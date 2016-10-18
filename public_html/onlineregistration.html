@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"><input type="text">
+<title>Online Registration</title>
+<style>
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #171515;
+	
+}
+li  {
+	float: left;
+}
+
+li a, .dropbtn { 
+display: inline-block;
+color: white;
+text-align: center;
+padding: 20px;
+text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+	background-color: red;		
+}
+
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 20px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+</style>
+</head>
+
+<body background="images/2015_AIGA-Design-Month_Website-Footer.png">
+<p style="text-align: center; font-size: 36px;">Online Registration</p>
+<ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="keynotespeakers.html">Keynote Speakers</a></li>
+    <li class="dropdown">
+       <a href="#" class="dropbtn">General Information</a>
+       <div class="dropdown-content">
+       <a href="abouttheconference.html">About the Conference</a>
+       <a href="conferencefee.html">Conference Fee</a>
+       <a href="hotelinformation.html">Hotel Information</a>
+       </div>
+    
+    <li><a href="callforpaper.html">Call for Paper</a></li>
+    <li><a href="importantdates.html">Important Dates</a></li>
+    <li><a href="majorareas.html">Major Areas</a></li>
+    <li><a href="papersubmission.html">Paper Submission</a></li>
+    <li><a class= "active" href="onlineregistration.html">Online Registration</a></li>
+    <li><a href="conferenceprogram.html">Conference Program</a></li>
+    <li><a href="commentsandfeedback.html">Comments and Feedback</a></li>
+
+</li>
+</ul>
+<p>&nbsp;</p>
+<p>
+  <label for="textfield">First name:</label>
+  <input type="text" name="textfield" id="textfield">
+</p>
+<p>
+  <label for="textfield2">Last name:</label>
+  <input type="text" name="textfield2" id="textfield2">
+</p>
+<p>
+  <label for="textfield3">Title, Company, or Organization:</label>
+  <input type="text" name="textfield3" id="textfield3">
+</p>
+<p>
+  <label for="textfield4">Address:</label>
+  <input type="text" name="textfield4" id="textfield4">
+</p>
+<p>
+  <label for="tel">Tel:</label>
+  <input type="tel" name="tel" id="tel">
+</p>
+<p>
+  <label for="email">Email:</label>
+  <input type="email" name="email" id="email">
+</p>
+<p>Are you a:</p>
+<p>
+  <label>
+    <input type="radio" name="Student " value="radio" id="Student_0">
+  Student</label>
+  <br>
+  <label>
+    <input type="radio" name="Student " value="radio" id="Student_1">
+    Author/Presenter </label>
+  <br>
+  <label>
+    <input type="radio" name="Student " value="radio" id="Student_2">
+    Regular attendee</label>
+  <br>
+</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>
