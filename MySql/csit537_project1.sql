@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2016 at 11:35 PM
+-- Generation Time: Oct 19, 2016 at 05:50 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.19
 
@@ -81,17 +81,45 @@ DROP TABLE IF EXISTS `wa_product_categories`;
 CREATE TABLE IF NOT EXISTS `wa_product_categories` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `CATEGORY_NAME` varchar(20) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `CATEGORY_NAME` (`CATEGORY_NAME`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `wa_product_categories`
 --
 
 INSERT INTO `wa_product_categories` (`ID`, `CATEGORY_NAME`) VALUES
+(9, 'Category 5'),
 (1, 'Test Category'),
-(2, 'Test Cat 3'),
-(3, 'Test Cat 4');
+(2, 'Test Category 3'),
+(3, 'Test Category 4');
+
+--
+-- Triggers `wa_product_categories`
+--
+DROP TRIGGER IF EXISTS `PREV_BLANK_CAT_INSERT`;
+DELIMITER //
+CREATE TRIGGER `PREV_BLANK_CAT_INSERT` BEFORE INSERT ON `wa_product_categories`
+ FOR EACH ROW BEGIN
+	IF NEW.CATEGORY_NAME = '' THEN
+		SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Blank values are not allowed';
+    END IF;
+END
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `PREV_BLANK_CAT_UPDATE`;
+DELIMITER //
+CREATE TRIGGER `PREV_BLANK_CAT_UPDATE` BEFORE UPDATE ON `wa_product_categories`
+ FOR EACH ROW BEGIN
+	IF NEW.CATEGORY_NAME = '' THEN
+		SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Blank values are not allowed';
+    END IF;
+END
+//
+DELIMITER ;
 
 -- --------------------------------------------------------
 
