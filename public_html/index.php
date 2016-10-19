@@ -1,4 +1,8 @@
 <!doctype html>
+<?php 
+    require './PHP_helper/connectDb.php';
+?>
+
 <html>
 <head>
 <meta charset="utf-8">
