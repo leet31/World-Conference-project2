@@ -6,6 +6,7 @@ require './PHP_helper/WA_functions.php';
 //perform requested action, if any
 $errMsg = doProdCatAction($pdo);
 
+//get product categories list as an array
 $cat_ra = getProdCatList($pdo);
 ?>
 <html>
