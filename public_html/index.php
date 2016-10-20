@@ -81,6 +81,12 @@ li.dropdown {
     <li><a href="onlineregistration.html">Online Registration</a></li>
     <li><a href="conferenceprogram.html">Conference Program</a></li>
     <li><a href="commentsandfeedback.html">Comments and Feedback</a></li>
+    <li class ="dropdown">
+        <a hre ="#" class ="dropbtn">Diagnostics Menu</a>
+        <div class="dropdown-content">
+            <a href="testCategories.php">Edit Product Categories</a>
+        </div>
+    </li>
 
 </ul>
   <p>&nbsp;</p>
