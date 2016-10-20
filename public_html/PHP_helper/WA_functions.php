@@ -61,6 +61,9 @@ function doProdCatAction($pdo) {
             $errMsg = updateProdCat($pdo, $_POST['catID'], $_POST['renameValue']);
         } else
         if (isset($_POST['btnInsert'])) {
+            echo("<div>POST catname set=".(isset($_POST['catName'])?"YES":"NO")."</div>");
+            #echo("<div>POST catname blank=".(($_POST['catName']='')?"YES":"NO")."</div>");
+            #echo("<div>POST catname=".$_POST['catName']);
             $errMsg = insertProdCat($pdo, $_POST['catName']);
         }
     }
