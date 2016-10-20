@@ -15,6 +15,7 @@ require './PHP_helper/connectDb.php';
         </p>
         <?php echo(file_get_contents('.\menu.html')) ?>
         <p>&nbsp;</p>
+        <p>&nbsp;</p>
         <?php echo"<p><h1>Hello PHP from Kevin!</h1>"; ?>
     </body>
 

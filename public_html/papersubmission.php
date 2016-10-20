@@ -7,7 +7,7 @@
 
     </head>
 
-    <body background="images/2015_AIGA-Design-Month_Website-Footer.png" style="text-align: center; font-size: xx-large;">
+    <body background="images/2015_AIGA-Design-Month_Website-Footer.png" style="text-align: center; font-size: large;">
         <?php echo(file_get_contents('.\menu.html')) ?>
         UNDER Construction........
     </body>

@@ -4,7 +4,6 @@ ul {
     padding: 0;
     overflow: hidden;
     background-color: #171515;
-
 }
 li  {
     float: left;
@@ -17,7 +16,10 @@ li a, .dropbtn {
     padding: 20px;
     text-decoration: none;
 }
-
+li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
 li a:hover, .dropdown:hover .dropbtn {
     background-color: red;		
 }

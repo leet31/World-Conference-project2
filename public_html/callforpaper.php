@@ -8,11 +8,11 @@
 
     <body background="images/2015_AIGA-Design-Month_Website-Footer.png">
 
-        <p style="text-align: center; font-family: Consolas, 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', Monaco, 'Courier New', monospace; font-style: inherit; font-weight: 800; font-size: 24px; color: #DC181B;">Call for Paper</p>
+        <p style="text-align: center; font-family: Consolas, 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', Monaco, 'Courier New', monospace; font-style: inherit; font-weight: bolder; font-size: 36px; color: #DC181B;">Call for Paper</p>
         <?php echo(file_get_contents('.\menu.html')) ?>
         <p>&nbsp;</p>
         <blockquote>
-            <p> <u>Five Areas of Topics Discuss:</u></p>
+            <p> <strong><u>Five Areas of Topics Discuss:</u></strong></p>
             <blockquote>
                 <blockquote>
                     <p>I. Computer Security </p>
