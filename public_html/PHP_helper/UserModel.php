@@ -4,19 +4,19 @@ class UserModel {
 
     private $pdo;
     
-    public $firstName;
-    public $lastName;
-    public $compOrg;
-    public $address;
-    public $address2;
-    public $city;
-    public $state;
-    public $zipCode;
-    public $phone;
-    public $email;
-    public $password;
-    public $password2;
-    public $attendeeType;
+    public $firstName ='';
+    public $lastName ='';
+    public $compOrg ='';
+    public $address ='';
+    public $address2 ='';
+    public $city ='';
+    public $state ='';
+    public $zipCode ='';
+    public $phone ='';
+    public $email ='';
+    public $password ='';
+    public $password2 ='';
+    public $attendeeType ='';
  
     public function __construct($inPdo) {
         if ($inPdo instanceof PDO) {
@@ -24,6 +24,23 @@ class UserModel {
         } else {
             die("Object Type Error");
         }
+        
+//        $userVars = filter_input(INPUT_SESSION,"userVars");
+//        if($userVars){
+//            $this->firstName    = $userVars->firstName   ;
+//            $this->lastName     = $userVars->lastName    ;
+//            $this->compOrg      = $userVars->compOrg     ;
+//            $this->address      = $userVars->address     ;
+//            $this->address2     = $userVars->address2    ;
+//            $this->city         = $userVars->city        ;
+//            $this->state        = $userVars->state       ;
+//            $this->zipCode      = $userVars->zipCode     ;
+//            $this->phone        = $userVars->phone       ;
+//            $this->email        = $userVars->email       ;
+//            $this->password     = $userVars->password    ;
+//            $this->password2    = $userVars->password2   ;
+//            $this->attendeeType = $userVars->attendeeType;
+//        }
     }
 
     public function doAction() {
@@ -47,6 +64,24 @@ class UserModel {
             $this->password2    = filter_input(INPUT_POST, "password2");
             $this->attendeeType = filter_input(INPUT_POST, "attendeeType");
             
+            $userVars = array(
+               "firstName"    => $this->firstName   ,
+               "lastName"     => $this->lastName    ,
+               "compOrg"      => $this->compOrg     ,
+               "address"      => $this->address     ,
+               "address2"     => $this->address2    ,
+               "city"         => $this->city        ,
+               "state"        => $this->state       ,
+               "zipCode"      => $this->zipCode     ,
+               "phone"        => $this->phone       ,
+               "email"        => $this->email       ,
+               "password"     => $this->password    ,
+               "password2"    => $this->password2   ,
+               "attendeeType" => $this->attendeeType
+            );
+            
+            $_SESSION['userVars'] = $userVars;
+            
             if (filter_input(INPUT_POST, 'btnDelete')) {
                 $errMsg = $this->deleteProdCat(filter_input(INPUT_POST, 'catID'));
             } else
@@ -59,19 +94,6 @@ class UserModel {
             if (filter_input(INPUT_POST, 'btnRegisterSubmit')) {
                 $errMsg = $this->submitRegistration();
             }
-        }else{
-            //recover posted vars from session and remove session vars
-            $firstName    = filter_input(INPUT_SESSION, "firstName");
-            $lastName     = filter_input(INPUT_SESSION, "lastName");
-            $compOrg      = filter_input(INPUT_SESSION, "compOrg ");
-            $address      = filter_input(INPUT_SESSION, "address");
-            $address2     = filter_input(INPUT_SESSION, "address2");
-            $city         = filter_input(INPUT_SESSION, "city");
-            $state        = filter_input(INPUT_SESSION, "state");
-            $zipCode      = filter_input(INPUT_SESSION, "zipCode");
-            $phone        = filter_input(INPUT_SESSION, "phone");
-            $email        = filter_input(INPUT_SESSION, "email");
-            $attendeeType = filter_input(INPUT_SESSION, "attendeeType");
         }
 
         return $errMsg;
