@@ -1,93 +1,22 @@
 <!doctype html>
-<?php 
-    require './PHP_helper/connectDb.php';
+<?php
+require './PHP_helper/connectDb.php';
 ?>
 
 <html>
-<head>
-<meta charset="utf-8">
-<title>Home page</title>
-<style>
-ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: #171515;
-	
-}
-li  {
-	float: left;
-}
-
-li a, .dropbtn { 
-display: inline-block;
-color: white;
-text-align: center;
-padding: 20px;
-text-decoration: none;
-}
-
-li a:hover, .dropdown:hover .dropbtn {
-	background-color: red;		
-}
-
-li.dropdown {
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 20px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-}
-
-.dropdown-content a:hover {background-color: #f1f1f1}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-</style>
-</head>
-<body background="images/2015_AIGA-Design-Month_Website-Footer.png">
-<p style="text-align: left; font-family: Baskerville, 'Palatino Linotype', Palatino, 'Century Schoolbook L', 'Times New Roman', serif; font-style: oblique;">&nbsp;</p>
-<p style="text-align: center; font-size: xx-large; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;"> <strong><em>World Congress CS-IT Conferences</em></strong></p>
- 
-  <ul>
-    <li><a class= "active" href="index.html">Home</a></li>
-    <li><a href="keynotespeakers.html">Keynote Speakers</a></li>
-    <li class="dropdown">
-       <a href="#" class="dropbtn">General Information</a>
-       <div class="dropdown-content">
-       <a href="abouttheconference.html">About the Conference</a>
-       <a href="conferencefee.html">Conference Fee</a>
-       <a href="hotelinformation.html">Hotel Information</a>
-       </div>
-    
-    <li><a href="callforpaper.html">Call for Paper</a></li>
-    <li><a href="importantdates.html">Important Dates</a></li>
-    <li><a href="majorareas.html">Major Areas</a></li>
-    <li><a href="papersubmission.html">Paper Submission</a></li>
-    <li><a href="onlineregistration.html">Online Registration</a></li>
-    <li><a href="conferenceprogram.html">Conference Program</a></li>
-    <li><a href="commentsandfeedback.html">Comments and Feedback</a></li>
-
-</ul>
-  <p>&nbsp;</p>
-  <?php
-  echo"<p><h1>Hello PHP from Kevin!</h1>";
-  ?>
-</body>
+    <head>
+        <meta charset="utf-8">
+        <title>Home page</title>
+        <link rel="stylesheet" type="text/css" href="./styles.css">
+    </head>
+    <body background="images/2015_AIGA-Design-Month_Website-Footer.png">
+        <p style="text-align: center; font-size: xx-large; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;">
+            <strong><em>World Congress CS-IT Conferences</em></strong>
+        </p>
+        <?php echo(file_get_contents('.\menu.html')) ?>
+        <p>&nbsp;</p>
+        <?php echo"<p><h1>Hello PHP from Kevin!</h1>"; ?>
+    </body>
 
 </html>
 
