@@ -9,7 +9,7 @@
     <body background="images/2015_AIGA-Design-Month_Website-Footer.png">
         <p style="text-align: center; font-size: 36px;">Online Registration</p>
         <?php echo(file_get_contents('.\menu.html')) ?>
-        
+        <div>
          <form name="regForm action=" action="#" method="POST">
                 <table>
                     <tr>
@@ -35,12 +35,14 @@
                     <tr>
                         <td>*City:</td>
                         <td>*State:</td>
-                        <td>*Zip Code:</td>
                     </tr>
                     <tr>
                         <td><input name="city" id="city" type="text"></td>
                         <td><input name="state" id="state" type="text"></td>
-                        <td><input name="zipCode" id="zipCode" type="text" pattern="[0-9]{5}" ></td>
+                    </tr>
+                    <tr>
+                        <td align="right">Zip code:</td>
+                        <td><input name="zipcode" id="zipcode" type="text" pattern="[0-9]{5}"></td>
                     </tr>
                     <tr>
                         <td align="right">Phone Number:</td>
@@ -71,5 +73,6 @@
         </p>
         <p>&nbsp;</p>
         <p>&nbsp;</p>
+        </div>
     </body>
 </html>
