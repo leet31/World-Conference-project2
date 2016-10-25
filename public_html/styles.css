@@ -1,3 +1,4 @@
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -50,4 +51,9 @@ li.dropdown {
     display: block;
 }
 
+div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 30px;
+}
 
