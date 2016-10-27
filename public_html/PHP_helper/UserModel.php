@@ -3,93 +3,126 @@
 class UserModel {
 
     private $pdo;
-    
-    public $firstName ='';
-    public $lastName ='';
-    public $compOrg ='';
-    public $address ='';
-    public $address2 ='';
-    public $city ='';
-    public $state ='';
-    public $zipCode ='';
-    public $phone ='';
-    public $email ='';
-    public $password ='';
-    public $password2 ='';
-    public $attendeeType ='';
- 
+    private $table = 'wa_users';
+    //only on HTML registration form
+    public $password1 = '';
+    public $password2 = '';
+    public $attendeeType = '';
+    //Fields in MySQL Table
+    public $userID = '';
+    public $pwHash = ';';
+    public $firstName = '';
+    public $lastName = '';
+    public $compOrg = '';
+    public $address1 = '';
+    public $address2 = '';
+    public $city = '';
+    public $state = '';
+    public $zipCode = '';
+    public $phone = '';
+    public $email = '';
+    public $admin = '';
+    public $attendee = '';
+    public $presenter = '';
+    public $student = '';
+    public $reviewer = '';
+
     public function __construct($inPdo) {
         if ($inPdo instanceof PDO) {
             $this->pdo = $inPdo;
         } else {
             die("Object Type Error");
         }
-        
-//        $userVars = filter_input(INPUT_SESSION,"userVars");
-//        if($userVars){
-//            $this->firstName    = $userVars->firstName   ;
-//            $this->lastName     = $userVars->lastName    ;
-//            $this->compOrg      = $userVars->compOrg     ;
-//            $this->address      = $userVars->address     ;
-//            $this->address2     = $userVars->address2    ;
-//            $this->city         = $userVars->city        ;
-//            $this->state        = $userVars->state       ;
-//            $this->zipCode      = $userVars->zipCode     ;
-//            $this->phone        = $userVars->phone       ;
-//            $this->email        = $userVars->email       ;
-//            $this->password     = $userVars->password    ;
-//            $this->password2    = $userVars->password2   ;
-//            $this->attendeeType = $userVars->attendeeType;
-//        }
+
+        if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') !== 'POST') {
+            unset($_SESSION['userVars']);
+        }
+
+        if (isset($_SESSION['userVars'])) {
+            $userVars = $_SESSION['userVars'];
+            
+//            echo("<p>Constructor -UserVars: ");
+//            print_r($userVars);
+//            echo("</p>");
+            
+            if ($userVars) {
+                $this->userID = $userVars['userID'];
+                $this->firstName = $userVars['firstName'];
+                $this->lastName = $userVars['lastName'];
+                $this->compOrg = $userVars['compOrg'];
+                $this->address1 = $userVars['address1'];
+                $this->address2 = $userVars['address2'];
+                $this->city = $userVars['city'];
+                $this->state = $userVars['state'];
+                $this->zipCode = $userVars['zipCode'];
+                $this->phone = $userVars['phone'];
+                $this->email = $userVars['email'];
+                $this->password1 = $userVars['password1'];
+                $this->password2 = $userVars['password2'];
+                $this->attendeeType = $userVars['attendeeType'];
+            }
+        }
     }
 
+    //do action in submitted HTML Form
     public function doAction() {
         $errMsg = '';
 
-        print_r($_POST);
+//        echo("<p>_POST: ");
+//        print_r($_POST);
+//        echo("</p>");
+//        echo("<p>_SESSION: ");
+//        print_r($_SESSION);
+//        echo("</p>");
+        
+        //save form values in user object
         if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
-            echo
             //save posted vars
-            $this->firstName    = filter_input(INPUT_POST, "firstName");
-            $this->lastName     = filter_input(INPUT_POST, "lastName");
-            $this->compOrg      = filter_input(INPUT_POST, "compOrg ");
-            $this->address      = filter_input(INPUT_POST, "address");
-            $this->address2     = filter_input(INPUT_POST, "address2");
-            $this->city         = filter_input(INPUT_POST, "city");
-            $this->state        = filter_input(INPUT_POST, "state");
-            $this->zipCode      = filter_input(INPUT_POST, "zipCode");
-            $this->phone        = filter_input(INPUT_POST, "phone");
-            $this->email        = filter_input(INPUT_POST, "email");
-            $this->password     = filter_input(INPUT_POST, "password");
-            $this->password2    = filter_input(INPUT_POST, "password2");
+            $this->userID = filter_input(INPUT_POST, "userID");
+            $this->firstName = filter_input(INPUT_POST, "firstName");
+            $this->lastName = filter_input(INPUT_POST, "lastName");
+            $this->compOrg = filter_input(INPUT_POST, "compOrg");
+            $this->address1 = filter_input(INPUT_POST, "address1");
+            $this->address2 = filter_input(INPUT_POST, "address2");
+            $this->city = filter_input(INPUT_POST, "city");
+            $this->state = filter_input(INPUT_POST, "state");
+            $this->zipCode = filter_input(INPUT_POST, "zipCode");
+            $this->phone = filter_input(INPUT_POST, "phone");
+            $this->email = filter_input(INPUT_POST, "email");
+            $this->password1 = filter_input(INPUT_POST, "password1");
+            $this->password2 = filter_input(INPUT_POST, "password2");
             $this->attendeeType = filter_input(INPUT_POST, "attendeeType");
-            
+
+            //save posted form values to array for session vars
             $userVars = array(
-               "firstName"    => $this->firstName   ,
-               "lastName"     => $this->lastName    ,
-               "compOrg"      => $this->compOrg     ,
-               "address"      => $this->address     ,
-               "address2"     => $this->address2    ,
-               "city"         => $this->city        ,
-               "state"        => $this->state       ,
-               "zipCode"      => $this->zipCode     ,
-               "phone"        => $this->phone       ,
-               "email"        => $this->email       ,
-               "password"     => $this->password    ,
-               "password2"    => $this->password2   ,
-               "attendeeType" => $this->attendeeType
+                "userID" => $this->userID,
+                "firstName" => $this->firstName,
+                "lastName" => $this->lastName,
+                "compOrg" => $this->compOrg,
+                "address1" => $this->address1,
+                "address2" => $this->address2,
+                "city" => $this->city,
+                "state" => $this->state,
+                "zipCode" => $this->zipCode,
+                "phone" => $this->phone,
+                "email" => $this->email,
+                "password1" => $this->password1,
+                "password2" => $this->password2,
+                "attendeeType" => $this->attendeeType
             );
-            
+
+            //save posted vars in session to reload on error
             $_SESSION['userVars'] = $userVars;
-            
+
+            //determine which action was selected
             if (filter_input(INPUT_POST, 'btnDelete')) {
-                $errMsg = $this->deleteProdCat(filter_input(INPUT_POST, 'catID'));
+                $errMsg = $this->deleteUser($this->userID);
             } else
-            if (filter_input(INPUT_POST, 'btnRename')) {
-                $errMsg = $this->updateProdCat(filter_input(INPUT_POST, 'catID'), filter_input(INPUT_POST, 'renameValue'));
+            if (filter_input(INPUT_POST, 'btnUpdate')) {
+                $errMsg = $this->update($this);
             } else
             if (filter_input(INPUT_POST, 'btnInsert')) {
-                $errMsg = $this->insertProdCat(filter_input(INPUT_POST, 'catName'));
+                $errMsg = $this->insert($this);
             } else
             if (filter_input(INPUT_POST, 'btnRegisterSubmit')) {
                 $errMsg = $this->submitRegistration();
@@ -98,50 +131,95 @@ class UserModel {
 
         return $errMsg;
     }
-    
-    public function submitRegistration(){
+
+    public function submitRegistration() {
         $errMsg = "None";
-        
-        $firstName    = filter_input(INPUT_POST, "firstName");
-        $lastName     = filter_input(INPUT_POST, "lastName");
-        $compOrg      = filter_input(INPUT_POST, "compOrg ");
-        $address      = filter_input(INPUT_POST, "address");
-        $address2     = filter_input(INPUT_POST, "address2");
-        $city         = filter_input(INPUT_POST, "city");
-        $state        = filter_input(INPUT_POST, "state");
-        $zipCode      = filter_input(INPUT_POST, "zipCode");
-        $phone        = filter_input(INPUT_POST, "phone");
-        $email        = filter_input(INPUT_POST, "email");
-        $password     = filter_input(INPUT_POST, "password");
-        $password2    = filter_input(INPUT_POST, "password2");
-        $attendeeType = filter_input(INPUT_POST, "attendeeType");
-        
-        if( !$firstName|| 
-            !$lastName || 
-            #!$compOrg  || 
-            !$address  || 
-            #!$address2 || 
-            !$city     || 
-            !$state    || 
-            !$zipCode  || 
-            #!$phone    || 
-            !$email    || 
-            !$password ||
-            !$password2    ){
-            
+
+        //save posted variable to $this for possible insertion into table
+        $this->firstName = filter_input(INPUT_POST, "firstName");
+        $this->lastName = filter_input(INPUT_POST, "lastName");
+        $this->compOrg = filter_input(INPUT_POST, "compOrg");
+        $this->address1 = filter_input(INPUT_POST, "address1");
+        $this->address2 = filter_input(INPUT_POST, "address2");
+        $this->city = filter_input(INPUT_POST, "city");
+        $this->state = filter_input(INPUT_POST, "state");
+        $this->zipCode = filter_input(INPUT_POST, "zipCode");
+        $this->phone = filter_input(INPUT_POST, "phone");
+        $this->email = filter_input(INPUT_POST, "email");
+        $this->password1 = filter_input(INPUT_POST, "password1");
+        $this->password2 = filter_input(INPUT_POST, "password2");
+        $this->attendeeType = filter_input(INPUT_POST, "attendeeType");
+
+        $this->attendee = 1; //everyone who registers is a student
+        $this->presenter = ($this->attendeeType === 'presenter') ? 1 : 0;
+        $this->student = ($this->attendeeType === 'student') ? 1 : 0;
+
+        //check for requied fields
+        if ($this->firstName === '' ||
+                $this->lastName === '' ||
+                $this->compOrg === '' ||
+                $this->address1 === '' ||
+                $this->address2 === '' ||
+                $this->city === '' ||
+                $this->state === '' ||
+                $this->zipCode === '' ||
+                $this->phone === '' ||
+                $this->email === '' ||
+                $this->password1 === '' ||
+                $this->password2 === '' ||
+                $this->attendeeType === ''
+        ) {
+
             $errMsg = "All fields marked with a '*' must be completed";
-            return($errMsg);
-            }
-        
-        if(!$password ||!$password2 || $password != $password2){
-            $errMsg = "Passwords are missing or do not match";
-            return($errMsg);
+            return $errMsg;
         }
-        $pwHash = sha1($password);
-        
-        
+
+        if (!$this->password1 || !$this->password2 || $this->password1 != $this->password2) {
+            $errMsg = "Passwords are missing or do not match";
+            return $errMsg;
+        }
+        $this->pwHash = sha1($this->password1);
+        echo("Submit pw hash:" . $this->pwHash . "</br>");
+        echo("Submit password:" . $this->password1 . "</br>");
+        $errMsg = $this->insert();
+        return $errMsg;
+    }
+
+    public function insert() {
+        //return "NOT IMPLEMENTED";
+        echo("Insert pw hash:" . $this->pwHash . "</br>");
+
+
+        try {
+            $stmt = $this->pdo->prepare("INSERT INTO $this->table ("
+                    . "PW_HASH,   FIRST_NAME, LAST_NAME,  COMPANY,  ADDRESS_1,  ADDRESS_2,  CITY,  STATE,  ZIP_CODE,  PHONE_NUMBER,  EMAIL,  ADMIN,  ATTENDEE,  PRESENTER,  STUDENT,  REVIEWER) VALUES ("
+                    . ":pw_hash, :first_name, :last_name, :company, :address_1, :address_2, :city, :state, :zip_code, :phone_number, :email, :admin, :attendee, :presenter, :student, :reviewer)");
+
+            $stmt->bindParam(':pw_hash', $this->pwHash);
+            $stmt->bindParam(':first_name', $this->firstName);
+            $stmt->bindParam(':last_name', $this->lastName);
+            $stmt->bindParam(':company', $this->compOrg);
+            $stmt->bindParam(':address_1', $this->address1);
+            $stmt->bindParam(':address_2', $this->address2);
+            $stmt->bindParam(':city', $this->city);
+            $stmt->bindParam(':state', $this->state);
+            $stmt->bindParam(':zip_code', $this->zipCode);
+            $stmt->bindParam(':phone_number', $this->phone);
+            $stmt->bindParam(':email', $this->email);
+            $stmt->bindParam(':admin', $this->admin);
+            $stmt->bindParam(':attendee', $this->attendee);
+            $stmt->bindParam(':presenter', $this->presenter);
+            $stmt->bindParam(':student', $this->student);
+            $stmt->bindParam(':reviewer', $this->reviewer);
+
+            $stmt->execute();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+
+        return 'NONE';
     }
 
 }
-
 ?>
+
