@@ -12,9 +12,13 @@
 
             }
             li  {
-                float: left;
+                 float: left;
+                 border-right:1px solid #bbb;
             }
 
+            li:last-child {
+                 border-right: none;
+            }
             li a, .dropbtn { 
                 display: inline-block;
                 color: white;
@@ -77,12 +81,12 @@
 
     <body bgcolor="#4880D5">
         <div id="menu">
-            <p style="text-align: center; font-family: Baskerville, 'Palatino Linotype', Palatino, 'Century Schoolbook L', 'Times New Roman', serif; font-style: oblique; font-size: xx-large;">	Keynote Speakers</p>
+            <p style="text-align: center; font-family: Baskerville, 'Palatino Linotype', Palatino, 'Century Schoolbook L', 'Times New Roman', serif; font-style: oblique; font-size: x-large;">Keynote Speakers</p>
             <?php echo(file_get_contents('.\menu.html')) ?>
         </div>
         <div id="note1">
             <div class="dropdown2">
-                <img src="images/download.jpe" width="91" height="123" alt=""/>
+                <img src="images/download.jpe" width="86" height="123" alt=""/>
                 <p style="text-align: left; font-family: Baskerville, 'Palatino Linotype', Palatino, 'Century Schoolbook L', 'Times New Roman', serif; font-style: normal; font-size: 14px;"><span style="color: rgba(255,255,255,1)">Grady Booch is an American software engineer best known for developing the UML (Unified Modeling Language) with Ivar Jacbson and James Rumbaugh. He is recognized internationally for his innovative work in software architecture, software engineering, and collaborative development. </span></p>
                 <p style="text-align: left; font-family: Baskerville, 'Palatino Linotype', Palatino, 'Century Schoolbook L', 'Times New Roman', serif; font-style: normal; font-size: 14px;">Topic of Discussion: <span style="font-style: normal; font-weight: bolder;">Software engineering</span>. &quot;Each Phase is the insurance of achievements towards success&quot;</p>
                 <div class="dropdown-content2">

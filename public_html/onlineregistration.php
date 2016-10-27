@@ -64,14 +64,26 @@
                         <td align="right"><input name="attendeeType" id="rbAtStudent" type="radio"></td><td>Student &nbsp;&nbsp;</td>
                         <td align="right"><input name="attendeeType" id="rbAtNa" type="radio">Neither</td>
                     </tr>
-                    <tr><td><input type="submit" name="btnRegisterSubmit" value="Submit"></td></tr>
 
                 </table>
             </form>
         <p>Payment Methods: </p>
-        <p><img src="images/american express.png" width="99" height="81" alt=""/>  <img src="images/discover.jpg" width="114" height="80" alt=""/>  <img src="images/visa.png" width="127" height="81" alt=""/> <img src="images/mastercard.gif" width="128" height="78" alt=""/><br>
-        </p>
+        <input name="paymentMethods" id="rbAtAmericanExpress" type="radio"><img src="images/american express.png" width="99" height="81" alt=""/>
+        <input name="paymentMethods" id="rbAtDiscover" type="radio"><img src="images/discover.jpg" width="114" height="80" alt=""/> 
+        <input name="paymentMethods" id="rbAtVisa" type="radio"><img src="images/visa.png" width="127" height="81" alt=""/> 
+        <input name="paymentMethods" id="rbAtMastercard" type="radio"><img src="images/mastercard.gif" width="128" height="78" alt=""/><br>
         <p>&nbsp;</p>
+        <table>
+                    <tr>
+                        <td  align="right">Credit Card Number:</td>
+                        <td><input name="firstName" id="creditcard" type="text" </td>
+                    </tr>
+                    <tr>
+                        <td  align="right">Expiration Date:</td>
+                        <td><input name="firstName" id="expirationdate" type="text" </td>
+                    </tr>
+                    <tr><td><input type="submit" name="btnRegisterSubmit" value="Submit"></td></tr>
+        </table>
         <p>&nbsp;</p>
         </div>
     </body>
