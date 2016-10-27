@@ -11,29 +11,36 @@
         <p>Please sign up to receive future notifications and/or comments about your experience below:</p>
 
         <form id="form1" name="form1" method="post">
-            <p>
-                <label for="textfield">Name:</label>
-                <input type="text" name="textfield" id="textfield">
-            </p>
-            <p>
-                <label for="tel">Tel:</label>
-                <input type="tel" name="tel" id="tel">
-            </p>
-            <p>
-                <label for="email">Email:</label>
-                <input type="email" name="email" id="email">
-            </p>
+            <table
+                <tr>
+                    <td align="right">Name:</td>
+                     <td><input name="name" id="name" type="text" </td>
+                </tr>
+                <tr>
+                        <td align="right">Tel:</td>
+                        <td><input name="tel" id="tel" type="text" pattern="(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}"></td>
+                    </tr>
+                    <tr>
+                    <td align="right">E-mail:</td>
+                        <td><input name="email" id="email" type="email"></td>
+                    </tr>
+            </table>
+            <table>
+                <p><strong>Tip:</strong> Use the space below to leave comments and/or questions, we appreciate your feedback:</p> 
+            </table>
+            <table>
+<form> 
+  <textarea>Some text...</textarea>
+</form>
             <blockquote>
                 <blockquote>
-                    <blockquote>
-                        <blockquote>
-                            <p>
-                                <input type="submit" name="submit" id="submit" value="Submit">
-                            </p>
+                    <tr><td align="center"</td>
+                                    <td><input type="submit" name="btnRegisterSubmit" value="Submit"></td>
+                            </tr>
                         </blockquote>
                     </blockquote>
-                </blockquote>
-            </blockquote>
+                
+            </table>
         </form>
         <p>&nbsp;</p>
     </body>

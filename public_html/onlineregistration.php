@@ -9,65 +9,70 @@
     <body background="images/2015_AIGA-Design-Month_Website-Footer.png">
         <p style="text-align: center; font-size: 36px;">Online Registration</p>
         <?php echo(file_get_contents('.\menu.html')) ?>
-        <p>&nbsp;</p>
-        <p>
-            <label for="textfield">First name:</label>
-            <input type="text" name="textfield" id="textfield">
-        </p>
-        <p>
-            <label for="textfield2">Last name:</label>
-            <input type="text" name="textfield2" id="textfield2">
-        </p>
-        <p>
-            <label for="textfield3">Title, Company, or Organization:</label>
-            <input type="text" name="textfield3" id="textfield3">
-        </p>
-        <p>
-            <label for="textfield4">Address:</label>
-            <input type="text" name="textfield4" id="textfield4">
-        </p>
-        <p>
-            <label for="address2">Address Line 2:</label>
-            <input type="text" name="address2" id="textfield4">
-        </p>
-        <p>
-            <label for="city">City:</label>
-            <input type="text" name="city" id="textfield4">
-        </p>
-        <p>
-            <label for="state">State:</label>
-            <input type="text" name="state" id="textfield4">
-        </p>
-        <p>
-            <label for="zipcode">Zip Code:</label>
-            <input type="text" name="zipcode" id="textfield4">
-        </p>
-        <p>
-            <label for="tel">Tel:</label>
-            <input type="tel" name="tel" id="tel">
-        </p>
-        <p>
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email">
-        </p>
-        <p>Are you a:</p>
-        <p>
-            <label>
-                <input type="radio" name="Student " value="radio" id="Student_0">
-                Student</label>
-            <br>
-            <label>
-                <input type="radio" name="Student " value="radio" id="Student_1">
-                Author/Presenter </label>
-            <br>
-            <label>
-                <input type="radio" name="Student " value="radio" id="Student_2">
-                Regular attendee</label>
-        </p>
+        <div>
+         <form name="regForm action=" action="#" method="POST">
+                <table>
+                    <tr>
+                        <td  align="right">*First Name:</td>
+                        <td><input name="firstName" id="firstName" type="text" </td>
+                    </tr>
+                    <tr>
+                        <td align="right">*Last Name:</td>
+                        <td><input name="lastName" id="lastName" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td align="right">Company/Organization:</td>
+                        <td><input name="compOrg" id="compOrg" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td align="right">*Address Line 1:</td>
+                        <td><input name="address1" id="address1" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td align="right">Address Line 2:</td>
+                        <td><input name="address2" id="address2" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td>*City:</td>
+                        <td>*State:</td>
+                    </tr>
+                    <tr>
+                        <td><input name="city" id="city" type="text"></td>
+                        <td><input name="state" id="state" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td align="right">Zip code:</td>
+                        <td><input name="zipcode" id="zipcode" type="text" pattern="[0-9]{5}"></td>
+                    </tr>
+                    <tr>
+                        <td align="right">Phone Number:</td>
+                        <td><input name="phone" id="phone" type="text" pattern="(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}"></td>
+                        <td align="right">*E-mail:</td>
+                        <td><input name="email" id="email" type="email"></td>
+                    </tr>
+                    <tr>
+                        <td align="right">*Password:</td>
+                        <td><input name="password" id="password" type="password"></td>
+                        <td align="right">*Confirm Password:</td>
+                        <td><input name="password2" id="password2" type="password"></td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>*Attendee Type: &nbsp;&nbsp;</td>
+                        <td align="right"><input name="attendeeType" id="rbAtPresenter" type="radio"></td><td>Presenter &nbsp;&nbsp;</td>
+                        <td align="right"><input name="attendeeType" id="rbAtStudent" type="radio"></td><td>Student &nbsp;&nbsp;</td>
+                        <td align="right"><input name="attendeeType" id="rbAtNa" type="radio">Neither</td>
+                    </tr>
+                    <tr><td><input type="submit" name="btnRegisterSubmit" value="Submit"></td></tr>
+
+                </table>
+            </form>
         <p>Payment Methods: </p>
         <p><img src="images/american express.png" width="99" height="81" alt=""/>  <img src="images/discover.jpg" width="114" height="80" alt=""/>  <img src="images/visa.png" width="127" height="81" alt=""/> <img src="images/mastercard.gif" width="128" height="78" alt=""/><br>
         </p>
         <p>&nbsp;</p>
         <p>&nbsp;</p>
+        </div>
     </body>
 </html>
