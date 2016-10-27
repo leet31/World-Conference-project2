@@ -179,15 +179,15 @@ class UserModel {
             return $errMsg;
         }
         $this->pwHash = sha1($this->password1);
-        echo("Submit pw hash:" . $this->pwHash . "</br>");
-        echo("Submit password:" . $this->password1 . "</br>");
+        //echo("Submit pw hash:" . $this->pwHash . "</br>");
+        //echo("Submit password:" . $this->password1 . "</br>");
         $errMsg = $this->insert();
         return $errMsg;
     }
 
     public function insert() {
         //return "NOT IMPLEMENTED";
-        echo("Insert pw hash:" . $this->pwHash . "</br>");
+        //echo("Insert pw hash:" . $this->pwHash . "</br>");
 
 
         try {
