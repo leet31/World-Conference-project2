@@ -1,6 +1,6 @@
 <!doctype html>
 <?php
-require './PHP_helper/connectDb.php';
+require '../controllers/connectDb.php';
 ?>
 
 <html>

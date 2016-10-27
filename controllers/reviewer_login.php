@@ -7,7 +7,7 @@
  */
 require_once '../public_html/PHP_helper/ProdCatModel.php';
 require_once '../public_html/PHP_helper/UserModel.php';
-require_once '../public_html/PHP_helper/wa_functions.php';
+//require_once '../public_html/PHP_helper/wa_functions.php';
 require_once '../public_html/PHP_helper/connectDb.php';
 
 $action = filter_input(INPUT_POST, 'action');
