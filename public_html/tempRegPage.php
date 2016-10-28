@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
-require './PHP_helper/connectDb.php';
-require './PHP_helper/UserModel.php';
+require '../controllers/connectDb.php';
+require '../models/UserModel.php';
 
 $UM = new UserModel($pdo);
 
@@ -33,7 +33,7 @@ if($errMsg == 'NONE'){
         <!--display error message, if any-->
         <?php if (isset($errMsg) && $errMsg != '') echo "<div><h3>Error: $errMsg</h3><div>"?>
         <div><h3>Input Your Information</h3>
-            <form name="regForm action=" action="#" method="POST">
+            <form name="regForm" action="#" method="POST">
                 <table>
                     <tr>
                         <td  align="right">*First Name:</td>

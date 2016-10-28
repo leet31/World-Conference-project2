@@ -126,10 +126,57 @@ class UserModel {
             } else
             if (filter_input(INPUT_POST, 'btnRegisterSubmit')) {
                 $errMsg = $this->submitRegistration();
+            }else
+            if (filter_input(INPUT_POST, 'btnLoginSubmit')) {
+                $errMsg = $this->submitLogin();
             }
         }
 
         return $errMsg;
+    }
+    
+    public function submitLogin(){
+        $errMsg = '';
+        
+        //save posted variable to $this for possible insertion into table
+        $this->email = filter_input(INPUT_POST, "email");
+        
+        //check for required variables
+        if($this->email ==='' ||
+           $this->password1 === ''){
+            $errMsg = "All fields must be completed";
+            return $errMsg;
+        }
+        
+        $this->pwHash = sha1($this->password1);
+        
+        try {
+            $stmt = $this->pdo->prepare("SELECT ID, FIRST_NAME, ADMIN,  ATTENDEE,  PRESENTER,  STUDENT,  REVIEWER FROM  $this->table "
+                    . "WHERE PW_HASH =  :pw_hash "
+                    . "AND EMAIL =  :email");
+
+            $stmt->bindParam(':pw_hash', $this->pwHash);
+            $stmt->bindParam(':email', $this->email);
+            
+            $stmt->execute();
+            $users = $stmt->fetchAll();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+
+        if (count($users) == 0)
+            return "Username or Password is incorrect";
+        
+        if (count($users) > 1)
+            return "Database error - multiple users returned";
+        
+        //save user identifier in session
+        $userRec = $users[0];
+        $_SESSION['userRec'] = $userRec;
+        return "NONE";
+        
+        
+        
     }
 
     public function submitRegistration() {

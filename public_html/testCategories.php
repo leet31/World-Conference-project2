@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
-require './PHP_helper/connectDb.php';
-require './PHP_helper/ProdCatModel.php';
+require '../controllers/connectDb.php';
+require '../models/ProdCatModel.php';
 
 $PCM = new ProdCatModel($pdo);
 
@@ -9,7 +9,7 @@ $PCM = new ProdCatModel($pdo);
 $errMsg = $PCM->doAction();
 
 //get product categories list as an array
-$cat_ra = $PCM->getProdCatList();
+$cat_ra = $PCM->getList();
 ?>
 <html>
     <head>
