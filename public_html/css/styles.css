@@ -65,9 +65,63 @@ li.dropdown {
     display: block;
 }
 
+/*input[type=text] {
+        width: 100%;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-image: url('searchicon.png');
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+    }*/
+
 div {
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 30px;
+    margin-top: 5px;
 }
-
+fieldset{
+   padding-top: 2em;
+   margin-bottom: 2em;
+   margin-left: 10em;
+   margin-right: 10em;
+}
+legend{
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+}
+label{
+    display: inline-block;
+    margin-right: 0.25em;
+    margin-left: 3em;
+    margin-bottom: 0.5em;
+    width: 10em;
+    text-align: right;
+}
+input[type = text]{
+    margin-bottom: 0.5em;
+    width: 15em;
+}
+input[type = submit]{
+    margin: 0.5em;
+    font-size: larger;
+    margin-right: 5em;
+}
+input[type = radio] {
+    margin: 0.5em;
+}
+.error{
+    color: red;
+}
+.message{
+    font-size: smaller;
+    font-style: italic;
+}
+span{
+    margin: 0.25em;
+}

@@ -288,7 +288,7 @@ class UserModel {
             $stmt->bindParam(':zip_code', $zip);
             $stmt->bindParam(':phone_number', $phone);
             $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':admin', 0);
+            $stmt->bindParam(':admin', $this->admin);
             $stmt->bindParam(':attendee', $attendee);
             $stmt->bindParam(':presenter', $presenter);
             $stmt->bindParam(':student', $student);

@@ -26,10 +26,10 @@ class Validate {
         //if the textbox is required to fill and nothing is filled by a user
         if ($required && empty($value)) {
             $field->setErrorMsg('Required');
-        } else if ($required && strlen($value) < min) {
+        } else if ($required && strlen($value) < $min) {
             //if the textbox is required to fill and the length is shorter than min
             $field->setErrorMsg('Too short');
-        } else if ($required && strlen($value) > max) {
+        } else if ($required && strlen($value) > $max) {
             //if the textbox is required to fill and the length is longer than max
             $fiel->setErrorMsg('Too long');
         } else {
@@ -61,7 +61,7 @@ class Validate {
     public function phone($name, $value, $required = true) {
         $field = $this->fields->getField($name);
         $this->text($name, $value, $required);
-        if ($field->getIsErorr()) {
+        if ($field->hasError()) {
             return;
         }
         //pattern for a phone number
@@ -73,7 +73,7 @@ class Validate {
     public function email($name, $value, $required = true) {
         $field = $this->fields->getField($name);
         $this->text($name, $value, $required);
-        if ($field->getIsError()) {
+        if ($field->hasError()) {
             return;
         }
         if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
@@ -93,7 +93,7 @@ class Validate {
     public function verify($name, $password, $verify, $required = true) {
         $field = $this->fields->getField($name);
         $this->text($name, $verify, $required, 6);
-        if ($field->getIsError()) {
+        if ($field->hasError()) {
             return;
         }
         if (strcmp($password, $verify) != 0) {
@@ -105,7 +105,7 @@ class Validate {
     public function state($name, $value, $required = true) {
         $field = $this->fields->getField($name);
         $this->text($name, $value, $required);
-        if ($field->getIsError()) {
+        if ($field->hasError()) {
             return;
         }
         $states = array(
@@ -115,7 +115,8 @@ class Validate {
             'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH',
             'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT',
             'VT', 'VA', 'WA', 'WV', 'WI', 'WY');
-        $states = impode('|', $states);
+        
+        $states = implode('|', $states);
         $pattern = '/^(' . $states . ')$/';
         $this->pattern($name, $value, $pattern, 'Invalid state name', $required);
     }
@@ -123,7 +124,7 @@ class Validate {
     public function zip($name, $value, $required = true) {
         $field = $this->fields->getField($name);
         $this->text($name, $value, $required);
-        if ($field->getIsError()) {
+        if ($field->hasError()) {
             return;
         }
         $pattern = '/^[[:digit:]]{5}(-[[:digit:]]{4})?$/';
@@ -131,7 +132,7 @@ class Validate {
         $this->pattern($name, $value, $pattern, $msg, $required);
     }
 
-    public function cardType($name, $value, $required) {
+    public function cardType($name, $value, $required = true) {
         $field = $this->fields->getField($name);
         if (empty($value)) {
             $field->setErrorMsg('Please select a card type.');
@@ -171,7 +172,7 @@ class Validate {
             $pattern = '/^[[:digit:]]{' . $length . '}$/';
             $msg = 'Invalide card number length';
             $this->pattern($name, $length, $pattern, $msg);
-            if ($field->getIsError()) {
+            if ($field->hasError()) {
                 return;
             }
         }
@@ -180,7 +181,7 @@ class Validate {
         $rangePattern = '/^[[:digit:]]+-[[:digit:]]+$/';
         foreach ($prefixes as $prefix) {
             $this->pattern($name, $prefix, $rangePattern, $msg);
-            if (!$field->getIsError()) {//prefix is a range pattern
+            if (!$field->hasError()) {//prefix is a range pattern
                 $range = explode('-', $prefix);
                 $start = intval($range[0]);
                 $end = intval($range[1]);
@@ -188,7 +189,7 @@ class Validate {
                 for ($prefix = $start; $prefix <= $end; $prefix++) {
                     $pattern = '/^' . $prefix . '/';
                     $this->pattern($name, $value, $pattern, $msg, $required);
-                    if ($field->getIsError()) {
+                    if ($field->hasError()) {
                         return;
                     }
                 }
@@ -219,7 +220,7 @@ class Validate {
         $dataPattern ='/^(0[1-9]|1[012])\/[1-9][[:digit:]]{3}?$/';
         $msg = 'Invalid data format';
         $this->pattern($name, $value, $dataPattern, $msg);
-        if($field->getIsError()){
+        if($field->hasError()){
             return;
         }
         //date matches
@@ -235,9 +236,10 @@ class Validate {
         }
         $field->clrErrorMsg();           
     }
+    //attendee is an array
     public function attendee($name, $value, $required = true){
         $field = $this->fields->getField($name);
-        if (strcmp($value, 'Presenter') == 0 || strcmp($value, 'Student') == 0 || strcmp($value, 'Neither') == 0) {
+        if (count($value) > 0) {
             $field->clrErrorMsg();
         } else {
             $field->setErrorMsg('Please pick at least one.');
