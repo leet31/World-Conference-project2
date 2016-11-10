@@ -266,6 +266,41 @@ class UserModel {
 
         return 'NONE';
     }
+    
+    public function insertNew($pwd, $firstName, $lastName, $company, $attendee, $presenter, $student, $reviewer, $address, $address_2, $city, $state, $zip, $phone, $email) {
+        //return "NOT IMPLEMENTED";
+        //echo("Insert pw hash:" . $this->pwHash . "</br>");
+
+
+        try {
+            $stmt = $this->pdo->prepare("INSERT INTO $this->table ("
+                    . "PW_HASH,   FIRST_NAME, LAST_NAME,  COMPANY,  ADDRESS_1,  ADDRESS_2,  CITY,  STATE,  ZIP_CODE,  PHONE_NUMBER,  EMAIL,  ADMIN,  ATTENDEE,  PRESENTER,  STUDENT,  REVIEWER) VALUES ("
+                    . ":pw_hash, :first_name, :last_name, :company, :address_1, :address_2, :city, :state, :zip_code, :phone_number, :email, :admin, :attendee, :presenter, :student, :reviewer)");
+
+            $stmt->bindParam(':pw_hash', sha1($pwd));
+            $stmt->bindParam(':first_name', $firstName);
+            $stmt->bindParam(':last_name', $lastName);
+            $stmt->bindParam(':company', $company);
+            $stmt->bindParam(':address_1', $address);
+            $stmt->bindParam(':address_2', $address_2);
+            $stmt->bindParam(':city', $city);
+            $stmt->bindParam(':state', $state);
+            $stmt->bindParam(':zip_code', $zip);
+            $stmt->bindParam(':phone_number', $phone);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':admin', 0);
+            $stmt->bindParam(':attendee', $attendee);
+            $stmt->bindParam(':presenter', $presenter);
+            $stmt->bindParam(':student', $student);
+            $stmt->bindParam(':reviewer', $reviewer);
+
+            $stmt->execute();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+
+        return 'NONE';
+    }
 
 }
 ?>
