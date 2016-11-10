@@ -1,4 +1,7 @@
 <?php
+/*
+ * this class refers to textbook
+ */
 class Field{
     private $name;
     private $msg = '';
@@ -14,7 +17,7 @@ class Field{
     public function getMsg() { 
         return $this->msg;
     }
-    public function getIsError() {
+    public function hasError() {
         return $this->isError;
     }
     public function setName($name) {
@@ -25,9 +28,17 @@ class Field{
         $this->msg = $msg;
         $this->isError = true;
     }
-    public function clrErrorMsg($error) {
+    public function clrErrorMsg() {
         $this->msg = '';
         $this->isError=false;
+    }
+    public function getHTML() {
+         $msg = htmlspecialchars($this->msg);
+        if ($this->hasError()) {
+            return '<span class="error">' . $msg . '</span>';
+        } else {
+            return '<span class="message">' . $msg . '</span>';
+        }
     }
 }
 class Fields {
@@ -42,8 +53,8 @@ class Fields {
         return $this->fields[$name];
     }
     public function hasErrors() {
-        foreach ($this->$fields as $field) {
-            if ($field->getIsError()) {
+        foreach ($this->fields as $field) {
+            if ($field->hasError()) {
                 return true;
             }
         }
