@@ -64,6 +64,13 @@ class UserModel {
         }
     }
 
+    public function getList() {
+        $stmt = $this->pdo->prepare("SELECT * FROM $this->table");
+        $stmt->execute();
+        $allList = $stmt->fetchAll();
+        return $allList;
+    }
+
     //do action in submitted HTML Form
     public function doAction() {
         $errMsg = '';

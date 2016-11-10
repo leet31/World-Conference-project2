@@ -53,6 +53,7 @@ $cat_ra = $PCM->getList();
             <table>
                 <tr>
                     <th>ID</th>
+                    <th></th>
                     <th>Name</th>
                 </tr>
                 <?php
