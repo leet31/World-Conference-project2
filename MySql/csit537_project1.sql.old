@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2016 at 03:37 AM
+-- Generation Time: Nov 09, 2016 at 07:29 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.19
 
@@ -28,23 +28,12 @@ USE `csit537_project1`;
 -- Table structure for table `wa_areas`
 --
 
-DROP TABLE IF EXISTS `wa_areas`;
 CREATE TABLE IF NOT EXISTS `wa_areas` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `NAME` varchar(20) NOT NULL,
   `DESCRIPTION` varchar(255) NOT NULL,
-  PRIMARY KEY (`ID`),
-  UNIQUE KEY `NAME` (`NAME`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `wa_areas`
---
-
-INSERT INTO `wa_areas` (`ID`, `NAME`, `DESCRIPTION`) VALUES
-(1, 'Cloud Computing', 'All areas of cloud computing...'),
-(2, 'Internet of Things', 'A bunch of thinngs on the Internet'),
-(3, 'Machine Learning', 'Machines that learn');
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -52,7 +41,6 @@ INSERT INTO `wa_areas` (`ID`, `NAME`, `DESCRIPTION`) VALUES
 -- Table structure for table `wa_book_details`
 --
 
-DROP TABLE IF EXISTS `wa_book_details`;
 CREATE TABLE IF NOT EXISTS `wa_book_details` (
   `PRODUCT_ID` int(11) NOT NULL,
   `TITLE` varchar(256) NOT NULL,
@@ -71,7 +59,6 @@ CREATE TABLE IF NOT EXISTS `wa_book_details` (
 -- Table structure for table `wa_orders`
 --
 
-DROP TABLE IF EXISTS `wa_orders`;
 CREATE TABLE IF NOT EXISTS `wa_orders` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `CUSTOMER_ID` int(11) NOT NULL,
@@ -86,7 +73,6 @@ CREATE TABLE IF NOT EXISTS `wa_orders` (
 -- Table structure for table `wa_order_details`
 --
 
-DROP TABLE IF EXISTS `wa_order_details`;
 CREATE TABLE IF NOT EXISTS `wa_order_details` (
   `ORDER_ID` int(11) NOT NULL,
   `PRODUCT_ID` int(11) NOT NULL,
@@ -101,7 +87,6 @@ CREATE TABLE IF NOT EXISTS `wa_order_details` (
 -- Table structure for table `wa_papers`
 --
 
-DROP TABLE IF EXISTS `wa_papers`;
 CREATE TABLE IF NOT EXISTS `wa_papers` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `AUTHOR_ID` int(11) NOT NULL COMMENT 'User ID of paper''s author',
@@ -122,7 +107,6 @@ CREATE TABLE IF NOT EXISTS `wa_papers` (
 -- Table structure for table `wa_products`
 --
 
-DROP TABLE IF EXISTS `wa_products`;
 CREATE TABLE IF NOT EXISTS `wa_products` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `CATEGORY` int(11) NOT NULL,
@@ -138,7 +122,6 @@ CREATE TABLE IF NOT EXISTS `wa_products` (
 -- Table structure for table `wa_product_categories`
 --
 
-DROP TABLE IF EXISTS `wa_product_categories`;
 CREATE TABLE IF NOT EXISTS `wa_product_categories` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `CATEGORY_NAME` varchar(20) NOT NULL,
@@ -190,25 +173,14 @@ DELIMITER ;
 -- Table structure for table `wa_subareas`
 --
 
-DROP TABLE IF EXISTS `wa_subareas`;
 CREATE TABLE IF NOT EXISTS `wa_subareas` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `PARENT_ID` int(11) NOT NULL,
   `NAME` varchar(20) NOT NULL,
   `DESCRIPTION` varchar(256) NOT NULL,
   PRIMARY KEY (`ID`),
-  UNIQUE KEY `SUBAREA_NAME_PARENT` (`PARENT_ID`,`NAME`) COMMENT 'Prevent duplicate subareas',
   KEY `PARENT_ID` (`PARENT_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
-
---
--- Dumping data for table `wa_subareas`
---
-
-INSERT INTO `wa_subareas` (`ID`, `PARENT_ID`, `NAME`, `DESCRIPTION`) VALUES
-(1, 1, 'Distributed Database', 'Databases in the cloud'),
-(3, 1, 'Thunder', 'more stuff in clouds'),
-(5, 2, 'Thunder', 'test');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -216,7 +188,6 @@ INSERT INTO `wa_subareas` (`ID`, `PARENT_ID`, `NAME`, `DESCRIPTION`) VALUES
 -- Table structure for table `wa_users`
 --
 
-DROP TABLE IF EXISTS `wa_users`;
 CREATE TABLE IF NOT EXISTS `wa_users` (
   `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'AI User ID',
   `PW_HASH` varchar(40) NOT NULL COMMENT 'User PW SHA1 Hash',
