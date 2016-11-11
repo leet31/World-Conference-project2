@@ -10,7 +10,7 @@ class UserModel {
     public $attendeeType = '';
     //Fields in MySQL Table
     public $userID    = '';
-    public $pwHash    = ';';
+    public $pwHash    = '';
     public $firstName = '';
     public $lastName  = '';
     public $compOrg   = '';
@@ -81,12 +81,12 @@ class UserModel {
     public function doAction() {
         $errMsg = '';
 
-        echo("<p>_POST: ");
-        print_r($_POST);
-        echo("</p>");
-        echo("<p>_SESSION: ");
-        print_r($_SESSION);
-        echo("</p>");
+//        echo("<p>_POST: ");
+//        print_r($_POST);
+//        echo("</p>");
+//        echo("<p>_SESSION: ");
+//        print_r($_SESSION);
+//        echo("</p>");
         
         //save form values in user object
         if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
@@ -174,8 +174,9 @@ class UserModel {
         }
         
         if($res){
-            return "Success: ".$stmt->rowCount()." rows deleted";
+            unset($_SESSION['userVars']);
             $this->clear();
+            return "Success: ".$stmt->rowCount()." rows deleted";
         }else {
             return"Error: Delete Failed";
         }
@@ -334,7 +335,7 @@ class UserModel {
      }
 
     public function submitRegistration() {
-        $errMsg = "None";
+        $errMsg = "NONE";
 
         //save posted variable to $this for possible insertion into table
         $this->firstName = filter_input(INPUT_POST, "firstName");
@@ -390,7 +391,13 @@ class UserModel {
         //return "NOT IMPLEMENTED";
         //echo("Insert pw hash:" . $this->pwHash . "</br>");
 
-
+        $pw=filter_input(INPUT_POST,"hiddenPw");
+        if($pw){
+            $this->pwHash = sha1($pw);
+        }
+        if(strlen($this->pwHash)!=40){
+            return "Password not set or not valid";
+        }
         try {
             $stmt = $this->pdo->prepare("INSERT INTO $this->table ("
                     . "PW_HASH,   FIRST_NAME, LAST_NAME,  COMPANY,  ADDRESS_1,  ADDRESS_2,  CITY,  STATE,  ZIP_CODE,  PHONE_NUMBER,  EMAIL,  ADMIN,  ATTENDEE,  PRESENTER,  STUDENT,  REVIEWER) VALUES ("
@@ -418,6 +425,8 @@ class UserModel {
             return $e->getMessage();
         }
 
+        unset($_SESSION['userVars']);
+        $this->clear();
         return 'NONE';
     }
     
@@ -453,7 +462,9 @@ class UserModel {
             return $e->getMessage();
         }
 
-        return 'NONE';
+        
+        return 'Insert Successful';
+        
     }
 
 }
