@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Major Areas</title>
-        <link rel="stylesheet" type="text/css" href="./styles.css">
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
     </head>
     <body bgcolor="#EDA947">
         <p style="text-align: left; font-family: Baskerville, 'Palatino Linotype', Palatino, 'Century Schoolbook L', 'Times New Roman', serif; font-style: oblique;">&nbsp;</p>

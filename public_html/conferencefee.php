@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Conference fee</title>
-        <link rel="stylesheet" type="text/css" href="./styles.css">
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
     </head>
 
     <body bgcolor="#E0DA48" style="font-size: 15px; color: rgba(0,0,0,1);">

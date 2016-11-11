@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Guidelines</title>
-        <link rel="stylesheet" type="text/css" href="./styles.css">
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
     </head>
 
     <body background="images/2015_AIGA-Design-Month_Website-Footer.png">

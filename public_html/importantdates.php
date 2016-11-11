@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Important Dates</title>
-        <link rel="stylesheet" type="text/css" href="./styles.css">
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
     </head>
 
     <body bgcolor="#D49318" text="#FFFFFF">
