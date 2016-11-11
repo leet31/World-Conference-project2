@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
-require '../controllers/connectDb.php';
-require '../models/AreaModel.php';
+require '../../controllers/connectDb.php';
+require '../../models/AreaModel.php';
 
 $PCM = new AreaModel($pdo);
 
@@ -21,6 +21,11 @@ $cat_ra = $PCM->getList();
         <style>
             table, th, td{
                 border: 1px solid black;
+            }
+                input[type = submit]{
+                margin: 0.0em;
+                font-size: smaller;
+                margin-right: 0em;
             }
         </style>
 

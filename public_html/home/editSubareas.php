@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
-require '../controllers/connectDb.php';
-require '../models/SubareaModel.php';
+require '../../controllers/connectDb.php';
+require '../../models/SubareaModel.php';
 
 $SAM = new SubareaModel($pdo);
 
@@ -24,6 +24,11 @@ $parentList = $SAM->getParentList();
         <style>
             table, th, td{
                 border: 1px solid black;
+            }
+                input[type = submit]{
+                margin: 0.0em;
+                font-size: smaller;
+                margin-right: 0em;
             }
         </style>
 

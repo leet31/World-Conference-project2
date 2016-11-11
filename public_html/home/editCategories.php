@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
-require '../controllers/connectDb.php';
-require '../models/ProdCatModel.php';
+require '../../controllers/connectDb.php';
+require '../../models/ProdCatModel.php';
 
 $PCM = new ProdCatModel($pdo);
 
@@ -21,6 +21,12 @@ $cat_ra = $PCM->getList();
         <style>
             table, th, td{
                 border: 1px solid black;
+            }
+            
+                input[type = submit]{
+                margin: 0.0em;
+                font-size: smaller;
+                margin-right: 0em;
             }
         </style>
 
