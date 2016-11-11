@@ -9,7 +9,7 @@
 
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
         <p style="text-align: center; font-size: 36px;">Online Registration</p>
-        <?php include 'menu.html'; ?>
+        <?php include '../home/menu.html'; ?>
         <div>
             <form name="regForm" action="." method="post">
                 <fieldset>
@@ -154,10 +154,10 @@
    </table>
 </form>
 <p>Payment Methods: </p>
-<input name="card_type" id="rbAtAmericanExpress" type="radio" value = "a"><img src="images/american express.png" width="99" height="81" alt=""/>
-<input name="card_type" id="rbAtDiscover" type="radio" value = "d"><img src="images/discover.jpg" width="114" height="80" alt=""/> 
-<input name="card_type" id="rbAtVisa" type="radio" value="v"><img src="images/visa.png" width="127" height="81" alt=""/> 
-<input name="card_type" id="rbAtMastercard" type="radio" value="m"><img src="images/mastercard.gif" width="128" height="78" alt=""/><br>
+<input name="card_type" id="rbAtAmericanExpress" type="radio" value = "a"><img src="../images/american express.png" width="99" height="81" alt=""/>
+<input name="card_type" id="rbAtDiscover" type="radio" value = "d"><img src="../images/discover.jpg" width="114" height="80" alt=""/> 
+<input name="card_type" id="rbAtVisa" type="radio" value="v"><img src="../images/visa.png" width="127" height="81" alt=""/> 
+<input name="card_type" id="rbAtMastercard" type="radio" value="m"><img src="../images/mastercard.gif" width="128" height="78" alt=""/><br>
 <p>&nbsp;</p>
 <table>
        <tr>

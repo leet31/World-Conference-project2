@@ -8,7 +8,7 @@
 
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
         <p style="text-align: center; font-size: 36px;">Online Registration</p>
-        <?php include 'menu.html'; ?>
+        <?php include '../home/menu.html'; ?>
         <div>
             <p>Registration is Successful!</p>
         </div>
