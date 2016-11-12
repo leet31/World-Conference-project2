@@ -25,7 +25,7 @@ if($errMsg == 'NONE'){
         <link rel="stylesheet" type="text/css" href="../css/styles.css">
     </head>
     <body>
-        <?php echo(file_get_contents('.\menu.html')) ?>
+        <?php echo(file_get_contents('.\menu.php')) ?>
 
         <div>Temporary Registration Page</div>
         <h2>Online Registration</h2>

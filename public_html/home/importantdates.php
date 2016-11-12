@@ -1,7 +1,3 @@
-<?php 
-#sets the root of the website so that any file can be referenced relative to the root
-$web_root = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
-?>
 <!doctype html>
 <html>
     <head>
@@ -13,7 +9,7 @@ $web_root = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
     <body bgcolor="#D49318" text="#FFFFFF">
         <p style="text-align: center; font-size: 24px; font-weight: bold; color: #000000;">Important Dates </p>
 
-        <?php echo(file_get_contents($web_root.'menu.html')) ?>
+        <?php echo(file_get_contents('../home/menu.php')) ?>
         <p>December 5th, 2016: Submission of draft papers (2000-200 words), extended abstracts (600-2000 words)</p>
         <p>&nbsp;</p>
         <p>January 25th, 2017: Notifications of Acceptance</p>

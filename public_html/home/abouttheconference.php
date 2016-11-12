@@ -1,7 +1,3 @@
-<?php 
-#sets the root of the website so that any file can be referenced relative to the root
-$web_root = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
-?>
 <!doctype html>
 <html>
     <head>
@@ -13,7 +9,7 @@ $web_root = "http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/";
         <p style="text-align: center; font-size: xx-large; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;">
             <strong><em>About the Conference</em></strong>
         </p>
-        <?php echo(file_get_contents($web_root.'menu.html')) ?>
+        <?php echo(file_get_contents('../home/menu.php')) ?>
         <p style="font-size: x-large">&nbsp;</p>
         <p style="font-size: x-large"><strong>Welcome to the 2017 World Congress in Software Engineer, Artificial intelligence, &amp; Computer Science!</strong></p>
         <p style="font-size: x-large">&nbsp;</p>

@@ -9,7 +9,7 @@
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
 
         <p style="text-align: center; font-family: Consolas, 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', Monaco, 'Courier New', monospace; font-style: inherit; font-weight: bolder; font-size: 36px; color: #DC181B;">Call for Paper</p>
-        <?php echo(file_get_contents('.\menu.html')) ?>
+        <?php echo(file_get_contents('.\menu.php')) ?>
         <p>&nbsp;</p>
         <blockquote>
             <p> <strong><u>Five Areas of Topics Discuss:</u></strong></p>

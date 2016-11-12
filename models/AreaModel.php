@@ -32,6 +32,17 @@ class AreaModel {
         return $cats;
     }
 
+    public function getIdNameList() {
+        $stmt = $this->pdo->prepare(""
+                . "SELECT "
+                . "ID, "
+                . "NAME "
+                . "FROM $this->table");
+        $stmt->execute();
+        $idNameList = $stmt->fetchAll();
+        return $idNameList;
+    }
+
     public function delete($areaID) {
         try {
             $stmt = $this->pdo->prepare("DELETE FROM $this->table WHERE ID = :areaID");

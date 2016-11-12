@@ -7,7 +7,7 @@
     </head>
 
     <body bgcolor="#E0DA48" style="font-size: 15px; color: rgba(0,0,0,1);">
-        <?php echo(file_get_contents('.\menu.html')) ?>
+        <?php echo(file_get_contents('.\menu.php')) ?>
         <p style="text-align: center; font-size: x-large; color: rgba(0,0,0,1);">Registration Fees</p>
         <p style="text-align: center; font-size: large; color: rgba(0,0,0,1);">&nbsp;</p>
         <div id="registrationinfo">

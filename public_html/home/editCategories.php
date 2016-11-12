@@ -33,7 +33,7 @@ $cat_ra = $PCM->getList();
 
     </head>
     <body>
-        <?php echo(file_get_contents('.\menu.html')) ?>
+        <?php echo(file_get_contents('.\menu.php')) ?>
 
         <div><h2>Edit Product Categories</h2></div>
         <!--display error message, if any-->

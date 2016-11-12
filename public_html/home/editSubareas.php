@@ -34,7 +34,7 @@ $parentList = $SAM->getParentList();
 
     </head>
     <body>
-        <?php echo(file_get_contents('.\menu.html')) ?>
+        <?php echo(file_get_contents('.\menu.php')) ?>
 
         <div><h2>Edit Content Subareas</h2></div>
         <!--display error message, if any-->

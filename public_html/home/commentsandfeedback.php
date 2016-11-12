@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <?php echo(file_get_contents('.\menu.html')) ?>
+        <?php echo(file_get_contents('.\menu.php')) ?>
         <p>Please sign up to receive future notifications and/or comments about your experience below:</p>
 
         <form id="form1" name="form1" method="post">

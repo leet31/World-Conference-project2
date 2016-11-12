@@ -1,54 +1,29 @@
 <!DOCTYPE html>
 <?php
 require '../../controllers/connectDb.php';
+require '../../models/PaperModel.php';
 require '../../models/UserModel.php';
+require '../../models/AreaModel.php';
+require '../../models/SubareaModel.php';
 
+$PM = new PaperModel($pdo);
 $UM = new UserModel($pdo);
+$AM = new AreaModel($pdo);
+$SM = new SubareaModel($pdo);
 
 //perform requested action, if any
-$errMsg = $UM->doAction();
+$errMsg = $PM->doAction();
 
-//get user list as an array
-$allList = $UM->getList();
+//get paper list as an array
+$allList = $PM->getList();
+$userList = $UM->getIdFullNameList();
+$areaList = $AM->getIdNameList();
+$subareaList = $SM->getIdNameParentList();
 ?>
 <html>
     <head>
-        <title>Edit Users</title>
-        <script>
-            function setPwButtonStyle(){
-                var pwHashInput = document.getElementById('pwHash').value;
-                var hiddenPw = document.getElementById('hiddenPw').value;
-                
-                if(hiddenPw.length < 6 && pwHashInput.length < 40 ){
-                    document.getElementById('btnPassword').value="Set PW";
-                    document.getElementById('btnPassword').style.color='red';
-                }else{
-                    document.getElementById('btnPassword').value="Change PW";
-                    document.getElementById('btnPassword').style.color='black';
-                }
-            }
-            
-            function setPw(){
-                var pw1 = prompt("Input new password:");
-                var pw2 = prompt("Re-input new password:");
-                
-                if (pw1 != pw2){
-                    alert("Passwords do not match");
-                    return;
-                }
-                
-                if(pw1.length<6){
-                    alert("Password is too short - 6 character minimum");
-                    return;
-                }
-                
-                document.getElementById("hiddenPw").value = pw1;
-                setPwButtonStyle();
-                alert('Password will be set when "Insert" is clicked');
-                return;
-            }
-        </script>
-<meta charset="UTF-8">
+        <title>Edit Papers</title>
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
@@ -64,38 +39,34 @@ $allList = $UM->getList();
             }
 
         </style>
-            </head>
-    <body onload="setPwButtonStyle();">
-        <?php echo(file_get_contents('..\home\menu.php')) ?>
+    </head>
+    <body>
+        <?php echo(file_get_contents('../home/menu.php')) ?>
 
-        <div><h2>Edit Users</h2></div>
+        <div><h2>Edit Papers</h2></div>
         <!--display error message, if any-->
         <?php if (isset($errMsg) && $errMsg != '' && strtoupper($errMsg) != 'NONE') echo "<div><h3>$errMsg</h3><div>" ?>
         <div>
             <form action = "<?php filter_input(INPUT_SERVER, 'REQUEST_URI') ?>" method='post'>
                 <table>
                     <tr>
-                        <th colspan="12" style="font-size:larger ">Insert New/Edit User:</th>
+                        <th colspan="12" style="font-size:larger ">Insert New/Edit Paper:</th>
                     </tr>
                     <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Company</th>
-                        <th>Address Line 1</th>
-                        <th>Address Line 2</th>
-                        <th>City</th>
-                        <th>State</th>
-                        <th>Zip</th>
-                        <th>Phone</th>
-                        <th>Email</th>
-                        <th>Password</th>
+                        <th>Author Name</th>
+                        <th>Reviewer Name</th>
+                        <th>Area</th>
+                        <th>Subarea</th>
+                        <th>Title</th>
+                        <th>Document</th>
                     </tr>
                     <tr>
 
                         <td style="display:none"> <!-- hidden primary key for update/delete -->
-                            <input type="hidden" name="userID" value='<?php echo($UM->userID) ?>'>
-                            <input type="hidden" name="pwHash" id="pwHash" value='<?php echo($UM->pwHash) ?>'>
-                            <input type="hidden" name="hiddenPw" id="hiddenPw" value=''>
+                            <input type="hidden" name="paperID"    id="authorID"   value='<?php echo($PM->authorID)  ?>'>
+                            <input type="hidden" name="reviewerID" id="reviewerID" value='<?php echo($PM->reviwerID) ?>'>
+                            <input type="hidden" name="areaID"     id="areaID"     value='<?php echo($PM->areaID)    ?>'>
+                            <input type="hidden" name="subareaID"  id="subareaID"  value='<?php echo($PM->subareaID) ?>'>
                         </td>
                         <td> 
                             <input type="text" required style="width:100px;" name="firstName" value='<?php echo($UM->firstName) ?>' > 
@@ -129,7 +100,7 @@ $allList = $UM->getList();
                         </td>
                         <!--<td>
                             <input type='text' style="width:80px;" readonly name='pwFlag' id='pwFlag' 
-                                   value='<?php #echo($UM->pwHash==""?"Not Set":"Set") ?>'>
+                                   value='<?php #echo($UM->pwHash==""?"Not Set":"Set")  ?>'>
                         </td>-->
                         <td>
                             <input type="checkbox" name="cbAdmin"     <?php echo($UM->admin == "1" ? "checked" : "") ?> >Admin</br>
@@ -189,3 +160,4 @@ $allList = $UM->getList();
         </div>
     </body>
 </html>
+

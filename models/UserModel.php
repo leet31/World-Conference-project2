@@ -153,6 +153,8 @@ class UserModel {
             } else
             if (filter_input(INPUT_POST, 'btnLoginSubmit')) {
                 $errMsg = $this->submitLogin();
+            } else{
+                $errMsg = "Unknown function";
             }
         }
 
@@ -420,6 +422,7 @@ class UserModel {
         if (strlen($this->pwHash) != 40) {
             return "Password not set or not valid";
         }
+        
         try {
             $stmt = $this->pdo->prepare("INSERT INTO $this->table ("
                     . "PW_HASH,   FIRST_NAME, LAST_NAME,  COMPANY,  ADDRESS_1,  ADDRESS_2,  CITY,  STATE,  ZIP_CODE,  PHONE_NUMBER,  EMAIL,  ADMIN,  ATTENDEE,  PRESENTER,  STUDENT,  REVIEWER) VALUES ("
@@ -488,6 +491,18 @@ class UserModel {
         return 'NONE';
     }
 
+    /**
+     * returns a list of all user ids with full names, suitable for HTML SELECT input
+     */
+    public function getIdFullNameList(){
+        $stmt = $this->pdo->prepare("SELECT "
+                . "ID, "
+                . " CONCAT(  `FIRST_NAME` ,  ' ',  `LAST_NAME` )  "
+                . " FROM $this->table");
+        $stmt->execute();
+        $fullNameList = $stmt->fetchAll();
+        return $fullNameList;
+    }
 }
 ?>
 

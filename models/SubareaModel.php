@@ -34,6 +34,18 @@ class SubareaModel {
         return $allList;
     }
 
+    public function getIdNameParentList() {
+        $stmt = $this->pdo->prepare(""
+                . "SELECT "
+                . "ID, "
+                . "PARENT_ID,"
+                . "NAME "
+                . "FROM $this->table");
+        $stmt->execute();
+        $nameList = $stmt->fetchAll();
+        return $nameList;
+    }
+
     public function getParentList() {
         $stmt = $this->pdo->prepare("SELECT ID, NAME FROM $this->parentTable");
         $stmt->execute();

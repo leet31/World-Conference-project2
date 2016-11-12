@@ -82,7 +82,7 @@
     <body bgcolor="#4880D5">
         <div id="menu">
             <p style="text-align: center; font-family: Baskerville, 'Palatino Linotype', Palatino, 'Century Schoolbook L', 'Times New Roman', serif; font-style: oblique; font-size: x-large;">Keynote Speakers</p>
-            <?php echo(file_get_contents('.\menu.html')) ?>
+            <?php echo(file_get_contents('.\menu.php')) ?>
         </div>
         <div id="note1">
             <div class="dropdown2">
