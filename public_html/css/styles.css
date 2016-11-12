@@ -88,7 +88,9 @@ div {
     padding: 0px;
     
 }
-
+.admin_menu{
+    padding: 0px;
+}
 
 fieldset{
    padding-top: 2em;
