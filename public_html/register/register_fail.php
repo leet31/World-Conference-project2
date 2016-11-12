@@ -10,7 +10,7 @@
         <p style="text-align: center; font-size: 36px;">Online Registration</p>
         <?php include '../home/menu.php'; ?>
         <div>
-            <p>Registration is Successful!</p>
+            <p>Registration is fail!</p>
         </div>
     </body>
 

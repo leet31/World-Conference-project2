@@ -1,136 +1,176 @@
-<?php
 
-require_once '../../models/fields.php';
-require_once '../../models/validate.php';
-require '../../controllers/connectDb.php';
-require_once '../../models/UserModel.php';
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Online Registration</title>
+        <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    </head>
 
-$UM = new UserModel($pdo);
+    <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
+        <p style="text-align: center; font-size: 36px;">Online Registration</p>
+        <?php include '../home/menu.php'; ?>
+        <div>
+            <form name="regForm" action="." method="post">
+                <fieldset>
+                    <legend>Personal Information</legend>
+                    <label>*First Name:</label>
+                    <input name="first_name" type="text" value="<?php echo htmlspecialchars($first_name) ?>">
+                    <?php echo $fields->getField('first_name')->getHTML(); ?><br>
 
-$validate = new Validate();
-$fields = $validate->getFields();
-$fields->addField('first_name', 'Must enter first name.');
-$fields->addField('last_name', 'Must enter last name.');
-$fields->addField('company_name');
-$fields->addField('address', 'Must enter address.');
-$fields->addField('address_2');
-$fields->addField('city');
-$fields->addField('state', 'Use 2 character abbreviation.');
-$fields->addField('zip', 'Use 5 or 9 digit zip code.');
-$fields->addField('phone', 'Use 999-999-9999 format');
-$fields->addField('email', 'Must be a valid email address');
-$fields->addField('password', 'Must be at least 6 characters.');
-$fields->addField('verify_password', 'Must be same password.');
-$fields->addField('attendee_type', 'Must pick one.');
+                    <label>*Last Name:</label>
+                    <input name="last_name" type="text" value="<?php echo htmlspecialchars($last_name) ?>">
+                    <?php echo $fields->getField('last_name')->getHTML(); ?><br>
 
-//credit card fields
-$fields->addField('card_type');
-$fields->addField('card_number');
-$fields->addField('exp_date');
+                    <label>Company/Organization:</label>
+                    <input name="company_name" type="text" value="<?php echo htmlspecialchars($company_name) ?>">
+                    <?php echo $fields->getField('company_name')->getHTML(); ?><br>
+                    <label>*Attendee Type: </label>
+                    <input name="attendee_type[]" id="rbAttendee" type="checkbox" value = "attendee"> Attendee
+                    <input name="attendee_type[]" id="rbAtPresenter" type="checkbox" value="presenter"> Presenter
+                    <input name="attendee_type[]" id="rbAtStudent" type="checkbox" value="student"> Student
+                    <input name="attendee_type[]" id="rbAtNa" type="checkbox" value="reviewer">Reviewer
+                    <?php echo $fields->getField('attendee_type')->getHTML();?><br>
+                </fieldset> 
+                <fieldset>
+                    <legend>Contact Information</legend>
+                    <label>*Address:</label>
+                    <input name="address" type="text" value="<?php echo htmlspecialchars($address) ?>">
+                    <?php echo $fields->getField('address')->getHTML(); ?><br>
 
-$action = filter_input(INPUT_POST, 'reg_action');
+                    <label>Additional Address:</label>
+                    <input name="address_2" type="text" value="<?php echo htmlspecialchars($address2) ?>">
+                    <?php echo $fields->getField('address_2')->getHTML(); ?><br>
 
-if($action === NULL){
-$action = 'reset';
-}else {
-$action = strtolower($action);
-}
-switch ($action) {
-    case 'reset':
-        $first_name = '';
-        $last_name = '';
-        $company_name = '';
-        $address = '';
-        $address2 = '';
-        $city = '';
-        $state = '';
-        $zip = '';
-        $phone = '';
-        $email = '';
-        $password = '';
-        $verify_password = '';
-        $attendee = '';
-        $student = '';
-        $presenter = '';
-        $reviewer = '';
-        //below is about the credit card
-        $cardType = '';
-        $cardNumber = '';
-        $cardDigits = '';
-        $expDate = '';
+                    <label>*City:</label>
+                    <input name="city" type="text" value="<?php echo htmlspecialchars($city) ?>">
+                    <?php echo $fields->getField('city')->getHTML(); ?><br>
+                    <label>*State:</label>
+                    <input name="state" type="text" value="<?php echo htmlspecialchars($state) ?>">
+                    <?php echo $fields->getField('state')->getHTML(); ?><br> 
+                    <label>*Zip:</label>
+                    <input name="zip" type="text" value="<?php echo htmlspecialchars($zip) ?>">
+                    <?php echo $fields->getField('zip')->getHTML(); ?><br>
+                    <label>*Phone:</label>
+                    <input name="phone" type="text" value="<?php echo htmlspecialchars($phone) ?>">
+                    <?php echo $fields->getField('phone')->getHTML(); ?><br>
+                </fieldset>
+                <fieldset>
+                    <legend>Account Information</legend>
+                    <label>*Email:</label>
+                    <input name="email" type="text" value="<?php echo htmlspecialchars($email) ?>">
+                    <?php echo $fields->getField('email')->getHTML(); ?><br>
 
-        include './onlineregistration.php';
-        break;
-    
-    case 'register':
+                    <label>*Password:</label>
+                    <input name="password" type="password" value="<?php echo htmlspecialchars($password) ?>">
+                    <?php echo $fields->getField('password')->getHTML(); ?><br>
 
-        $first_name = trim(filter_input(INPUT_POST, 'first_name'));
-        $last_name = trim(filter_input(INPUT_POST, 'last_name'));
-        $company_name = trim(filter_input(INPUT_POST, 'company_name'));
-        $address = trim(filter_input(INPUT_POST, 'address'));
-        $address2 = trim(filter_input(INPUT_POST, 'address_2'));
-        $city = trim(filter_input(INPUT_POST, 'city'));
-        $state = filter_input(INPUT_POST, 'state');
-        $zip = filter_input(INPUT_POST, 'zip');
-        $phone = filter_input(INPUT_POST, 'phone');
-        $email = filter_input(INPUT_POST, 'email');
-        $password = filter_input(INPUT_POST, 'password');
-        $verify_password = filter_input(INPUT_POST, 'verify_password');
-        $attendee_type = filter_input(INPUT_POST, 'attendee_type');
-        
-        //below is about credit card
-        $cardType = filter_input(INPUT_POST, 'card_type');
-        $cardNumber = filter_input(INPUT_POST, 'card_number');
-        $cardDigits = preg_replace('/[^[:digit:]]/', '', $cardNumber); //delete the characters not number characters
-        $expDate = filter_input(INPUT_POST, 'exp_date');
+                    <label>*Verify Password:</label>
+                    <input name="verify_password" type="password" value="<?php echo htmlspecialchars($verify_password) ?>">
+                    <?php echo $fields->getField('verify_password')->getHTML(); ?><br>
 
-        //validate form data
-        $validate->text('first_name', $first_name);
-        $validate->text('last_name', $last_name);
-        //company name doesn't need validate
-        $validate->text('address', $address); //address2 doesn't need validate
-        $validate->text('city', $city);
-        $validate->text('company_name', $company_name, false);
-        $validate->text('address_2', $address2, false);
-        $validate->state('state', $state);
-        $validate->zip('zip', $zip);
-        $validate->phone('phone', $phone);
-        $validate->email('email', $email);
-        $validate->password('password', $password);
-        $validate->verify('verify_password', $password, $verify_password);
-        $validate->attendee('attendee_type', $attendee_type);
-        if($attendee_type[0] == 'attendee') {
-            $attendee = 1;
-        } else {
-            $attendee = 0;
-        }
-        if($attendee_type[1] == 'presenter') {
-            $presenter = 1;
-        }else {
-            $presenter = 0;
-        }
-        if($attendee_type[2] == 'student') {
-            $student = 1;
-        }else {
-            $student = 0;
-        }
-        if($attendee_type[3] == 'reviewer') {
-            $reviewer = 1;
-        }else {
-            $reviewer = 0;
-        }
-        //validate credit card input
-//        $validate->cardType('card_type', $cardType);
-//        $validate->cardNumber('card_number', $cardDigits, $cardType);
-//        $validate->expDate('exp_date', $expDate);
-        if ($fields->hasErrors()) {
-            
-            include 'onlineregistration.php';
-        }else {
-            $UM->insertNew($password, $first_name, $last_name, $company_name, $attendee, $presenter, $student, $reviewer, $address, $address2, $city, $state, $zip, $phone, $email);
-            include 'register_success.php';
-        }
-        break;
+                    
+                </fieldset> 
 
-}
+<!--                <fieldset>
+                    <legend>Credit Card Information</legend>
+                    <label>*Payment Method:</label>
+                    <input name="card_type" id="rbAtAmericanExpress" type="radio" value = "a"><img src="../../public_html/images/american express.png" width="99" height="81" alt=""/>
+                    <input name="card_type" id="rbAtDiscover" type="radio" value = "d"><img src="../../public_html/images/discover.jpg" width="114" height="80" alt=""/> 
+                    <input name="card_type" id="rbAtVisa" type="radio" value="v"><img src="../../public_html/images/visa.png" width="127" height="81" alt=""/> 
+                    <input name="card_type" id="rbAtMastercard" type="radio" value="m"><img src="../../public_html/images/mastercard.gif" width="128" height="78" alt=""/><br>
 
+                    <label>*Card Number:</label>
+                    <input name="card_number" type="text" value="<?php echo htmlspecialchars($cardNumber) ?>">
+                    <?php echo $fields->getField('card_number')->getHTML(); ?><br>
+
+                    <label>*Expiration Date:</label>
+                    <input name="exp_date" type="text" value="<?php echo htmlspecialchars($expDate) ?>">
+                    <?php echo $fields->getField('exp_date')->getHTML(); ?><br>
+                </fieldset>-->
+                <fieldset>
+                    <legend>Submit Registration</legend>
+
+                    <label>&nbsp;</label>
+                    <input type ="submit" name="reg_action" value="Register">
+                    <input type = "submit" name="reg_action" value="Reset"><br>
+                </fieldset>
+            </form>
+
+<!--                <table>
+       <tr>
+           <td  align="right">*First Name:</td>
+           <td><input name="first_name" id="firstName" type="text" </td>
+       </tr>
+       <tr>
+           <td align="right">*Last Name:</td>
+           <td><input name="last_name" id="lastName" type="text"></td>
+       </tr>
+       <tr>
+           <td align="right">Company/Organization:</td>
+           <td><input name="compOrg" id="compOrg" type="text"></td>
+       </tr>
+       <tr>
+           <td align="right">*Address Line 1:</td>
+           <td><input name="address" id="address" type="text"></td>
+       </tr>
+       <tr>
+           <td align="right">Address Line 2:</td>
+           <td><input name="address_2" id="address2" type="text"></td>
+       </tr>
+       <tr>
+           <td>*City:</td>
+           <td>*State:</td>
+       </tr>
+       <tr>
+           <td><input name="city" id="city" type="text"></td>
+           <td><input name="state" id="state" type="text"></td>
+       </tr>
+       <tr>
+           <td align="right">*Zip code:</td>
+           <td><input name="zip" id="zipcode" type="text" pattern="[0-9]{5}"></td>
+       </tr>
+       <tr>
+           <td align="right">*Phone Number:</td>
+           <td><input name="phone" id="phone" type="text" pattern="(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}"></td>
+           <td align="right">*E-mail:</td>
+           <td><input name="email" id="email" type="email"></td>
+       </tr>
+       <tr>
+           <td align="right">*Password:</td>
+           <td><input name="password" id="password" type="password"></td>
+           <td align="right">*Confirm Password:</td>
+           <td><input name="verify_password" id="password2" type="password"></td>
+       </tr>
+   </table>
+   <table>
+       <tr>
+           <td>*Attendee Type: &nbsp;&nbsp;</td>
+           <td align="right"><input name="attendee_type" id="rbAtPresenter" type="radio"></td><td>Presenter &nbsp;&nbsp;</td>
+           <td align="right"><input name="attendee_type" id="rbAtStudent" type="radio"></td><td>Student &nbsp;&nbsp;</td>
+           <td align="right"><input name="attendee_type" id="rbAtNa" type="radio">Neither</td>
+       </tr>
+
+   </table>
+</form>
+<p>Payment Methods: </p>
+<input name="card_type" id="rbAtAmericanExpress" type="radio" value = "a"><img src="../images/american express.png" width="99" height="81" alt=""/>
+<input name="card_type" id="rbAtDiscover" type="radio" value = "d"><img src="../images/discover.jpg" width="114" height="80" alt=""/> 
+<input name="card_type" id="rbAtVisa" type="radio" value="v"><img src="../images/visa.png" width="127" height="81" alt=""/> 
+<input name="card_type" id="rbAtMastercard" type="radio" value="m"><img src="../images/mastercard.gif" width="128" height="78" alt=""/><br>
+<p>&nbsp;</p>
+<table>
+       <tr>
+           <td  align="right">Credit Card Number:</td>
+           <td><input name="card_number" id="creditcard" type="text" </td>
+       </tr>
+       <tr>
+           <td  align="right">Expiration Date:</td>
+           <td><input name="exp_date" id="expirationdate" type="text" </td>
+       </tr>
+       <tr><td><input type="submit" name="btnRegisterSubmit" value="Submit"></td></tr>
+</table>-->
+            <p>&nbsp;</p>
+        </div>
+    </body>
+</html>
