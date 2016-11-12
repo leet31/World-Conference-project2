@@ -9,7 +9,7 @@
 
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
         <p style="text-align: center; font-size: 36px;">Online Registration</p>
-        <?php include '../home/menu.html'; ?>
+        <?php include '../home/menu.php'; ?>
         <div>
             <form name="regForm" action="." method="post">
                 <fieldset>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
-require '../controllers/connectDb.php';
-require '../models/UserModel.php';
+require '../../controllers/connectDb.php';
+require '../../models/UserModel.php';
 
 $UM = new UserModel($pdo);
 

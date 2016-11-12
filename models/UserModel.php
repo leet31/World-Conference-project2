@@ -9,23 +9,23 @@ class UserModel {
     public $password2 = '';
     public $attendeeType = '';
     //Fields in MySQL Table
-    public $userID    = '';
-    public $pwHash    = '';
+    public $userID = '';
+    public $pwHash = '';
     public $firstName = '';
-    public $lastName  = '';
-    public $compOrg   = '';
-    public $address1  = '';
-    public $address2  = '';
-    public $city      = '';
-    public $state     = '';
-    public $zipCode   = '';
-    public $phone     = '';
-    public $email     = '';
-    public $admin     = '';
-    public $attendee  = '';
+    public $lastName = '';
+    public $compOrg = '';
+    public $address1 = '';
+    public $address2 = '';
+    public $city = '';
+    public $state = '';
+    public $zipCode = '';
+    public $phone = '';
+    public $email = '';
+    public $admin = '';
+    public $attendee = '';
     public $presenter = '';
-    public $student   = '';
-    public $reviewer  = '';
+    public $student = '';
+    public $reviewer = '';
 
     public function __construct($inPdo) {
         if ($inPdo instanceof PDO) {
@@ -40,32 +40,31 @@ class UserModel {
 
         if (isset($_SESSION['userVars'])) {
             $userVars = $_SESSION['userVars'];
-            
+
 //            echo("<p>Constructor -UserVars: ");
 //            print_r($userVars);
 //            echo("</p>");
-            
+
             if ($userVars) {
-                $this->userID       = $userVars['userID'];
-                $this->firstName    = $userVars['firstName'];
-                $this->lastName     = $userVars['lastName'];
-                $this->compOrg      = $userVars['compOrg'];
-                $this->address1     = $userVars['address1'];
-                $this->address2     = $userVars['address2'];
-                $this->city         = $userVars['city'];
-                $this->state        = $userVars['state'];
-                $this->zipCode      = $userVars['zipCode'];
-                $this->phone        = $userVars['phone'];
-                $this->email        = $userVars['email'];
-                $this->admin        = $userVars['admin'];
-                $this->attendee     = $userVars['attendee'];
-                $this->presenter    = $userVars['presenter'];
-                $this->student      = $userVars['student'];
-                $this->reviewer     = $userVars['reviewer'];
-                $this->password1    = $userVars['password1'];
-                $this->password2    = $userVars['password2'];
+                $this->userID = $userVars['userID'];
+                $this->firstName = $userVars['firstName'];
+                $this->lastName = $userVars['lastName'];
+                $this->compOrg = $userVars['compOrg'];
+                $this->address1 = $userVars['address1'];
+                $this->address2 = $userVars['address2'];
+                $this->city = $userVars['city'];
+                $this->state = $userVars['state'];
+                $this->zipCode = $userVars['zipCode'];
+                $this->phone = $userVars['phone'];
+                $this->email = $userVars['email'];
+                $this->admin = $userVars['admin'];
+                $this->attendee = $userVars['attendee'];
+                $this->presenter = $userVars['presenter'];
+                $this->student = $userVars['student'];
+                $this->reviewer = $userVars['reviewer'];
+                $this->password1 = $userVars['password1'];
+                $this->password2 = $userVars['password2'];
                 $this->attendeeType = $userVars['attendeeType'];
-                
             }
         }
     }
@@ -87,50 +86,49 @@ class UserModel {
 //        echo("<p>_SESSION: ");
 //        print_r($_SESSION);
 //        echo("</p>");
-        
         //save form values in user object
         if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
             //save posted vars
-            $this->userID       = filter_input(INPUT_POST, "userID");
-            $this->firstName    = filter_input(INPUT_POST, "firstName");
-            $this->lastName     = filter_input(INPUT_POST, "lastName");
-            $this->compOrg      = filter_input(INPUT_POST, "compOrg");
-            $this->address1     = filter_input(INPUT_POST, "address1");
-            $this->address2     = filter_input(INPUT_POST, "address2");
-            $this->city         = filter_input(INPUT_POST, "city");
-            $this->state        = filter_input(INPUT_POST, "state");
-            $this->zipCode      = filter_input(INPUT_POST, "zipCode");
-            $this->phone        = filter_input(INPUT_POST, "phone");
-            $this->email        = filter_input(INPUT_POST, "email");
-            $this->admin        = filter_input(INPUT_POST, "cbAdmin")    == 'on'?1:0 ;
-            $this->attendee     = filter_input(INPUT_POST, "cbAttend")   == 'on'?1:0 ;
-            $this->presenter    = filter_input(INPUT_POST, "cbPresenter")== 'on'?1:0 ;
-            $this->student      = filter_input(INPUT_POST, "cbStudent")  == 'on'?1:0 ;
-            $this->reviewer     = filter_input(INPUT_POST, "cbReviewer") == 'on'?1:0 ;
-            $this->password1    = filter_input(INPUT_POST, "password1")   ;
-            $this->password2    = filter_input(INPUT_POST, "password2")   ;
+            $this->userID = filter_input(INPUT_POST, "userID");
+            $this->firstName = filter_input(INPUT_POST, "firstName");
+            $this->lastName = filter_input(INPUT_POST, "lastName");
+            $this->compOrg = filter_input(INPUT_POST, "compOrg");
+            $this->address1 = filter_input(INPUT_POST, "address1");
+            $this->address2 = filter_input(INPUT_POST, "address2");
+            $this->city = filter_input(INPUT_POST, "city");
+            $this->state = filter_input(INPUT_POST, "state");
+            $this->zipCode = filter_input(INPUT_POST, "zipCode");
+            $this->phone = filter_input(INPUT_POST, "phone");
+            $this->email = filter_input(INPUT_POST, "email");
+            $this->admin = filter_input(INPUT_POST, "cbAdmin") == 'on' ? 1 : 0;
+            $this->attendee = filter_input(INPUT_POST, "cbAttend") == 'on' ? 1 : 0;
+            $this->presenter = filter_input(INPUT_POST, "cbPresenter") == 'on' ? 1 : 0;
+            $this->student = filter_input(INPUT_POST, "cbStudent") == 'on' ? 1 : 0;
+            $this->reviewer = filter_input(INPUT_POST, "cbReviewer") == 'on' ? 1 : 0;
+            $this->password1 = filter_input(INPUT_POST, "password1");
+            $this->password2 = filter_input(INPUT_POST, "password2");
             $this->attendeeType = filter_input(INPUT_POST, "attendeeType");
 
             //save posted form values to array for session vars
             $userVars = array(
-                "userID"       => $this->userID,
-                "firstName"    => $this->firstName,
-                "lastName"     => $this->lastName,
-                "compOrg"      => $this->compOrg,
-                "address1"     => $this->address1,
-                "address2"     => $this->address2,
-                "city"         => $this->city,
-                "state"        => $this->state,
-                "zipCode"      => $this->zipCode,
-                "phone"        => $this->phone,
-                "email"        => $this->email,
-                "attendee"     => $this->attendee ,
-                "admin"        => $this->attendee ,
-                "presenter"    => $this->presenter,
-                "student"      => $this->student  ,
-                "reviewer"     => $this->reviewer ,
-                "password1"    => $this->password1,
-                "password2"    => $this->password2,
+                "userID" => $this->userID,
+                "firstName" => $this->firstName,
+                "lastName" => $this->lastName,
+                "compOrg" => $this->compOrg,
+                "address1" => $this->address1,
+                "address2" => $this->address2,
+                "city" => $this->city,
+                "state" => $this->state,
+                "zipCode" => $this->zipCode,
+                "phone" => $this->phone,
+                "email" => $this->email,
+                "attendee" => $this->attendee,
+                "admin" => $this->attendee,
+                "presenter" => $this->presenter,
+                "student" => $this->student,
+                "reviewer" => $this->reviewer,
+                "password1" => $this->password1,
+                "password2" => $this->password2,
                 "attendeeType" => $this->attendeeType
             );
 
@@ -152,7 +150,7 @@ class UserModel {
             } else
             if (filter_input(INPUT_POST, 'btnRegisterSubmit')) {
                 $errMsg = $this->submitRegistration();
-            }else
+            } else
             if (filter_input(INPUT_POST, 'btnLoginSubmit')) {
                 $errMsg = $this->submitLogin();
             }
@@ -160,53 +158,51 @@ class UserModel {
 
         return $errMsg;
     }
-    
-    public function delete(){
-        try{
+
+    public function delete() {
+        try {
             $stmt = $this->pdo->prepare("DELETE FROM $this->table "
                     . "WHERE ID = :userID;");
-                    
+
             $stmt->bindParam(':userID', $this->userID);
             $res = $stmt->execute();
-            
-        }catch(PDOException $e) {
+        } catch (PDOException $e) {
             return $e->getMessage();
         }
-        
-        if($res){
+
+        if ($res) {
             unset($_SESSION['userVars']);
             $this->clear();
-            return "Success: ".$stmt->rowCount()." rows deleted";
-        }else {
+            return "Success: " . $stmt->rowCount() . " rows deleted";
+        } else {
             return"Error: Delete Failed";
         }
-            
     }
-    
-    public function clear(){
-        $this->password1    = '';
-        $this->password2    = '';
+
+    public function clear() {
+        $this->password1 = '';
+        $this->password2 = '';
         $this->attendeeType = '';
-        $this->userID       = '';
-        $this->pwHash       = ';';
-        $this->firstName    = '';
-        $this->lastName     = '';
-        $this->compOrg      = '';
-        $this->address1     = '';
-        $this->address2     = '';
-        $this->city         = '';
-        $this->state        = '';
-        $this->zipCode      = '';
-        $this->phone        = '';
-        $this->email        = '';
-        $this->admin        = '';
-        $this->attendee     = '';
-        $this->presenter    = '';
-        $this->student      = '';
-        $this->reviewer     = '';    
+        $this->userID = '';
+        $this->pwHash = ';';
+        $this->firstName = '';
+        $this->lastName = '';
+        $this->compOrg = '';
+        $this->address1 = '';
+        $this->address2 = '';
+        $this->city = '';
+        $this->state = '';
+        $this->zipCode = '';
+        $this->phone = '';
+        $this->email = '';
+        $this->admin = '';
+        $this->attendee = '';
+        $this->presenter = '';
+        $this->student = '';
+        $this->reviewer = '';
     }
-    
-    public function update(){
+
+    public function update() {
         try {
             $stmt = $this->pdo->prepare("UPDATE $this->table "
                     . "SET "
@@ -227,37 +223,35 @@ class UserModel {
                     . "    REVIEWER     = :reviewer  "
                     . "WHERE ID = :userID ");
 
-            $stmt->bindParam(':userID'   , $this->userID   );
+            $stmt->bindParam(':userID', $this->userID);
             $stmt->bindParam(':firstName', $this->firstName);
-            $stmt->bindParam(':lastName' , $this->lastName );
-            $stmt->bindParam(':compOrg'  , $this->compOrg  );
-            $stmt->bindParam(':address1' , $this->address1 );
-            $stmt->bindParam(':address2' , $this->address2 );
-            $stmt->bindParam(':city'     , $this->city     );
-            $stmt->bindParam(':state'    , $this->state    );
-            $stmt->bindParam(':zipCode'  , $this->zipCode  );
-            $stmt->bindParam(':phone'    , $this->phone    );
-            $stmt->bindParam(':email'    , $this->email    );
-            $stmt->bindParam(':admin'    , $this->admin    );
-            $stmt->bindParam(':attendee' , $this->attendee );
-            $stmt->bindParam(':presenter', $this->presenter);    
-            $stmt->bindParam(':student'  , $this->student  );    
-            $stmt->bindParam(':reviewer' , $this->reviewer );    
+            $stmt->bindParam(':lastName', $this->lastName);
+            $stmt->bindParam(':compOrg', $this->compOrg);
+            $stmt->bindParam(':address1', $this->address1);
+            $stmt->bindParam(':address2', $this->address2);
+            $stmt->bindParam(':city', $this->city);
+            $stmt->bindParam(':state', $this->state);
+            $stmt->bindParam(':zipCode', $this->zipCode);
+            $stmt->bindParam(':phone', $this->phone);
+            $stmt->bindParam(':email', $this->email);
+            $stmt->bindParam(':admin', $this->admin);
+            $stmt->bindParam(':attendee', $this->attendee);
+            $stmt->bindParam(':presenter', $this->presenter);
+            $stmt->bindParam(':student', $this->student);
+            $stmt->bindParam(':reviewer', $this->reviewer);
 
             $res = $stmt->execute();
-            
-       } catch (PDOException $e) {
+        } catch (PDOException $e) {
             return $e->getMessage();
         }
-        
-        if($res){
-            return "Success: ".$stmt->rowCount()." rows updated";
-        }else {
+
+        if ($res) {
+            return "Success: " . $stmt->rowCount() . " rows updated";
+        } else {
             return"Error: Update Failed";
         }
-
     }
-    
+
     //load user record into $this
     public function getUser($userID) {
         try {
@@ -270,44 +264,43 @@ class UserModel {
         } catch (PDOException $e) {
             return $e->getMessage();
         }
-        
-        $this->userID       = $user['ID'];
-        $this->pwHash       = $user['PW_HASH'];
-        $this->firstName    = $user['FIRST_NAME'];
-        $this->lastName     = $user['LAST_NAME'];
-        $this->compOrg      = $user['COMPANY'];
-        $this->address1     = $user['ADDRESS_1'];
-        $this->address2     = $user['ADDRESS_2'];
-        $this->city         = $user['CITY'];
-        $this->state        = $user['STATE'];
-        $this->zipCode      = $user['ZIP_CODE'];
-        $this->phone        = $user['PHONE_NUMBER'];
-        $this->email        = $user['EMAIL'];
-        $this->admin        = $user['ADMIN'];
-        $this->attendee     = $user['ATTENDEE'];
-        $this->presenter    = $user['PRESENTER'];
-        $this->student      = $user['STUDENT'];
-        $this->reviewer     = $user['REVIEWER'];
-        
+
+        $this->userID = $user['ID'];
+        $this->pwHash = $user['PW_HASH'];
+        $this->firstName = $user['FIRST_NAME'];
+        $this->lastName = $user['LAST_NAME'];
+        $this->compOrg = $user['COMPANY'];
+        $this->address1 = $user['ADDRESS_1'];
+        $this->address2 = $user['ADDRESS_2'];
+        $this->city = $user['CITY'];
+        $this->state = $user['STATE'];
+        $this->zipCode = $user['ZIP_CODE'];
+        $this->phone = $user['PHONE_NUMBER'];
+        $this->email = $user['EMAIL'];
+        $this->admin = $user['ADMIN'];
+        $this->attendee = $user['ATTENDEE'];
+        $this->presenter = $user['PRESENTER'];
+        $this->student = $user['STUDENT'];
+        $this->reviewer = $user['REVIEWER'];
+
         return "";
-            
     }
 
-    public function submitLogin(){
+    public function submitLogin() {
         $errMsg = '';
-        
+
         //save posted variable to $this for possible insertion into table
         $this->email = filter_input(INPUT_POST, "email");
-        
+
         //check for required variables
-        if($this->email ==='' ||
-           $this->password1 === ''){
+        if ($this->email === '' ||
+                $this->password1 === '') {
             $errMsg = "All fields must be completed";
             return $errMsg;
         }
-        
+
         $this->pwHash = sha1($this->password1);
-        
+
         try {
             $stmt = $this->pdo->prepare("SELECT ID, FIRST_NAME, ADMIN,  ATTENDEE,  PRESENTER,  STUDENT,  REVIEWER FROM  $this->table "
                     . "WHERE PW_HASH =  :pw_hash "
@@ -315,7 +308,7 @@ class UserModel {
 
             $stmt->bindParam(':pw_hash', $this->pwHash);
             $stmt->bindParam(':email', $this->email);
-            
+
             $stmt->execute();
             $users = $stmt->fetchAll();
         } catch (PDOException $e) {
@@ -324,15 +317,44 @@ class UserModel {
 
         if (count($users) == 0)
             return "Username or Password is incorrect";
-        
+
         if (count($users) > 1)
             return "Database error - multiple users returned";
-        
+
         //save user identifier in session
         $userRec = $users[0];
         $_SESSION['userRec'] = $userRec;
         return "NONE";
-     }
+    }
+
+    public function login($email, $password) {
+        $pwdHash = sha1($password);
+        try {
+            $stmt = $this->pdo->prepare("SELECT ID, FIRST_NAME, ADMIN,  ATTENDEE,  PRESENTER,  STUDENT,  REVIEWER FROM  $this->table "
+                    . "WHERE PW_HASH =  :pw_hash "
+                    . "AND EMAIL =  :email");
+
+            $stmt->bindParam(':pw_hash', $pwdHash);
+            $stmt->bindParam(':email', $email);
+
+            $stmt->execute();
+            $users = $stmt->fetchAll();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+
+        if (count($users) == 0)
+            return "Username or Password is incorrect";
+
+        if (count($users) > 1)
+            return "Database error - multiple users returned";
+
+        //save user identifier in session
+        $userRec = $users[0];
+        
+        $_SESSION['userRec'] = $userRec;
+        return "NONE";
+    }
 
     public function submitRegistration() {
         $errMsg = "NONE";
@@ -391,11 +413,11 @@ class UserModel {
         //return "NOT IMPLEMENTED";
         //echo("Insert pw hash:" . $this->pwHash . "</br>");
 
-        $pw=filter_input(INPUT_POST,"hiddenPw");
-        if($pw){
+        $pw = filter_input(INPUT_POST, "hiddenPw");
+        if ($pw) {
             $this->pwHash = sha1($pw);
         }
-        if(strlen($this->pwHash)!=40){
+        if (strlen($this->pwHash) != 40) {
             return "Password not set or not valid";
         }
         try {
@@ -429,7 +451,7 @@ class UserModel {
         $this->clear();
         return 'NONE';
     }
-    
+
     public function insertNew($pwd, $firstName, $lastName, $company, $attendee, $presenter, $student, $reviewer, $address, $address_2, $city, $state, $zip, $phone, $email) {
         //return "NOT IMPLEMENTED";
         //echo("Insert pw hash:" . $this->pwHash . "</br>");
@@ -462,9 +484,8 @@ class UserModel {
             return $e->getMessage();
         }
 
-        
-        return 'Insert Successful';
-        
+
+        return 'NONE';
     }
 
 }

@@ -87,7 +87,6 @@ switch ($action) {
         //validate form data
         $validate->text('first_name', $first_name);
         $validate->text('last_name', $last_name);
-        //company name doesn't need validate
         $validate->text('address', $address); //address2 doesn't need validate
         $validate->text('city', $city);
         $validate->text('company_name', $company_name, false);
@@ -99,6 +98,7 @@ switch ($action) {
         $validate->password('password', $password);
         $validate->verify('verify_password', $password, $verify_password);
         $validate->attendee('attendee_type', $attendee_type);
+       
         if($attendee_type[0] == 'attendee') {
             $attendee = 1;
         } else {
@@ -119,6 +119,22 @@ switch ($action) {
         }else {
             $reviewer = 0;
         }
+//        
+//         $userVars = array(
+////             "userID" => $this->userID,
+//                "firstName" => $first_name,
+//                "lastName" => $last_name,
+//                "compOrg" => $company_name,
+//                "address1" => $address,
+//                "address2" => $address2,
+//                "city" => $city,
+//                "state" => $state,
+//                "zipCode" => $zip,
+//                "phone" => $phone,
+//                "email" => $email,
+//                "attendee_type" => $attendee_type,
+//             'password'=>$password,
+//        );
         //validate credit card input
 //        $validate->cardType('card_type', $cardType);
 //        $validate->cardNumber('card_number', $cardDigits, $cardType);
@@ -128,7 +144,10 @@ switch ($action) {
         }else {
             $msg=$UM->insertNew($password, $first_name, $last_name, $company_name, $attendee, $presenter, $student, $reviewer, $address, $address2, $city, $state, $zip, $phone, $email);
             if ($msg == 'NONE') {
+//                $_SESSION['userVars']=$userVars;
+                $UM->login($email, $password);//default login after register
                 include 'register_success.php';
+                
             } else {
                 include 'register_fail.php';
                 echo '<div>'.$msg.'</div>';
