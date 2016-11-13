@@ -47,9 +47,9 @@ $product_list = $PM->getList();
         <?php
         if (isset($errMsg_product)) {
             if ($errMsg_product == 'NONE') {
-                echo '<div><h3>Update Successfully!</h3><div>';
+                echo '<div><h3>Update Successfully!</h3></div>';
             } else if ($errMsg_product != '') {
-                echo "<div><h3>Product Error: $errMsg_product</h3><div>";
+                echo "<div><h3>Product Error: $errMsg_product</h3></div>";
             }
         }
         ?>
@@ -97,7 +97,7 @@ $product_list = $PM->getList();
            
             <table>
                 <tr>
-                        <th colspan="7" style="font-size:larger ">Delete or Update Products</th>
+                        <th colspan="8" style="font-size:larger ">Delete or Update Products</th>
                     </tr>
                 <tr>
                     <th>ID</th>
@@ -108,6 +108,7 @@ $product_list = $PM->getList();
                     <th>Description</th>
                     <th>Price
                     </th>
+                    <th></th>
                 </tr>
                 <?php
                 foreach ($product_list as $row) {
@@ -128,8 +129,10 @@ $product_list = $PM->getList();
                     }
                     echo '</select>';
                     echo '</td>';
-                    echo '<td><input type="text" name= "description" value="' . $row['DESCRIPTION'] . '"></td>' .
-                    '<td><input type="text" name= "price" value="' . $row['PRICE'] . '"></td>' .
+                    echo
+                    '<td><input type="text" name= "name" value="' . $row['NAME'] . '"></td>' .
+                    '<td><input type="text" name= "description" value="' . $row['DESCRIPTION'] . '"></td>' .
+                    '<td><input type="text" name= "price" value="' . number_format($row['PRICE'],2) . '"></td>' .
                     '<td><input type="submit" name="btnUpdate" value="Update"></td>' .
                     '</form>';
                     echo('</tr>');
