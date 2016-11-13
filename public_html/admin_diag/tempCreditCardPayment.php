@@ -20,9 +20,13 @@ $rbCreditCard =isset($_POST['rbCreditCard'])  ? $_POST['rbCreditCard'] : "";;
                 border: 1px solid black;
             }
         </style>
+        <link rel="stylesheet" type="text/css" href="../css/styles.css">
     </head>
     <body>
-        <div><h1>Credit Card Payment</div>
+        <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
+        <p style="text-align: center; font-size: 36px;">Temp Credit Card Payment</p>
+        <?php include('../home/menu.php') ?>
+        <div>
         <form action='#' method='POST'>
             <table>
                 <tr><td colspan="2" style='font-weight:bold; text-align: center'>Billing Information</td></tr>
@@ -56,5 +60,6 @@ $rbCreditCard =isset($_POST['rbCreditCard'])  ? $_POST['rbCreditCard'] : "";;
             </table>
             <input type='submit' value="Submit">
         </form>
+            </div>
     </body>
 </html>

@@ -1,5 +1,4 @@
 <?php
-
 require_once '../../models/fields.php';
 require_once '../../models/validate.php';
 require '../../controllers/connectDb.php';
@@ -18,9 +17,9 @@ $fields->addField('city');
 $fields->addField('state', 'Use 2 character abbreviation.');
 $fields->addField('zip', 'Use 5 or 9 digit zip code.');
 $fields->addField('phone', 'Use 9999999999 format');
-$fields->addField('email', 'Must be a valid email address');
-$fields->addField('password', 'Must be at least 6 characters.');
-$fields->addField('verify_password', 'Must be same password.');
+$fields->addField('email', 'Must be a valid email address.');
+$fields->addField('password', 'Leave it blank if no change.');
+$fields->addField('verify_password', 'Leave it blank if no change.');
 $fields->addField('attendee_type', 'Must pick one.');
 
 //credit card fields
@@ -28,14 +27,65 @@ $fields->addField('card_type');
 $fields->addField('card_number');
 $fields->addField('exp_date');
 
-$action = filter_input(INPUT_POST, 'reg_action');
+  $UM->getUser($_SESSION['userRec']['ID']);
+        $userID=$UM->userID;
+        $first_name = $UM->firstName;
+        $last_name = $UM->lastName;
+        $company_name = $UM->compOrg;
+        $address = $UM->address1;
+        $address2 = $UM->address2;
+        $city =$UM->city;
+        $state = $UM->state;
+        $zip = $UM->zipCode;
+        $phone = $UM->phone;
+        $email = $UM->email;
+//        $password = '';
+        $admin=$UM->admin;
+        
+       
+        $attendee = $UM->attendee;
+        $student = $UM->student;
+        $presenter = $UM->presenter;
+        $reviewer = $UM->reviewer;
+        
+        $typeString ='';
+        if($attendee){
+            $typeString.='Attendee|';
+        }
+        if($student){
+            $typeString.='Student|';
+        }
+        if($presenter){
+            $typeString.='Presenter|';
+        }
+        if($reviewer){
+            $typeString='Reviewer|';
+        }
+
+
+$action = filter_input(INPUT_POST, 'account_action');
+
+
 
 if ($action === NULL) {
-    $action = 'reset';
+    $action = 'load';
 } else {
     $action = strtolower($action);
 }
 switch ($action) {
+    case 'load':
+      
+        //below is about the credit card
+//        $cardType = '';
+//        $cardNumber = '';
+//        $cardDigits = '';
+//        $expDate = '';
+      
+        include 'load_account.php';
+        break;
+    case 'cancel':
+        include 'load_account.php';
+        break;
     case 'reset':
         $first_name = '';
         $last_name = '';
@@ -59,11 +109,12 @@ switch ($action) {
         $cardNumber = '';
         $cardDigits = '';
         $expDate = '';
-
-        include 'registration.php';
+        include 'edit_account.php';
         break;
-
-    case 'register':
+    case 'edit':
+        include 'edit_account.php';
+        break;
+    case 'update':
 
         $first_name = trim(filter_input(INPUT_POST, 'first_name'));
         $last_name = trim(filter_input(INPUT_POST, 'last_name'));
@@ -96,8 +147,8 @@ switch ($action) {
         $validate->zip('zip', $zip);
         $validate->phone('phone', $phone);
         $validate->email('email', $email);
-        $validate->password('password', $password);
-        $validate->verify('verify_password', $password, $verify_password);
+//        $validate->password('password', $password, false);
+//        $validate->verify('verify_password', $password, $verify_password, false);
         $validate->attendee('attendee_type', $attendee_type);
         $attendee = FALSE;
         $presenter = FALSE;
@@ -120,39 +171,29 @@ switch ($action) {
             }
         }
 
-
-//        
-//         $userVars = array(
-////             "userID" => $this->userID,
-//                "firstName" => $first_name,
-//                "lastName" => $last_name,
-//                "compOrg" => $company_name,
-//                "address1" => $address,
-//                "address2" => $address2,
-//                "city" => $city,
-//                "state" => $state,
-//                "zipCode" => $zip,
-//                "phone" => $phone,
-//                "email" => $email,
-//                "attendee_type" => $attendee_type,
-//             'password'=>$password,
-//        );
-        //validate credit card input
-//        $validate->cardType('card_type', $cardType);
-//        $validate->cardNumber('card_number', $cardDigits, $cardType);
-//        $validate->expDate('exp_date', $expDate);
         if ($fields->hasErrors()) {
-            include 'registration.php';
+            include 'edit_account.php';
         } else {
-            $msg = $UM->insertNew($password, $first_name, $last_name, $company_name, $attendee, $presenter, $student, $reviewer, $address, $address2, $city, $state, $zip, $phone, $email);
-            if ($msg == 'NONE') {
-//                $_SESSION['userVars']=$userVars;
-                $UM->login($email, $password); //default login after register
-                include 'register_success.php';
-            } else {
-                include 'register_fail.php';
+            $UM->firstName=$first_name;
+            $UM->lastName=$last_name;
+            $UM->compOrg=$company_name;
+            $UM->address1=$address;
+            $UM->address2=$address2;
+            $UM->city=$city;
+            $UM->state=$state;
+            $UM->zipCode=$zip;
+            $UM->phone=$phone;
+            $UM->email=$email;
+            $UM->attendee=$attendee;
+            $UM->student=$student;
+            $UM->reviewer=$reviewer;
+            $UM->presenter=$presenter;
+            $UM->admin=$admin;
+            
+            $msg = $UM->update();
+            include 'result.php';
+           
                 echo '<div>' . $msg . '</div>';
-            }
         }
         break;
 }
