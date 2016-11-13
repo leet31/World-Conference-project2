@@ -56,43 +56,32 @@
             .dropdown:hover .dropdown-content {
                 display: block;
             }
-            .dropdown2 {
-                position: relative;
-                display: inline-block;
-            }
-            .dropdown-content2 {
-                display: none;
-                position: absolute;
-                background-color: #f9f9f9;
-                min-width: 160px;
-                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            }
+            .container{
+        overflow:hidden;
+        width:300px;/*change this to whatever you want*/
+        height:150px;/*change this to whatever you want*/
 
-            .dropdown2:hover .dropdown-content2 {
-                display: block;
-            }
+        /*Of course, to get the desired effect, the size of the image "<img>" below must be larger than the size mentioned above*/
+    }
 
-            .desc {
-                padding: 15px;
-                text-align: center;
-            }
+    .container:hover{
+        overflow:visible
+    }
         </style>
     </head>
 
     <body bgcolor="#4880D5">
+        
         <div id="menu">
             <p style="text-align: center; font-family: Baskerville, 'Palatino Linotype', Palatino, 'Century Schoolbook L', 'Times New Roman', serif; font-style: oblique; font-size: x-large;">Keynote Speakers</p>
             <?php echo(file_get_contents('.\menu.html')) ?>
+            
         </div>
-        <div id="note1">
-            <div class="dropdown2">
-                <img src="../images/download.jpe" width="86" height="123" alt=""/>
+             <div class='container'><img src="../images/download.jpe"/></div>
+               <div
                 <p style="text-align: left; font-family: Baskerville, 'Palatino Linotype', Palatino, 'Century Schoolbook L', 'Times New Roman', serif; font-style: normal; font-size: 14px;"><span style="color: rgba(255,255,255,1)">Grady Booch is an American software engineer best known for developing the UML (Unified Modeling Language) with Ivar Jacbson and James Rumbaugh. He is recognized internationally for his innovative work in software architecture, software engineering, and collaborative development. </span></p>
                 <p style="text-align: left; font-family: Baskerville, 'Palatino Linotype', Palatino, 'Century Schoolbook L', 'Times New Roman', serif; font-style: normal; font-size: 14px;">Topic of Discussion: <span style="font-style: normal; font-weight: bolder;">Software engineering</span>. &quot;Each Phase is the insurance of achievements towards success&quot;</p>
-                <div class="dropdown-content2">
-                    <img src="../images/download.jpe" alt="" width="250" height="200">
-                </div>
-            </div>
+               </div>
         </div>
 
         <div id="note2">
@@ -133,5 +122,6 @@
                                     <img src="../images/stanislaw_raczynski_gawin.jpg" width="250" height="200">
                                 </div>
                             </div>
+                            </table>
                             </body>
                             </html>
