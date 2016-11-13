@@ -16,6 +16,7 @@ if (isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE) {
         <a href ="#" class ="dropbtn">Content Management</a>
         <div class="dropdown-content">
             <a href="../admin_edit/editCategories.php">Edit Product Categories</a>
+            <a href="../admin_edit/editProducts.php">Edit Product</a>
             <a href="../admin_edit/editAreas.php">Edit Content Areas</a>
             <a href="../admin_edit/editSubareas.php">Edit Content Subareas</a>
             <a href="../admin_edit/editUsers.php">Edit Users</a>
