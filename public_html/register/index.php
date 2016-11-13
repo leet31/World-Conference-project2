@@ -30,10 +30,10 @@ $fields->addField('exp_date');
 
 $action = filter_input(INPUT_POST, 'reg_action');
 
-if($action === NULL){
-$action = 'reset';
-}else {
-$action = strtolower($action);
+if ($action === NULL) {
+    $action = 'reset';
+} else {
+    $action = strtolower($action);
 }
 switch ($action) {
     case 'reset':
@@ -49,10 +49,11 @@ switch ($action) {
         $email = '';
         $password = '';
         $verify_password = '';
-        $attendee = '';
-        $student = '';
-        $presenter = '';
-        $reviewer = '';
+        $attendee_type='';
+        $attendee = FALSE;
+        $student = FALSE;
+        $presenter = FALSE;
+        $reviewer = FALSE;
         //below is about the credit card
         $cardType = '';
         $cardNumber = '';
@@ -61,7 +62,7 @@ switch ($action) {
 
         include 'registration.php';
         break;
-    
+
     case 'register':
 
         $first_name = trim(filter_input(INPUT_POST, 'first_name'));
@@ -76,8 +77,8 @@ switch ($action) {
         $email = filter_input(INPUT_POST, 'email');
         $password = filter_input(INPUT_POST, 'password');
         $verify_password = filter_input(INPUT_POST, 'verify_password');
-        $attendee_type = filter_input(INPUT_POST, 'attendee_type');
-        
+        $attendee_type = (isset($_POST['attendee_type'])?$_POST['attendee_type']:null);
+
         //below is about credit card
         $cardType = filter_input(INPUT_POST, 'card_type');
         $cardNumber = filter_input(INPUT_POST, 'card_number');
@@ -98,27 +99,28 @@ switch ($action) {
         $validate->password('password', $password);
         $validate->verify('verify_password', $password, $verify_password);
         $validate->attendee('attendee_type', $attendee_type);
-       
-        if($attendee_type[0] == 'attendee') {
-            $attendee = 1;
-        } else {
-            $attendee = 0;
+        $attendee = FALSE;
+        $presenter = FALSE;
+        $student = FALSE;
+        $reviewer = FALSE;
+        if (count($attendee_type) > 0) {
+            foreach ($attendee_type as $temp) {
+                if ($temp == 'attendee') {
+                    $attendee = TRUE;
+                }
+                if ($temp == 'presenter') {
+                    $presenter = TRUE;
+                }
+                if ($temp == 'student') {
+                    $student = TRUE;
+                }
+                if ($temp == 'reviewer') {
+                    $reviewer = TRUE;
+                }
+            }
         }
-        if($attendee_type[1] == 'presenter') {
-            $presenter = 1;
-        }else {
-            $presenter = 0;
-        }
-        if($attendee_type[2] == 'student') {
-            $student = 1;
-        }else {
-            $student = 0;
-        }
-        if($attendee_type[3] == 'reviewer') {
-            $reviewer = 1;
-        }else {
-            $reviewer = 0;
-        }
+
+
 //        
 //         $userVars = array(
 ////             "userID" => $this->userID,
@@ -141,19 +143,17 @@ switch ($action) {
 //        $validate->expDate('exp_date', $expDate);
         if ($fields->hasErrors()) {
             include 'registration.php';
-        }else {
-            $msg=$UM->insertNew($password, $first_name, $last_name, $company_name, $attendee, $presenter, $student, $reviewer, $address, $address2, $city, $state, $zip, $phone, $email);
+        } else {
+            $msg = $UM->insertNew($password, $first_name, $last_name, $company_name, $attendee, $presenter, $student, $reviewer, $address, $address2, $city, $state, $zip, $phone, $email);
             if ($msg == 'NONE') {
 //                $_SESSION['userVars']=$userVars;
-                $UM->login($email, $password);//default login after register
+                $UM->login($email, $password); //default login after register
                 include 'register_success.php';
-                
             } else {
                 include 'register_fail.php';
-                echo '<div>'.$msg.'</div>';
+                echo '<div>' . $msg . '</div>';
             }
         }
         break;
-
 }
 
