@@ -34,39 +34,39 @@ class UserModel {
             die("Object Type Error");
         }
 
-        if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') !== 'POST') {
-            unset($_SESSION['userVars']);
-        }
+//        if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') !== 'POST') {
+//            unset($_SESSION['userVars']);
+//        }
 
-        if (isset($_SESSION['userVars'])) {
-            $userVars = $_SESSION['userVars'];
-
-//            echo("<p>Constructor -UserVars: ");
-//            print_r($userVars);
-//            echo("</p>");
-
-            if ($userVars) {
-                $this->userID = $userVars['userID'];
-                $this->firstName = $userVars['firstName'];
-                $this->lastName = $userVars['lastName'];
-                $this->compOrg = $userVars['compOrg'];
-                $this->address1 = $userVars['address1'];
-                $this->address2 = $userVars['address2'];
-                $this->city = $userVars['city'];
-                $this->state = $userVars['state'];
-                $this->zipCode = $userVars['zipCode'];
-                $this->phone = $userVars['phone'];
-                $this->email = $userVars['email'];
-                $this->admin = $userVars['admin'];
-                $this->attendee = $userVars['attendee'];
-                $this->presenter = $userVars['presenter'];
-                $this->student = $userVars['student'];
-                $this->reviewer = $userVars['reviewer'];
-                $this->password1 = $userVars['password1'];
-                $this->password2 = $userVars['password2'];
-                $this->attendeeType = $userVars['attendeeType'];
-            }
-        }
+//        if (isset($_SESSION['userVars'])) {
+//            $userVars = $_SESSION['userVars'];
+//
+////            echo("<p>Constructor -UserVars: ");
+////            print_r($userVars);
+////            echo("</p>");
+//
+//            if ($userVars) {
+//                $this->userID = $userVars['userID'];
+//                $this->firstName = $userVars['firstName'];
+//                $this->lastName = $userVars['lastName'];
+//                $this->compOrg = $userVars['compOrg'];
+//                $this->address1 = $userVars['address1'];
+//                $this->address2 = $userVars['address2'];
+//                $this->city = $userVars['city'];
+//                $this->state = $userVars['state'];
+//                $this->zipCode = $userVars['zipCode'];
+//                $this->phone = $userVars['phone'];
+//                $this->email = $userVars['email'];
+//                $this->admin = $userVars['admin'];
+//                $this->attendee = $userVars['attendee'];
+//                $this->presenter = $userVars['presenter'];
+//                $this->student = $userVars['student'];
+//                $this->reviewer = $userVars['reviewer'];
+//                $this->password1 = $userVars['password1'];
+//                $this->password2 = $userVars['password2'];
+//                $this->attendeeType = $userVars['attendeeType'];
+//            }
+//        }
     }
 
     public function getList() {
@@ -109,31 +109,31 @@ class UserModel {
             $this->password2 = filter_input(INPUT_POST, "password2");
             $this->attendeeType = filter_input(INPUT_POST, "attendeeType");
 
-            //save posted form values to array for session vars
-            $userVars = array(
-                "userID" => $this->userID,
-                "firstName" => $this->firstName,
-                "lastName" => $this->lastName,
-                "compOrg" => $this->compOrg,
-                "address1" => $this->address1,
-                "address2" => $this->address2,
-                "city" => $this->city,
-                "state" => $this->state,
-                "zipCode" => $this->zipCode,
-                "phone" => $this->phone,
-                "email" => $this->email,
-                "attendee" => $this->attendee,
-                "admin" => $this->attendee,
-                "presenter" => $this->presenter,
-                "student" => $this->student,
-                "reviewer" => $this->reviewer,
-                "password1" => $this->password1,
-                "password2" => $this->password2,
-                "attendeeType" => $this->attendeeType
-            );
+//            //save posted form values to array for session vars
+//            $userVars = array(
+//                "userID" => $this->userID,
+//                "firstName" => $this->firstName,
+//                "lastName" => $this->lastName,
+//                "compOrg" => $this->compOrg,
+//                "address1" => $this->address1,
+//                "address2" => $this->address2,
+//                "city" => $this->city,
+//                "state" => $this->state,
+//                "zipCode" => $this->zipCode,
+//                "phone" => $this->phone,
+//                "email" => $this->email,
+//                "attendee" => $this->attendee,
+//                "admin" => $this->attendee,
+//                "presenter" => $this->presenter,
+//                "student" => $this->student,
+//                "reviewer" => $this->reviewer,
+//                "password1" => $this->password1,
+//                "password2" => $this->password2,
+//                "attendeeType" => $this->attendeeType
+//            );
 
-            //save posted vars in session to reload on error
-            $_SESSION['userVars'] = $userVars;
+//            //save posted vars in session to reload on error
+//            $_SESSION['userVars'] = $userVars;
 
             //determine which action was selected
             if (filter_input(INPUT_POST, 'btnEdit')) {
@@ -497,7 +497,7 @@ class UserModel {
     public function getIdFullNameList(){
         $stmt = $this->pdo->prepare("SELECT "
                 . "ID, "
-                . " CONCAT(  `FIRST_NAME` ,  ' ',  `LAST_NAME` )  "
+                . " CONCAT(  `FIRST_NAME` ,  ' ',  `LAST_NAME` ) AS `FULL_NAME`  "
                 . " FROM $this->table");
         $stmt->execute();
         $fullNameList = $stmt->fetchAll();

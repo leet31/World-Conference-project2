@@ -3,8 +3,7 @@
 class PaperModel {
 
     private $pdo;
-    private $table = 'wa_subareas';
-    private $userTable = 'wa_users';
+    private $table = 'wa_papers';
     public $paperID = '';
     public $authorID = '';
     public $reviewerID = '';
@@ -12,7 +11,13 @@ class PaperModel {
     public $title = '';
     public $mime = '';
     public $document = '';
-
+    
+    //extened info for editing display
+    public $authorFullName = '';
+    public $reviewerFullName = '';
+    public $areaName = '';
+    public $subareaName = '';
+    
     public function __construct($inPdo) {
         if ($inPdo instanceof PDO) {
             $this->pdo = $inPdo;
@@ -22,10 +27,90 @@ class PaperModel {
     }
 
     public function getList() {
-        $stmt = $this->pdo->prepare("SELECT * FROM $this->table");
+        $stmt = $this->pdo->prepare("SELECT ID, AUTHOR_ID, REVIEWER_ID, SUBAREA_ID, TITLE  FROM $this->table");
         $stmt->execute();
         $allList = $stmt->fetchAll();
         return $allList;
+    }
+    
+    /**
+     * gets list of papers with author name, reviewer name, area name, and subarea name for content manager
+     */
+    public function getEditPaperList(){
+        $sql = "
+            SELECT p.ID, p.REVIEWER_ID, p.AUTHOR_ID, p.SUBAREA_ID, p.TITLE, 
+            s.NAME AS `SUBAREA_NAME`,
+            sq.NAME AS `AREA_NAME`,
+            CONCAT(an.FIRST_NAME, ' ',an.LAST_NAME) AS `AUTHOR_FULL_NAME`,
+            CONCAT(rn.FIRST_NAME, ' ',rn.LAST_NAME) AS `REVIEWER_FULL_NAME`
+            FROM `wa_papers` AS p
+            INNER JOIN(SELECT sa.ID AS `SUBAREA_ID`, a.ID AS `AREA_ID`, a.NAME 
+                        FROM `wa_subareas`AS sa 
+                        INNER JOIN `wa_areas` AS `a` WHERE sa.PARENT_ID = a.ID) as `sq`
+                ON p.SUBAREA_ID=sq.SUBAREA_ID 
+            INNER JOIN `wa_subareas` AS s 
+                ON p.SUBAREA_ID=s.ID
+            INNER JOIN `wa_users` AS an 
+                ON p.AUTHOR_ID=an.ID
+            LEFT JOIN `wa_users` AS rn 
+                ON p.REVIEWER_ID=rn.ID";
+        
+        try{
+            $stmt = $this->pdo->prepare($sql);
+            $res = $stmt->execute();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+        
+        $editPaperList = $stmt->fetchAll();
+        return $editPaperList;
+    }
+    
+    public function getSinglePaperForEditing(){
+        $sql = "
+            SELECT p.ID, p.REVIEWER_ID, p.AUTHOR_ID, p.SUBAREA_ID, p.TITLE, 
+            s.NAME AS `SUBAREA_NAME`,
+            sq.NAME AS `AREA_NAME`,
+            CONCAT(an.FIRST_NAME, ' ',an.LAST_NAME) AS `AUTHOR_FULL_NAME`,
+            CONCAT(rn.FIRST_NAME, ' ',rn.LAST_NAME) AS `REVIEWER_FULL_NAME`
+            FROM `wa_papers` AS p
+            INNER JOIN(SELECT sa.ID AS `SUBAREA_ID`, a.ID AS `AREA_ID`, a.NAME 
+                        FROM `wa_subareas`AS sa 
+                        INNER JOIN `wa_areas` AS `a` WHERE sa.PARENT_ID = a.ID) as `sq`
+                ON p.SUBAREA_ID=sq.SUBAREA_ID 
+            INNER JOIN `wa_subareas` AS s 
+                ON p.SUBAREA_ID=s.ID
+            INNER JOIN `wa_users` AS an 
+                ON p.AUTHOR_ID=an.ID
+            LEFT JOIN `wa_users` AS rn 
+                ON p.REVIEWER_ID=rn.ID
+            WHERE p.ID = :paperID";
+        
+        try{
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':paperID', $this->paperID);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+        
+        if ($stmt->rowCount() != 1) {
+            return "Wrong number of rows returned: ".$stmt->rowCount().", id: ".$this->paperID;
+        }
+        
+        $row = $stmt->fetch();
+        $this->paperID          = $row['ID'];
+        $this->authorID         = $row['AUTHOR_ID'];
+        $this->reviewerID       = $row['REVIEWER_ID'];
+        $this->subAreaID        = $row['SUBAREA_ID'];
+        $this->title            = $row['TITLE'];
+        $this->mime             = '';
+        $this->document         = '';
+        $this->authorFullName   = $row['AUTHOR_FULL_NAME'];
+        $this->reviewerFullName = $row['REVIEWER_FULL_NAME'];
+        $this->areaName         = $row['AREA_NAME'];
+        $this->subareaName      = $row['SUBAREA_NAME'];
+   
     }
 
     public function getPaper() {
@@ -69,25 +154,35 @@ class PaperModel {
             $this->reviewerID = filter_input(INPUT_POST, "reviewerID");
             $this->subAreaID  = filter_input(INPUT_POST, "subAreaID");
             $this->title      = filter_input(INPUT_POST, "title");
-            $this->document   = filter_input(INPUT_POST, "document");
+            //$this->document   = filter_input(INPUT_POST, "document");
             
-            //save posted form values to array for session vars
-            $userVars = array(
-                "paperID"    => $this->paperID,
-                "authorID"   => $this->authorID,
-                "reviewerID" => $this->reviewerID,
-                "subAreaID"  => $this->subAreaID,
-                "title"      => $this->title,
-                "mime"       => $this->mime,
-                "document"   => $this->document  
-            );
+            //extended info
+            $this->authorFullName   = filter_input(INPUT_POST, "authorFullName");
+            $this->reviewerFullName = filter_input(INPUT_POST, "reviewerFullName");
+            $this->areaName         = filter_input(INPUT_POST, "areaName");
+            $this->subareaName      = filter_input(INPUT_POST, "subareaname ");
             
-            //save posted vars in session to reload on error
-            $_SESSION['userVars'] = $userVars;
+//            //save posted form values to array for session vars
+//            $userVars = array(
+//                "paperID"          => $this->paperID,
+//                "authorID"         => $this->authorID,
+//                "reviewerID"       => $this->reviewerID,
+//                "subAreaID"        => $this->subAreaID,
+//                "title"            => $this->title,
+//                "mime"             => $this->mime,
+//                //"document"         => $this->document, 
+//                "authorFullName"   => $this->authorFullName,
+//                "reviewerFullName" => $this->reviewerFullName,
+//                "areaName"         => $this->areaName,
+//                "subareaName"      => $this->subareaName
+//            );
+//            
+//            //save posted vars in session to reload on error
+//            $_SESSION['userVars'] = $userVars;
 
        //determine which action was selected
             if (filter_input(INPUT_POST, 'btnEdit')) {
-                $errMsg = $this->getUser($this->userID);
+                $errMsg = $this->getSinglePaperForEditing($this->paperID);
             } else
             if (filter_input(INPUT_POST, 'btnDelete')) {
                 $errMsg = $this->delete();
@@ -243,12 +338,15 @@ class PaperModel {
         $this->document = '';
     }
 
-//    SELECT DISTINCT p.ID, p.REVIEWER_ID, p.AUTHOR_ID, p.SUBAREA_ID, p.TITLE, 
-//    CONCAT(u.FIRST_NAME, ' ',u.LAST_NAME) AS `AUTHOR_NAME`,
-//    CONCAT(r.FIRST_NAME, ' ',r.LAST_NAME) AS `REVIEWER_NAME`,
-//    s.NAME AS `SUBAREA_NAME`
-//    FROM `wa_papers` AS p
-//    INNER JOIN `wa_users` AS u ON p.AUTHOR_ID=u.ID
-//    INNER JOIN `wa_users` AS r ON p.REVIEWER_ID=r.ID
-//    INNER JOIN `wa_subareas` AS s ON p.SUBAREA_ID=s.ID
+//SELECT p.ID, p.REVIEWER_ID, p.AUTHOR_ID, p.SUBAREA_ID, p.TITLE, 
+//s.NAME AS `SUBAREA_NAME`,
+//sq.NAME AS `AREA_NAME`,
+//CONCAT(an.FIRST_NAME, ' ',an.LAST_NAME) AS `AUTHOR_FULL_NAME`,
+//CONCAT(rn.FIRST_NAME, ' ',rn.LAST_NAME) AS `REVIEWER_FULL_NAME`
+//FROM `wa_papers` AS p
+//INNER JOIN(SELECT sa.ID AS `SUBAREA_ID`, a.ID AS `AREA_ID`, a.NAME FROM `wa_subareas`AS sa INNER JOIN `wa_areas` AS `a` WHERE sa.PARENT_ID = a.ID) as `sq`ON p.SUBAREA_ID=sq.SUBAREA_ID
+//INNER JOIN `wa_subareas` AS s ON p.SUBAREA_ID=s.ID
+//INNER JOIN `wa_users` AS an ON p.AUTHOR_ID=an.ID
+//LEFT JOIN `wa_users` AS rn ON p.REVIEWER_ID=rn.ID
+
 }

@@ -10,7 +10,7 @@
             <strong><em>World Congress CS-IT Conferences</em></strong>
         </p>
        
-        <?php include 'menu.php'?>
+        <?php include '../home/menu.php'?>
         <p>&nbsp;</p>
         <p>&nbsp;</p>
         <?php echo"<p><h1>Hello PHP from Kevin!</h1>"; ?>

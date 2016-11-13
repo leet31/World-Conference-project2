@@ -19,6 +19,7 @@ $allList = $PM->getList();
 $userList = $UM->getIdFullNameList();
 $areaList = $AM->getIdNameList();
 $subareaList = $SM->getIdNameParentList();
+$editPaperList = $PM->getEditPaperList();
 ?>
 <html>
     <head>
@@ -41,13 +42,17 @@ $subareaList = $SM->getIdNameParentList();
         </style>
     </head>
     <body>
-        <?php echo(file_get_contents('../home/menu.php')) ?>
-
+        <?php include('../home/menu.php') ?>
+        <?php // foreach($userList as $row){
+            //echo("</br>ID: ".$row['ID']);
+            //echo("<br>Name: ".$row['FULL_NAME']);
+        //}
+        ?>
         <div><h2>Edit Papers</h2></div>
         <!--display error message, if any-->
         <?php if (isset($errMsg) && $errMsg != '' && strtoupper($errMsg) != 'NONE') echo "<div><h3>$errMsg</h3><div>" ?>
         <div>
-            <form action = "<?php filter_input(INPUT_SERVER, 'REQUEST_URI') ?>" method='post'>
+            <form action = "<?php filter_input(INPUT_SERVER, 'REQUEST_URI') ?>" method='post' enctype="multipart/form-data">
                 <table>
                     <tr>
                         <th colspan="12" style="font-size:larger ">Insert New/Edit Paper:</th>
@@ -63,53 +68,48 @@ $subareaList = $SM->getIdNameParentList();
                     <tr>
 
                         <td style="display:none"> <!-- hidden primary key for update/delete -->
-                            <input type="hidden" name="paperID"    id="authorID"   value='<?php echo($PM->authorID)  ?>'>
+                            <input type="hidden" name="paperID"    id="paperID"    value='<?php echo($PM->paperID)  ?>'>
+                            <input type="hidden" name="authorID"   id="authorID"   value='<?php echo($PM->authorID)  ?>'>
                             <input type="hidden" name="reviewerID" id="reviewerID" value='<?php echo($PM->reviwerID) ?>'>
                             <input type="hidden" name="areaID"     id="areaID"     value='<?php echo($PM->areaID)    ?>'>
                             <input type="hidden" name="subareaID"  id="subareaID"  value='<?php echo($PM->subareaID) ?>'>
                         </td>
                         <td> 
-                            <input type="text" required style="width:100px;" name="firstName" value='<?php echo($UM->firstName) ?>' > 
+                            <select name="newAuthorID">
+                                <?php
+                                if($PM->authorID == ''){echo("<option disabled selected value> -- select an option -- </option>");}
+                                foreach($userList as $row){
+                                    echo("<option value='".$row['ID']."'".($row['ID']==$PM->authorID?"selected":"").">".$row['FULL_NAME']."</option>\n");
+                                }
+                                ?>
+                            </select> 
                         </td>
                         <td> 
-                            <input type="text" required style="width:100px;"  name="lastName"  value='<?php echo($UM->lastName) ?>' > 
+                            <select name="newReviewerID">
+                                <?php
+                                if($PM->reviewerID == ''){echo("<option disabled selected value> -- select an option -- </option>");}
+                                foreach($userList as $row){
+                                    echo("<option value='".$row['ID']."'".($row['ID']==$PM->reviewerID?"selected":"").">".$row['FULL_NAME']."</option>\n");
+                                }
+                                ?>
+                            </select> 
                         </td>
                         <td> 
-                            <input type="text" style="width:100px;"  name="compOrg"   value='<?php echo($UM->compOrg) ?>' > 
+                            <input type="text" style="width:100px;"  name="areaName"   value='<?php echo($PM->areaName) ?>' > 
                         </td>
                         <td> 
-                            <input type="text" required style="width:100px;"  name="address1"  value='<?php echo($UM->address1) ?>' > 
+                            <input type="text" style="width:100px;"  name="subareaName"  value='<?php echo($PM->subareaName) ?>' > 
                         </td>
                         <td> 
-                            <input type="text" style="width:100px;"  name="address2"  value='<?php echo($UM->address2) ?>' >
+                            <input type="text" style="width:100px;"  name="title"  value='<?php echo($PM->title) ?>' >
                         </td>
-                        <td> 
-                            <input type="text" style="width:100px;"  name="city"      value='<?php echo($UM->city) ?>' > 
-                        </td>
-                        <td> 
-                            <input type="text" style="width:40px;"   name="state"     value='<?php echo($UM->state) ?>' > 
-                        </td>
-                        <td> 
-                            <input type="text" style="width:60px;"   name="zipCode" pattern="[0-9]{5}"  value='<?php echo($UM->zipCode) ?>' > 
-                        </td>
-                        <td> 
-                            <input type="text" style="width:100px;"  name="phone" pattern="(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}" value='<?php echo($UM->phone) ?>' > 
-                        </td>
-                        <td> 
-                            <input type="email" required style="width:150px;"  name="email"     value='<?php echo($UM->email) ?>' > 
-                        </td>
-                        <!--<td>
-                            <input type='text' style="width:80px;" readonly name='pwFlag' id='pwFlag' 
-                                   value='<?php #echo($UM->pwHash==""?"Not Set":"Set")  ?>'>
-                        </td>-->
                         <td>
-                            <input type="checkbox" name="cbAdmin"     <?php echo($UM->admin == "1" ? "checked" : "") ?> >Admin</br>
-                            <input type="checkbox" name="cbAttend"    <?php echo($UM->attendee == "1" ? "checked" : "") ?> >Attendee</br>
-                            <input type="checkbox" name="cbPresenter" <?php echo($UM->presenter == "1" ? "checked" : "") ?> >Presenter</br>
-                            <input type="checkbox" name="cbStudent"   <?php echo($UM->student == "1" ? "checked" : "") ?> >Student</br>
-                            <input type="checkbox" name="cbReviewer"  <?php echo($UM->reviewer == "1" ? "checked" : "") ?> >Reviewer</br>
+                            <input name="document" type="file" class="inputFile" />
                         </td>
                         <td> 
+                            <input type="button"  name="btnViewDoc"      value='View Document' > 
+                        </td>
+                                                <td> 
                             <?php
                             if ($UM->userID == "") {
                                 echo('<input type="submit" name="btnInsert" value ="Insert"></br>');
@@ -118,10 +118,7 @@ $subareaList = $SM->getIdNameParentList();
                                 echo('<input type="submit" name="btnDelete" value ="Delete"></br>');
                             }
                             ?>
-                            <input type="reset" name="btnClear" value ="Reset"></br>                            
-                            <input type="button" name="btnPassword" id="btnPassword"
-                                   value='Set/Reset PW'
-                                   onclick="setPw();">
+                            <input type="reset" name="btnClear" value ="Reset">
                         </td>
                     </tr>
                 </table>
@@ -132,26 +129,28 @@ $subareaList = $SM->getIdNameParentList();
             <table>
                 <tr>
                     <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
+                    <th>Author Name</th>
+                    <th>Reviewer Name</th>
+                    <th>Area Name</th>
+                    <th>Subarea Name</th>
+                    <th>Title</th>
                 </tr>
                 <?php
-                foreach ($allList as $row) {
+                foreach ($editPaperList as $row) {
                     echo('<tr>');
+                    echo("<form action = " . $_SERVER['REQUEST_URI'] . " method='post'>" . "\n"); 
+                    echo('<td style="display:none">' . "\n"); 
+                    echo("<input type='hidden' name='paperID' value=" . $row['ID'] . ">" . "\n");
+                    echo("</td>" . "\n" );
+                   
                     echo('<td>' . $row['ID'] . '</td>');
-                    echo('<td>' . "\n" .
-                    "<form action = " . $_SERVER['REQUEST_URI'] . " method='post'>" . "\n" .
-                    "<input type='hidden' name='userID' value=" . $row['ID'] . ">" . "\n" .
-                    "</form>" . "\n" .
-                    "<form action = " . $_SERVER['REQUEST_URI'] . " method='post'>" . "\n" .
-                    "<input type='hidden' name='userID' value=" . $row['ID'] . ">" . "\n" .
-                    "<input type='text' name= 'firstName' value='" . $row['FIRST_NAME'] . "'></td>" . "\n" .
-                    "<td><input type='text' name= 'lastName' value='" . $row['LAST_NAME'] . "'></td>" . "\n" .
-                    "<td><input type='text' name= 'email' value='" . $row['EMAIL'] . "'></td>" . "\n" .
-                    "<td><input type='submit' name='btnEdit' value='Edit'>" . "\n" .
-                    "</form>" . "\n" .
-                    '</td>' . "\n");
+                    echo("<td>".$row['AUTHOR_FULL_NAME']."</td>" . "\n" );
+                    echo("<td>".$row['REVIEWER_FULL_NAME'] . "</td>" . "\n" );
+                    echo("<td>".$row['AREA_NAME'] . "</td>" . "\n");
+                    echo("<td>".$row['SUBAREA_NAME'] . "</td>" . "\n");
+                    echo("<td>".$row['TITLE'] . "</td>" . "\n");
+                    echo("<td><input type='submit' name='btnEdit' value='Edit'></td>" . "\n" );
+                    echo("</form>" . "\n");
                     echo('</tr>');
                 }
                 ?>

@@ -239,7 +239,7 @@ class Validate {
     //attendee is an array
     public function attendee($name, $value, $required = true){
         $field = $this->fields->getField($name);
-        if (count($value) > 0) {
+        if (isset($value)) {
             $field->clrErrorMsg();
         } else {
             $field->setErrorMsg('Please pick at least one.');
