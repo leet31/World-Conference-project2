@@ -4,6 +4,8 @@
     { 
         session_start(); 
     } 
+    
+    
 if (isset($_SESSION['userRec'])) {
     echo '<ul  class ="account"><li><a href="../user_account">' . $_SESSION['userRec']['FIRST_NAME'] . '</a></li><li><a href="../logout">Logout</a></li></ul>';
 } else {
