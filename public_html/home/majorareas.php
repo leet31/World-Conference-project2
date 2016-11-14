@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html>
     <head>
@@ -5,11 +6,12 @@
         <title>Major Areas</title>
         <link rel="stylesheet" type="text/css" href="../css/styles.css">
     </head>
-    <body bgcolor="#EDA947">
-        <p style="text-align: left; font-family: Baskerville, 'Palatino Linotype', Palatino, 'Century Schoolbook L', 'Times New Roman', serif; font-style: oblique;">&nbsp;</p>
-        <p style="text-align: center; font-size: xx-large; font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif;"> <strong><em>Major Areas </em></strong></p>
 
-        <?php echo(file_get_contents('.\menu.php')) ?>
+    <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
+        
+        <p style="text-align: center; font-size: 36px;">Major Areas</p>
+        <?php include '../home/menu.php'; ?>
+        <div>
         <p>
         <section id="areas">
             <p>I.  Computer Security</p>
@@ -49,6 +51,7 @@
 
 
     </span>
+        </div>
 </body>
 
 </html>

@@ -1,16 +1,17 @@
+
 <!doctype html>
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Call for Paper</title>
+        <title>Call For Paper</title>
         <link rel="stylesheet" type="text/css" href="../css/styles.css">
     </head>
 
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
-
-        <p style="text-align: center; font-family: Consolas, 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', Monaco, 'Courier New', monospace; font-style: inherit; font-weight: bolder; font-size: 36px; color: #DC181B;">Call for Paper</p>
-        <?php echo(file_get_contents('.\menu.php')) ?>
-        <p>&nbsp;</p>
+        
+        <p style="text-align: center; font-size: 36px;">Call For Paper</p>
+        <?php include '../home/menu.php'; ?>
+        <div>
         <blockquote>
             <p> <strong><u>Five Areas of Topics Discuss:</u></strong></p>
             <blockquote>
@@ -23,5 +24,6 @@
                 </blockquote>
             </blockquote>
         </blockquote>
+        </div>
     </body>
 </html>
