@@ -66,7 +66,7 @@ $allList = $UM->getList();
         </style>
             </head>
     <body onload="setPwButtonStyle();">
-        <?php echo(file_get_contents('..\home\menu.php')) ?>
+        <?php include '..\home\menu.php'; ?>
 
         <div><h2>Edit Users</h2></div>
         <!--display error message, if any-->
@@ -88,7 +88,7 @@ $allList = $UM->getList();
                         <th>Zip</th>
                         <th>Phone</th>
                         <th>Email</th>
-                        <th>Password</th>
+                        <th>Roles</th>
                     </tr>
                     <tr>
 
