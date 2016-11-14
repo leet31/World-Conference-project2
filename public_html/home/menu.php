@@ -14,6 +14,8 @@ if (isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE) {
         <a href="../home/editCategories>Edit Product Categories</a>
             <a href="../home/editAreas.php">Edit Content Areas</a>
             <a href="../home/editSubareas.php">Edit Content Subareas</a>
+            <a href="../home/editUsers.php">Edit Content Users</a>
+            <a href="../home/editPapers.php">Edit Content Submitted Papers</a>
         </div>
     </li>
     <li class ="dropdown">
