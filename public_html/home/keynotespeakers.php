@@ -85,10 +85,7 @@
                     <p><small>PhD. (Computer and Information Science) - University of Minesota, Twin Cities</small></p>
                     <p><small>M.S. University of Minnesota</small></p>
                     <p><small>B.Ed. National Chunghua University of Education, Taiwan</small></p>
-
-
                 </div>
-           
-        </div>
+           </div>
     </body>
 </html>
