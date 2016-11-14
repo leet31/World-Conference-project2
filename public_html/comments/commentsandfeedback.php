@@ -27,7 +27,7 @@
                     <label>Tel:</label>
                     <input name="tel" id="tel" type="text" pattern="(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}"><br>
                     <label>E-mail:</label>
-                    <input name="email" id="email" type="email"><br>
+                    <input name="email" id="email" type="email">
                     <label><strong>Tip:</strong></label>Use the space below to leave comments and/or questions, we appreciate your feedback:<br>
                     <label></label><textarea  name="comments"placeholder="Please input your comments" rows="15" cols="50"></textarea>
                     <br>

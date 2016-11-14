@@ -10,8 +10,6 @@
         <p style="text-align: center; font-size: 36px;">Log In</p>
         <?php include '../home/menu.php' ?>
 
-
-
         <!--display error message, if any-->
 
         <div>
@@ -29,10 +27,8 @@
                     <label></label>
                     <input type="submit" name="log_action" value="Login">
                     <input type="submit" name="log_action" value="Reset">
-
-
-                    </div>
                 </fieldset>
             </form>
+        </div>
     </body>
 </html>

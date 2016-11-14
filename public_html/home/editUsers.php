@@ -1,11 +1,5 @@
 <!DOCTYPE html>
 <?php
-if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
-if (!(isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE)){
-    header("Location: ../login");
-    die();
-}
-
 require '../../controllers/connectDb.php';
 require '../../models/UserModel.php';
 
@@ -68,18 +62,13 @@ $allList = $UM->getList();
                 font-size: smaller;
                 margin-right: 0em;
             }
-            
-            table{
-                margin: auto;
-            }
 
         </style>
             </head>
     <body onload="setPwButtonStyle();">
-        <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
-        <p style="text-align: center; font-size: 36px;">Edit Users</p>
-         <?php include('../home/menu.php') ?>
+        <?php include '..\home\menu.php'; ?>
 
+        <div><h2>Edit Users</h2></div>
         <!--display error message, if any-->
         <?php if (isset($errMsg) && $errMsg != '' && strtoupper($errMsg) != 'NONE') echo "<div><h3>$errMsg</h3><div>" ?>
         <div>
@@ -109,10 +98,10 @@ $allList = $UM->getList();
                             <input type="hidden" name="hiddenPw" id="hiddenPw" value=''>
                         </td>
                         <td> 
-                            <input type="text" required style="width:90px;" name="firstName" value='<?php echo($UM->firstName) ?>' > 
+                            <input type="text" required style="width:100px;" name="firstName" value='<?php echo($UM->firstName) ?>' > 
                         </td>
                         <td> 
-                            <input type="text" required style="width:90px;"  name="lastName"  value='<?php echo($UM->lastName) ?>' > 
+                            <input type="text" required style="width:100px;"  name="lastName"  value='<?php echo($UM->lastName) ?>' > 
                         </td>
                         <td> 
                             <input type="text" style="width:100px;"  name="compOrg"   value='<?php echo($UM->compOrg) ?>' > 
@@ -121,7 +110,7 @@ $allList = $UM->getList();
                             <input type="text" required style="width:100px;"  name="address1"  value='<?php echo($UM->address1) ?>' > 
                         </td>
                         <td> 
-                            <input type="text" style="width:80px;"  name="address2"  value='<?php echo($UM->address2) ?>' >
+                            <input type="text" style="width:100px;"  name="address2"  value='<?php echo($UM->address2) ?>' >
                         </td>
                         <td> 
                             <input type="text" style="width:100px;"  name="city"      value='<?php echo($UM->city) ?>' > 
@@ -136,7 +125,7 @@ $allList = $UM->getList();
                             <input type="text" style="width:100px;"  name="phone" pattern="(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}" value='<?php echo($UM->phone) ?>' > 
                         </td>
                         <td> 
-                            <input type="email" required style="width:100px;"  name="email"     value='<?php echo($UM->email) ?>' > 
+                            <input type="email" required style="width:150px;"  name="email"     value='<?php echo($UM->email) ?>' > 
                         </td>
                         <!--<td>
                             <input type='text' style="width:80px;" readonly name='pwFlag' id='pwFlag' 

@@ -8,7 +8,7 @@
     </head>
 
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
-        <?php echo(file_get_contents('.\menu.html')) ?>
+        <?php echo(file_get_contents('.\menu.php')) ?>
 
         <blockquote>
             <blockquote>

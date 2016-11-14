@@ -1,17 +1,13 @@
-
 <!doctype html>
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Conference Program</title>
+        <title>Comments and Feedback</title>
         <link rel="stylesheet" type="text/css" href="../css/styles.css">
     </head>
 
-    <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
-        
-        <p style="text-align: center; font-size: 36px;">Conference Program</p>
-        <?php include '../home/menu.php'; ?>
-        <div>
+    <body>
+        <?php echo(file_get_contents('.\menu.php')) ?>
         <p>Please sign up to receive future notifications and/or comments about your experience below:</p>
 
         <form id="form1" name="form1" method="post">
@@ -46,6 +42,6 @@
                 
             </table>
         </form>
-        </div>
+        <p>&nbsp;</p>
     </body>
 </html>

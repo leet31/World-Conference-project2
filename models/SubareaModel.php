@@ -34,6 +34,18 @@ class SubareaModel {
         return $allList;
     }
 
+    public function getIdNameParentList() {
+        $stmt = $this->pdo->prepare(""
+                . "SELECT "
+                . "ID, "
+                . "PARENT_ID,"
+                . "NAME "
+                . "FROM $this->table");
+        $stmt->execute();
+        $nameList = $stmt->fetchAll();
+        return $nameList;
+    }
+
     public function getParentList() {
         $stmt = $this->pdo->prepare("SELECT ID, NAME FROM $this->parentTable");
         $stmt->execute();
@@ -84,6 +96,17 @@ class SubareaModel {
 
         return $errMsg;
     }
+    
+    public function getAreaSubAreaList(){
+        $sql="SELECT sa.ID, CONCAT( a.name,  ' | ', sa.NAME ) AS NAME
+              FROM wa_subareas AS sa
+              INNER JOIN wa_areas AS a ON a.id = sa.PARENT_ID";
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $list = $stmt->fetchAll();
+        return $list;
+     }
 
 }
 

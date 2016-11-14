@@ -1,11 +1,5 @@
 <!DOCTYPE html>
 <?php
-if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
-if (!(isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE)){
-    header("Location: ../login");
-    die();
-}
-
 require '../../controllers/connectDb.php';
 require '../../models/ProdCatModel.php';
 
@@ -19,7 +13,7 @@ $cat_ra = $PCM->getList();
 ?>
 <html>
     <head>
-        <title>Edit Category</title>
+        <title>Test Category Model</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -34,19 +28,14 @@ $cat_ra = $PCM->getList();
                 font-size: smaller;
                 margin-right: 0em;
             }
-            table{
-                margin: auto;
-            }
         </style>
 
 
     </head>
     <body>
-        <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
-        <p style="text-align: center; font-size: 36px;">Edit Categories</p>
-        <?php include('../home/menu.php') ?>
+        <?php echo(file_get_contents('.\menu.php')) ?>
 
-          
+        <div><h2>Edit Product Categories</h2></div>
         <!--display error message, if any-->
         <?php if (isset($errMsg) && $errMsg != '') echo "<div><h3>Error: $errMsg</h3><div>" ?>
         <div>

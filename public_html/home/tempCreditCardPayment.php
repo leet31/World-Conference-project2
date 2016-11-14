@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <!-- temp PHP for debugging html-->
 <?php
-if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
-if (!(isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE)){
-    header("Location: ../login");
-    die();
-}
-
 $firstName    =isset($_POST['firstName'])? $_POST['firstName']         :"John";
 $lastName     =isset($_POST['lastName']) ? $_POST['lastName']          :"Doe";
 $address1     =isset($_POST['address1']) ? $_POST['address1']          :"123MainSt.";
@@ -26,13 +20,9 @@ $rbCreditCard =isset($_POST['rbCreditCard'])  ? $_POST['rbCreditCard'] : "";;
                 border: 1px solid black;
             }
         </style>
-        <link rel="stylesheet" type="text/css" href="../css/styles.css">
     </head>
     <body>
-        <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
-        <p style="text-align: center; font-size: 36px;">Temp Credit Card Payment</p>
-        <?php include('../home/menu.php') ?>
-        <div>
+        <div><h1>Credit Card Payment</div>
         <form action='#' method='POST'>
             <table>
                 <tr><td colspan="2" style='font-weight:bold; text-align: center'>Billing Information</td></tr>
@@ -66,6 +56,5 @@ $rbCreditCard =isset($_POST['rbCreditCard'])  ? $_POST['rbCreditCard'] : "";;
             </table>
             <input type='submit' value="Submit">
         </form>
-            </div>
     </body>
 </html>

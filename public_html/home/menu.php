@@ -4,6 +4,8 @@
     { 
         session_start(); 
     } 
+    
+    
 if (isset($_SESSION['userRec'])) {
     echo '<ul  class ="account"><li><a href="../user_account">' . $_SESSION['userRec']['FIRST_NAME'] . '</a></li><li><a href="../logout">Logout</a></li></ul>';
 } else {
@@ -20,6 +22,7 @@ if (isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE) {
             <a href="../admin_edit/editAreas.php">Edit Content Areas</a>
             <a href="../admin_edit/editSubareas.php">Edit Content Subareas</a>
             <a href="../admin_edit/editUsers.php">Edit Users</a>
+            <a href="../admin_edit/editPapers.php">Edit Paper Submissions</a>
         </div>
     </li>
     <li class ="dropdown">

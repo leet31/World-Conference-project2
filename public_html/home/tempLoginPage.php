@@ -1,11 +1,5 @@
 <!DOCTYPE html>
 <?php
-if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
-if (!(isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE)){
-    header("Location: ../login");
-    die();
-}
-
 require '../../controllers/connectDb.php';
 require '../../models/UserModel.php';
 
@@ -32,9 +26,9 @@ if($errMsg == 'NONE'){
         <link rel="stylesheet" type="text/css" href="../css/styles.css">
     </head>
     <body>
-    <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
-        <p style="text-align: center; font-size: 36px;">Temp Log In</p>
-        <?php include('../home/menu.php') ?>
+    <?php echo(file_get_contents('.\menu.php')) ?>
+
+        <div>Temporary Login Page</div>
         <h2>Log In</h2>
 
         <!--display error message, if any-->
