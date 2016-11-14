@@ -246,7 +246,6 @@ class UserModel {
         } catch (PDOException $e) {
             return $e->getMessage();
         }
-
         if ($res) {
             return "Success: " . $stmt->rowCount() . " rows updated";
         } else {
