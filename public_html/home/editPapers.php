@@ -17,8 +17,7 @@ $errMsg = $PM->doAction();
 //get paper list as an array
 $allList = $PM->getList();
 $userList = $UM->getIdFullNameList();
-$areaList = $AM->getIdNameList();
-$subareaList = $SM->getIdNameParentList();
+$areaSubareaList = $SM->getAreaSubAreaList();
 $editPaperList = $PM->getEditPaperList();
 ?>
 <html>
@@ -40,44 +39,76 @@ $editPaperList = $PM->getEditPaperList();
             }
 
         </style>
+        <script>
+            function clearFields(){
+                document.getElementById("authorID").value= "0";
+                document.getElementById("reviewerID").value= "0";
+                document.getElementById("subareaID").value= "0";
+                document.getElementById("EditTitle").value= "";
+                document.getElementById("fileChooser").value= "";
+                document.getElementById("paperID").value= "";      
+                document.getElementById("paperIDCell").innerHTML= "";      
+                document.getElementById("fileName").value= "";
+                document.getElementById("fileNameCell").innerHTML= "";
+                document.getElementById("localFileName").value= "";
+                document.getElementById("oldauthorID").value= "";  
+                document.getElementById("oldreviewerID").value= "";
+                document.getElementById("oldareaID").value= "";    
+                document.getElementById("oldsubareaID").value= ""; 
+                document.getElementById("btnCell").innerHTML= '<input type="submit" name="btnInsert" value ="Insert"></br>\n\
+                                                               <button onclick="clearFields()" name="btnClear" id="btnClear">Clear</button>';      
+                document.getElementById("errMsg").innerHTML= "";      
+                document.getElementById("chooserCell").innerHTML = '<input name="document" id="fileChooser" type="file" class="inputFile" required /> ';
+                //alert("done");
+            }
+        </script>
     </head>
     <body>
         <?php include('../home/menu.php') ?>
-        <?php // foreach($userList as $row){
+        <?php //  foreach($areaSubareaList as $row){
             //echo("</br>ID: ".$row['ID']);
-            //echo("<br>Name: ".$row['FULL_NAME']);
+            //echo("<br>Name: ".$row['NAME']);
         //}
         ?>
         <div><h2>Edit Papers</h2></div>
         <!--display error message, if any-->
-        <?php if (isset($errMsg) && $errMsg != '' && strtoupper($errMsg) != 'NONE') echo "<div><h3>$errMsg</h3><div>" ?>
+        <div id="errMsg">
+            <?php if (isset($errMsg) && $errMsg != '' && strtoupper($errMsg) != 'NONE') echo "<div><h3>$errMsg</h3><div>" ?>
+        </div>
         <div>
-            <form action = "<?php filter_input(INPUT_SERVER, 'REQUEST_URI') ?>" method='post' enctype="multipart/form-data">
+            <form action = "<?php filter_input(INPUT_SERVER, 'REQUEST_URI') ?>" method='post' enctype="multipart/form-data" name="editForm" id="editForm">
                 <table>
                     <tr>
                         <th colspan="12" style="font-size:larger ">Insert New/Edit Paper:</th>
                     </tr>
                     <tr>
+                        <th>ID</th>
                         <th>Author Name</th>
                         <th>Reviewer Name</th>
-                        <th>Area</th>
-                        <th>Subarea</th>
+                        <th>Area | Subarea</th>
                         <th>Title</th>
-                        <th>Document</th>
+                        <th>File Name</th>
+                        <th>Upload Document</th>
+                        <th>Download Document</th>
                     </tr>
                     <tr>
 
                         <td style="display:none"> <!-- hidden primary key for update/delete -->
-                            <input type="hidden" name="paperID"    id="paperID"    value='<?php echo($PM->paperID)  ?>'>
-                            <input type="hidden" name="authorID"   id="authorID"   value='<?php echo($PM->authorID)  ?>'>
-                            <input type="hidden" name="reviewerID" id="reviewerID" value='<?php echo($PM->reviwerID) ?>'>
-                            <input type="hidden" name="areaID"     id="areaID"     value='<?php echo($PM->areaID)    ?>'>
-                            <input type="hidden" name="subareaID"  id="subareaID"  value='<?php echo($PM->subareaID) ?>'>
+                            <input type="hidden" name="paperID"       id="paperID"       value='<?php echo($PM->paperID)      ?>'>
+                            <input type="hidden" name="fileName"      id="fileName"      value='<?php echo($PM->fileName)     ?>'>
+                            <input type="hidden" name="localFileName" id="localFileName" value='<?php echo($PM->localFileName)?>'>
+                            <input type="hidden" name="oldAuthorID"   id="oldauthorID"   value='<?php echo($PM->authorID)     ?>'>
+                            <input type="hidden" name="oldReviewerID" id="oldreviewerID" value='<?php echo($PM->reviwerID)    ?>'>
+                            <input type="hidden" name="oldAreaID"     id="oldareaID"     value='<?php echo($PM->areaID)       ?>'>
+                            <input type="hidden" name="oldSubareaID"  id="oldsubareaID"  value='<?php echo($PM->subareaID)    ?>'>
+                         </td>
+                        <td id="paperIDCell">
+                            <?php echo($PM->paperID)?>
                         </td>
                         <td> 
-                            <select name="newAuthorID">
+                            <select name="authorID" id="authorID" required>
                                 <?php
-                                if($PM->authorID == ''){echo("<option disabled selected value> -- select an option -- </option>");}
+                                if($PM->authorID == ''){echo("<option disabled selected value='0'> -- select an option -- </option>");}
                                 foreach($userList as $row){
                                     echo("<option value='".$row['ID']."'".($row['ID']==$PM->authorID?"selected":"").">".$row['FULL_NAME']."</option>\n");
                                 }
@@ -85,9 +116,9 @@ $editPaperList = $PM->getEditPaperList();
                             </select> 
                         </td>
                         <td> 
-                            <select name="newReviewerID">
+                            <select name="reviewerID" id="reviewerID">
                                 <?php
-                                if($PM->reviewerID == ''){echo("<option disabled selected value> -- select an option -- </option>");}
+                                if($PM->reviewerID == ''){echo("<option disabled selected value='0'> -- select an option -- </option>");}
                                 foreach($userList as $row){
                                     echo("<option value='".$row['ID']."'".($row['ID']==$PM->reviewerID?"selected":"").">".$row['FULL_NAME']."</option>\n");
                                 }
@@ -95,34 +126,43 @@ $editPaperList = $PM->getEditPaperList();
                             </select> 
                         </td>
                         <td> 
-                            <input type="text" style="width:100px;"  name="areaName"   value='<?php echo($PM->areaName) ?>' > 
+                            <select name="subareaID" id="subareaID" required>
+                                <?php
+                                if($PM->subareaID == ''){echo("<option disabled selected value='0'> -- select an option -- </option>");}
+                                foreach($areaSubareaList as $row){
+                                    echo("<option value='".$row['ID']."'".($row['ID']==$PM->subareaID?"selected":"").">".$row['NAME']."</option>\n");
+                                }
+                                ?>
+                            </select> 
                         </td>
                         <td> 
-                            <input type="text" style="width:100px;"  name="subareaName"  value='<?php echo($PM->subareaName) ?>' > 
+                            <input type="text" style="width:100px;"  required name="title"  id="EditTitle"  value='<?php echo($PM->title) ?>' >
+                        </td>
+                        <td id="fileNameCell"> 
+                            <?php echo($PM->fileName) ?>
+                        </td>
+                        <td id="chooserCell">
+                            <input name="document" id="fileChooser" type="file" class="inputFile" <?php echo($PM->localFileName == ''?"required":"disabled") ?> />
                         </td>
                         <td> 
-                            <input type="text" style="width:100px;"  name="title"  value='<?php echo($PM->title) ?>' >
+                            <input type="submit"  name="btnViewDoc" id="btnViewDoc" <?php echo($PM->paperID == ''?"disabled":"") ?>     value='View Document' > 
+                            
                         </td>
-                        <td>
-                            <input name="document" type="file" class="inputFile" />
-                        </td>
-                        <td> 
-                            <input type="button"  name="btnViewDoc"      value='View Document' > 
-                        </td>
-                                                <td> 
+                        <td id="btnCell"> 
                             <?php
-                            if ($UM->userID == "") {
+                            if ($PM->paperID == "") {
                                 echo('<input type="submit" name="btnInsert" value ="Insert"></br>');
                             } else {
                                 echo('<input type="submit" name="btnUpdate" value ="Update"></br>');
                                 echo('<input type="submit" name="btnDelete" value ="Delete"></br>');
                             }
                             ?>
-                            <input type="reset" name="btnClear" value ="Reset">
+                            <button onclick="clearFields()" name="btnClear" id="btnClear">Clear</button>
                         </td>
                     </tr>
                 </table>
             </form> 
+            
         </div>
         <p>
         <div>
@@ -134,6 +174,7 @@ $editPaperList = $PM->getEditPaperList();
                     <th>Area Name</th>
                     <th>Subarea Name</th>
                     <th>Title</th>
+                    <th>File Name</th>
                 </tr>
                 <?php
                 foreach ($editPaperList as $row) {
@@ -149,6 +190,7 @@ $editPaperList = $PM->getEditPaperList();
                     echo("<td>".$row['AREA_NAME'] . "</td>" . "\n");
                     echo("<td>".$row['SUBAREA_NAME'] . "</td>" . "\n");
                     echo("<td>".$row['TITLE'] . "</td>" . "\n");
+                    echo("<td>".$row['FILENAME'] . "</td>" . "\n");
                     echo("<td><input type='submit' name='btnEdit' value='Edit'></td>" . "\n" );
                     echo("</form>" . "\n");
                     echo('</tr>');

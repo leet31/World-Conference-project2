@@ -4,14 +4,16 @@ class PaperModel {
 
     private $pdo;
     private $table = 'wa_papers';
+    
+    //table columns
     public $paperID = '';
     public $authorID = '';
     public $reviewerID = '';
-    public $subAreaID = '';
+    public $subareaID = '';
     public $title = '';
-    public $mime = '';
-    public $document = '';
-    
+    public $fileName = '';
+    public $localFileName = '';
+     
     //extened info for editing display
     public $authorFullName = '';
     public $reviewerFullName = '';
@@ -27,7 +29,9 @@ class PaperModel {
     }
 
     public function getList() {
-        $stmt = $this->pdo->prepare("SELECT ID, AUTHOR_ID, REVIEWER_ID, SUBAREA_ID, TITLE  FROM $this->table");
+        $stmt = $this->pdo->prepare(""
+                . "SELECT * "
+                . "FROM $this->table");
         $stmt->execute();
         $allList = $stmt->fetchAll();
         return $allList;
@@ -38,7 +42,7 @@ class PaperModel {
      */
     public function getEditPaperList(){
         $sql = "
-            SELECT p.ID, p.REVIEWER_ID, p.AUTHOR_ID, p.SUBAREA_ID, p.TITLE, 
+            SELECT p.ID, p.REVIEWER_ID, p.AUTHOR_ID, p.SUBAREA_ID, p.TITLE, p.FILENAME, p.LOCAL_FILENAME,
             s.NAME AS `SUBAREA_NAME`,
             sq.NAME AS `AREA_NAME`,
             CONCAT(an.FIRST_NAME, ' ',an.LAST_NAME) AS `AUTHOR_FULL_NAME`,
@@ -68,7 +72,7 @@ class PaperModel {
     
     public function getSinglePaperForEditing(){
         $sql = "
-            SELECT p.ID, p.REVIEWER_ID, p.AUTHOR_ID, p.SUBAREA_ID, p.TITLE, 
+            SELECT p.ID, p.REVIEWER_ID, p.AUTHOR_ID, p.SUBAREA_ID, p.TITLE, p.FILENAME, p.LOCAL_FILENAME,
             s.NAME AS `SUBAREA_NAME`,
             sq.NAME AS `AREA_NAME`,
             CONCAT(an.FIRST_NAME, ' ',an.LAST_NAME) AS `AUTHOR_FULL_NAME`,
@@ -102,14 +106,16 @@ class PaperModel {
         $this->paperID          = $row['ID'];
         $this->authorID         = $row['AUTHOR_ID'];
         $this->reviewerID       = $row['REVIEWER_ID'];
-        $this->subAreaID        = $row['SUBAREA_ID'];
+        $this->subareaID        = $row['SUBAREA_ID'];
         $this->title            = $row['TITLE'];
-        $this->mime             = '';
-        $this->document         = '';
+        $this->fileName         = $row['FILENAME'];
+        $this->localFileName    = $row['LOCAL_FILENAME'];
         $this->authorFullName   = $row['AUTHOR_FULL_NAME'];
         $this->reviewerFullName = $row['REVIEWER_FULL_NAME'];
         $this->areaName         = $row['AREA_NAME'];
         $this->subareaName      = $row['SUBAREA_NAME'];
+        
+        //echo("</br>Get FileName: $this->fileName");
    
     }
 
@@ -128,13 +134,13 @@ class PaperModel {
         }
         
         $row = $stmt->fetch();
-        $this->paperID    = $row->ID;
-        $this->authorID   = $row->AUTHOR_ID;
-        $this->reviewerID = $row->REVIEWER_ID;
-        $this->subAreaID  = $row->SUBAREA_ID;
-        $this->title      = $row->TITLE;
-        $this->mime      = $row->MIME;
-        $this->document   = $row->DOCUMENT;
+        $this->paperID       = $row->ID;
+        $this->authorID      = $row->AUTHOR_ID;
+        $this->reviewerID    = $row->REVIEWER_ID;
+        $this->subareaID     = $row->SUBAREA_ID;
+        $this->title         = $row->TITLE;
+        $this->fileName      = $row->FILENAME;
+        $this->localFileName = $row->LOCAL_FILENAME;
     }
 
     public function doAction() {
@@ -149,38 +155,21 @@ class PaperModel {
         //save form values in user object
         if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
             //save posted vars
-            $this->paperID    = filter_input(INPUT_POST, "paperID");
-            $this->authorID   = filter_input(INPUT_POST, "authorID");
-            $this->reviewerID = filter_input(INPUT_POST, "reviewerID");
-            $this->subAreaID  = filter_input(INPUT_POST, "subAreaID");
-            $this->title      = filter_input(INPUT_POST, "title");
-            //$this->document   = filter_input(INPUT_POST, "document");
+            $this->paperID       = filter_input(INPUT_POST, "paperID");
+            $this->authorID      = filter_input(INPUT_POST, "authorID");
+            $this->reviewerID    = filter_input(INPUT_POST, "reviewerID");
+            $this->subareaID     = filter_input(INPUT_POST, "subareaID");
+            $this->title         = filter_input(INPUT_POST, "title");
+            $this->fileName      = filter_input(INPUT_POST, "fileName");
+            $this->localFileName = filter_input(INPUT_POST, "localFileName");
             
             //extended info
             $this->authorFullName   = filter_input(INPUT_POST, "authorFullName");
             $this->reviewerFullName = filter_input(INPUT_POST, "reviewerFullName");
             $this->areaName         = filter_input(INPUT_POST, "areaName");
-            $this->subareaName      = filter_input(INPUT_POST, "subareaname ");
-            
-//            //save posted form values to array for session vars
-//            $userVars = array(
-//                "paperID"          => $this->paperID,
-//                "authorID"         => $this->authorID,
-//                "reviewerID"       => $this->reviewerID,
-//                "subAreaID"        => $this->subAreaID,
-//                "title"            => $this->title,
-//                "mime"             => $this->mime,
-//                //"document"         => $this->document, 
-//                "authorFullName"   => $this->authorFullName,
-//                "reviewerFullName" => $this->reviewerFullName,
-//                "areaName"         => $this->areaName,
-//                "subareaName"      => $this->subareaName
-//            );
-//            
-//            //save posted vars in session to reload on error
-//            $_SESSION['userVars'] = $userVars;
-
-       //determine which action was selected
+            $this->subareaName      = filter_input(INPUT_POST, "subareaname");
+             
+            //determine which action was selected
             if (filter_input(INPUT_POST, 'btnEdit')) {
                 $errMsg = $this->getSinglePaperForEditing($this->paperID);
             } else
@@ -198,7 +187,14 @@ class PaperModel {
             } else
             if (filter_input(INPUT_POST, 'btnDeletePaper')) {
                 $errMsg = $this->deletePaper();
-            } else{
+            } else
+            if (filter_input(INPUT_POST, 'btnClear')) {
+                $errMsg = $this->clear();
+            } else
+            if(filter_input(INPUT_POST, 'btnViewDoc')) {
+                //echo("<br>viewDoc...");
+                $errMsg = $this->viewDoc(); 
+            }else{
                 $errMsg = "Unknown function";
             }
         }
@@ -241,60 +237,99 @@ class PaperModel {
 
     public function insert() {
         /**
-         * inserts new record 
+         * inserts new record and uploads file to documents folder
          * include this in HTML FORM: "<input name="document" type="file" class="inputFile" />"
          * 
          */
-        if (count($_FILES) > 0) {
+//        echo("</br> authorID:      ".$this->authorID);
+//        echo("</br> reviewerID:    ".$this->reviewerID);
+//        echo("</br> subareaID:     ".$this->subareaID);
+//        echo("</br> title:         ".$this->title);
+//        echo("</br> fileName:      ".$this->fileName);
+//        echo("</br> localFileName: ".$this->localFileName);
+//        
+//        echo("</br>_FILES: ");
+//        print_r($_FILES);
+//        echo("</br>Count: ".count($_FILES));
+        
+        if (count($_FILES) <= 0) {
             return "Error: no files uploaded";
         }
         
         if (!is_uploaded_file($_FILES['document']['tmp_name'])) {
             return "Error: Uploaded file not found";
         }
+        
+        $target_dir = "../../documents/";
+        $target_file = $target_dir . basename($_FILES["document"]['tmp_name']);
+        //echo("</br>Target File: $target_file");
+        $uploadOk = 1;
+        
+        // Check file size
+        if ($_FILES["document"]["size"] > 10000000) {
+            return "Sorry, your file is too large ( > 10MB).";
+        }
+        
+        if (move_uploaded_file($_FILES["document"]["tmp_name"], $target_file)) {
+            $errMsg = "The file ". basename( $_FILES["document"]["name"]). " has been uploaded.";
+        } else {
+            return "Sorry, there was an error uploading your file.";
+        }
 
-        $docBlob = fopen($_FILES['document']['tmp_name'], 'rb');
-        $mimetype = mime_content_type($_FILES['document']['tmp_name']);
-
+        $this->fileName=$_FILES['document']['name'];
+        $this->localFileName=basename($_FILES["document"]['tmp_name']);
         try {
-            $stmt = $this->pdo->prepare("INSERT INTO $this->table ("
-                    . "AUTHOR_ID, REVIEWER_ID, SUBAREA_ID,  TITLE, MIME,  DOCUMENT) VALUES ("
-                    . ":authorID, :reviewerID, :subareaID, :title, :mime, :document");
-
-            $stmt->bindParam(':authorId', $this->authorID);
-            $stmt->bindParam(':reviewerID', $this->reviewerID);
-            $stmt->bindParam(':subareaID', $this->subAreaID);
-            $stmt->bindParam(':title', $this->title);
-            $stmt->bindParam(':mime', $this->mime);
-            $stmt->bindParam(':document', $this->document, PDO::PARAM_LOB);
+            $cols =  "AUTHOR_ID, SUBAREA_ID, TITLE,  FILENAME,  LOCAL_FILENAME  ";
+            $params= ":authorID, :subareaID, :title, :fileName, :localFileName";
+            
+            if($this->reviewerID != ''){
+                $cols   .= ", REVIEWER_ID";
+                $params .= ", :reviewerID";
+            }
+            
+            $sql="INSERT INTO $this->table ("
+                    . "$cols  ) VALUES ("
+                    . "$params )";
+            //echo("</br>$sql");
+            
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':authorID'  , $this->authorID);
+            $stmt->bindParam(':subareaID' , $this->subareaID);
+            $stmt->bindParam(':title'     , $this->title);
+            $stmt->bindParam(':fileName'  , $this->fileName);
+            $stmt->bindParam(':localFileName'  , $this->localFileName);
+            if($this->reviewerID != ''){
+                $stmt->bindParam(':reviewerID', $this->reviewerID);
+            }
             
             $stmt->execute();
         } catch (PDOException $e) {
+            $this->fileName = '';
             return $e->getMessage();
         }
 
-        unset($_SESSION['userVars']);
         $this->clear();
+        unset($_POST);
         return 'NONE';
     }
 
     public function update() {
-            try {
-                $stmt = $this->pdo->prepare("UPDATE $this->table "
+        $sql="UPDATE $this->table "
                     . "SET "
                     . "    AUTHOR_ID   = :authorID,  "
                     . "    REVIEWER_ID = :reviewerID,"
-                    . "    SUBAREA_ID  = :subAreaID, "
-                    . "    TITLE       = :title,     "
-                    . "    DOCUMENT    = :document,  "
-                    . "WHERE ID = :paperID ");
+                    . "    SUBAREA_ID  = :subareaID, "
+                    . "    TITLE       = :title      "
+                    . "WHERE ID = :paperID ";
+        
+            try {
+                $stmt = $this->pdo->prepare($sql);
 
-            $stmt->bindParam(':paperID'     , $this->paperID);
+            $stmt->bindParam(':paperID'    , $this->paperID);
             $stmt->bindParam(':authorID'   , $this->authorID );
             $stmt->bindParam(':reviewerID' , $this->reviewerID);
-            $stmt->bindParam(':subAreaID'  , $this->subAreaID);
+            $stmt->bindParam(':subareaID'  , $this->subareaID);
             $stmt->bindParam(':title'      , $this->title);
-            $stmt->bindParam(':document'   , $this->document);
             
             $res = $stmt->execute();
         } catch (PDOException $e) {
@@ -333,20 +368,37 @@ class PaperModel {
         $this->paperID = '';
         $this->authorID = '';
         $this->reviewerID = '';
-        $this->subAreaID = '';
+        $this->subareaID = '';
         $this->title = '';
-        $this->document = '';
+        $this->fileName = '';
+        $this->localFileName = '';
     }
 
-//SELECT p.ID, p.REVIEWER_ID, p.AUTHOR_ID, p.SUBAREA_ID, p.TITLE, 
-//s.NAME AS `SUBAREA_NAME`,
-//sq.NAME AS `AREA_NAME`,
-//CONCAT(an.FIRST_NAME, ' ',an.LAST_NAME) AS `AUTHOR_FULL_NAME`,
-//CONCAT(rn.FIRST_NAME, ' ',rn.LAST_NAME) AS `REVIEWER_FULL_NAME`
-//FROM `wa_papers` AS p
-//INNER JOIN(SELECT sa.ID AS `SUBAREA_ID`, a.ID AS `AREA_ID`, a.NAME FROM `wa_subareas`AS sa INNER JOIN `wa_areas` AS `a` WHERE sa.PARENT_ID = a.ID) as `sq`ON p.SUBAREA_ID=sq.SUBAREA_ID
-//INNER JOIN `wa_subareas` AS s ON p.SUBAREA_ID=s.ID
-//INNER JOIN `wa_users` AS an ON p.AUTHOR_ID=an.ID
-//LEFT JOIN `wa_users` AS rn ON p.REVIEWER_ID=rn.ID
+    public function viewDoc(){
+        //echo("</br>FileName: $this->fileName");
+        //echo("</br>LocalFileName: $this->localFileName");
+        $errMsg = "";
+        $source_dir = "../../documents/";
+        $source_file = $source_dir.$this->localFileName;
+        //echo("</br>SourceFile: $source_file");
+    
+        if (file_exists($source_file)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            //header('Content-Disposition: attachment; filename="'.basename($file).'"');
+            header('Content-Disposition: attachment; filename="'.$this->fileName.'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($source_file));
+            ob_clean();
+            flush();
+            readfile($source_file);
+        }else{
+            return"Error: source file does not exist";
+        }
+        return"NONE";
+
+    }
 
 }

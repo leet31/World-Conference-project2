@@ -96,6 +96,17 @@ class SubareaModel {
 
         return $errMsg;
     }
+    
+    public function getAreaSubAreaList(){
+        $sql="SELECT sa.ID, CONCAT( a.name,  ' | ', sa.NAME ) AS NAME
+              FROM wa_subareas AS sa
+              INNER JOIN wa_areas AS a ON a.id = sa.PARENT_ID";
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $list = $stmt->fetchAll();
+        return $list;
+     }
 
 }
 
