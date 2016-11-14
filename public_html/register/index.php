@@ -17,7 +17,7 @@ $fields->addField('address_2');
 $fields->addField('city');
 $fields->addField('state', 'Use 2 character abbreviation.');
 $fields->addField('zip', 'Use 5 or 9 digit zip code.');
-$fields->addField('phone', 'Use 999-999-9999 format');
+$fields->addField('phone', 'Use 9999999999 format');
 $fields->addField('email', 'Must be a valid email address');
 $fields->addField('password', 'Must be at least 6 characters.');
 $fields->addField('verify_password', 'Must be same password.');
