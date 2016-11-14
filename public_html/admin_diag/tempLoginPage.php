@@ -26,9 +26,9 @@ if($errMsg == 'NONE'){
         <link rel="stylesheet" type="text/css" href="../css/styles.css">
     </head>
     <body>
-    <?php echo(file_get_contents('.\menu.html')) ?>
-
-        <div>Temporary Login Page</div>
+    <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
+        <p style="text-align: center; font-size: 36px;">Temp Log In</p>
+        <?php include('../home/menu.php') ?>
         <h2>Log In</h2>
 
         <!--display error message, if any-->

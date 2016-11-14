@@ -62,13 +62,18 @@ $allList = $UM->getList();
                 font-size: smaller;
                 margin-right: 0em;
             }
+            
+            table{
+                margin: auto;
+            }
 
         </style>
             </head>
     <body onload="setPwButtonStyle();">
-        <?php echo(file_get_contents('.\menu.html')) ?>
+        <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
+        <p style="text-align: center; font-size: 36px;">Edit Users</p>
+         <?php include('../home/menu.php') ?>
 
-        <div><h2>Edit Users</h2></div>
         <!--display error message, if any-->
         <?php if (isset($errMsg) && $errMsg != '' && strtoupper($errMsg) != 'NONE') echo "<div><h3>$errMsg</h3><div>" ?>
         <div>
@@ -81,14 +86,15 @@ $allList = $UM->getList();
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Company</th>
-                        <th>Address Line 1</th>
-                        <th>Address Line 2</th>
+                        <th>Address</th>
+                        <th>Apt#/Suit#</th>
                         <th>City</th>
                         <th>State</th>
                         <th>Zip</th>
                         <th>Phone</th>
                         <th>Email</th>
                         <th>Password</th>
+                        <th>Type</th>
                     </tr>
                     <tr>
 
@@ -98,10 +104,10 @@ $allList = $UM->getList();
                             <input type="hidden" name="hiddenPw" id="hiddenPw" value=''>
                         </td>
                         <td> 
-                            <input type="text" required style="width:100px;" name="firstName" value='<?php echo($UM->firstName) ?>' > 
+                            <input type="text" required style="width:90px;" name="firstName" value='<?php echo($UM->firstName) ?>' > 
                         </td>
                         <td> 
-                            <input type="text" required style="width:100px;"  name="lastName"  value='<?php echo($UM->lastName) ?>' > 
+                            <input type="text" required style="width:90px;"  name="lastName"  value='<?php echo($UM->lastName) ?>' > 
                         </td>
                         <td> 
                             <input type="text" style="width:100px;"  name="compOrg"   value='<?php echo($UM->compOrg) ?>' > 
@@ -110,7 +116,7 @@ $allList = $UM->getList();
                             <input type="text" required style="width:100px;"  name="address1"  value='<?php echo($UM->address1) ?>' > 
                         </td>
                         <td> 
-                            <input type="text" style="width:100px;"  name="address2"  value='<?php echo($UM->address2) ?>' >
+                            <input type="text" style="width:80px;"  name="address2"  value='<?php echo($UM->address2) ?>' >
                         </td>
                         <td> 
                             <input type="text" style="width:100px;"  name="city"      value='<?php echo($UM->city) ?>' > 
@@ -125,12 +131,17 @@ $allList = $UM->getList();
                             <input type="text" style="width:100px;"  name="phone" pattern="(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}" value='<?php echo($UM->phone) ?>' > 
                         </td>
                         <td> 
-                            <input type="email" required style="width:150px;"  name="email"     value='<?php echo($UM->email) ?>' > 
+                            <input type="email" required style="width:100px;"  name="email"     value='<?php echo($UM->email) ?>' > 
                         </td>
                         <!--<td>
                             <input type='text' style="width:80px;" readonly name='pwFlag' id='pwFlag' 
                                    value='<?php #echo($UM->pwHash==""?"Not Set":"Set") ?>'>
                         </td>-->
+                        <td>
+                            <input type="button" name="btnPassword" id="btnPassword"
+                                   value='Set/Reset PW'
+                                   onclick="setPw();">
+                        </td>
                         <td>
                             <input type="checkbox" name="cbAdmin"     <?php echo($UM->admin == "1" ? "checked" : "") ?> >Admin</br>
                             <input type="checkbox" name="cbAttend"    <?php echo($UM->attendee == "1" ? "checked" : "") ?> >Attendee</br>
@@ -148,9 +159,7 @@ $allList = $UM->getList();
                             }
                             ?>
                             <input type="reset" name="btnClear" value ="Reset"></br>                            
-                            <input type="button" name="btnPassword" id="btnPassword"
-                                   value='Set/Reset PW'
-                                   onclick="setPw();">
+                            
                         </td>
                     </tr>
                 </table>
