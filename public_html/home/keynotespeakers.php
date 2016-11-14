@@ -15,9 +15,9 @@
                     <img src="../img/antoniou.png" alt="Dr. George Antoniou">
                 </div>
                 <div class = "speaker">
-                    <div
+                   
 
-                    <h3>Minimal Circuit and State Space Realization of 2D Al-Pole Systems with Coefficient Symmetry</h3>
+                        <h3><b>Minimal Circuit and State Space Realization of 2D Al-Pole Systems with Coefficient Symmetry</b></h3>
                     <p><b>Dr. George Antoniou</b></p>
                     <p><i>Professor of Montclair State University</i></p>
                     <small><b>Education:</b></small>
@@ -25,7 +25,7 @@
                     <p><small>Master of Electrical Engineering, Villanova University </small></p>
                     <p><small>Bachelor of Science in Electrical Engineering, Fairleigh Dickinson University</small></p>
                     <p><small>Bachelor of Science, NYIT</small></p>
-                    </div>
+                   
 
                 </div>
             
