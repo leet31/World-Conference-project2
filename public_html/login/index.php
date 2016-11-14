@@ -19,6 +19,7 @@ if ($action === NULL) {
 } else {
     $action = strtolower($action);
 }
+
 switch ($action) {
     case 'reset':
         $email = '';
