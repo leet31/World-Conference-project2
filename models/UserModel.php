@@ -303,7 +303,7 @@ class UserModel {
         $this->pwHash = sha1($this->password1);
 
         try {
-            $stmt = $this->pdo->prepare("SELECT ID, FIRST_NAME, ADMIN,  ATTENDEE,  PRESENTER,  STUDENT,  REVIEWER FROM  $this->table "
+            $stmt = $this->pdo->prepare("SELECT ID, FIRST_NAME, LAST_NAME, EMAIL, ADMIN,  ATTENDEE,  PRESENTER,  STUDENT,  REVIEWER FROM  $this->table "
                     . "WHERE PW_HASH =  :pw_hash "
                     . "AND EMAIL =  :email");
 
@@ -331,7 +331,7 @@ class UserModel {
     public function login($email, $password) {
         $pwdHash = sha1($password);
         try {
-            $stmt = $this->pdo->prepare("SELECT ID, FIRST_NAME, ADMIN,  ATTENDEE,  PRESENTER,  STUDENT,  REVIEWER FROM  $this->table "
+            $stmt = $this->pdo->prepare("SELECT ID, FIRST_NAME, LAST_NAME, EMAIL, ADMIN,  ATTENDEE,  PRESENTER,  STUDENT,  REVIEWER FROM  $this->table "
                     . "WHERE PW_HASH =  :pw_hash "
                     . "AND EMAIL =  :email");
 

@@ -40,7 +40,7 @@ class PaperModel {
     /**
      * gets list of papers with author name, reviewer name, area name, and subarea name for content manager
      */
-    public function getEditPaperList(){
+    public function getEditPaperList($authorID = ''){
         $sql = "
             SELECT p.ID, p.REVIEWER_ID, p.AUTHOR_ID, p.SUBAREA_ID, p.TITLE, p.FILENAME, p.LOCAL_FILENAME,
             s.NAME AS `SUBAREA_NAME`,
@@ -59,6 +59,10 @@ class PaperModel {
             LEFT JOIN `wa_users` AS rn 
                 ON p.REVIEWER_ID=rn.ID";
         
+        if($authorID != ''){
+            $sql .= " \nWHERE p.AUTHOR_ID=$authorID";
+        }
+                
         try{
             $stmt = $this->pdo->prepare($sql);
             $res = $stmt->execute();
@@ -239,7 +243,7 @@ class PaperModel {
         /**
          * inserts new record and uploads file to documents folder
          * include this in HTML FORM: "<input name="document" type="file" class="inputFile" />"
-         * 
+         * <form> must have these two attributes: "method='post' enctype='multipart/form-data' "
          */
 //        echo("</br> authorID:      ".$this->authorID);
 //        echo("</br> reviewerID:    ".$this->reviewerID);
@@ -278,7 +282,9 @@ class PaperModel {
 
         $this->fileName=$_FILES['document']['name'];
         $this->localFileName=basename($_FILES["document"]['tmp_name']);
-        try {
+//        echo("<br><br> fileName:      ".$this->fileName);
+//        echo("<br> localFileName: ".$this->localFileName);
+       try {
             $cols =  "AUTHOR_ID, SUBAREA_ID, TITLE,  FILENAME,  LOCAL_FILENAME  ";
             $params= ":authorID, :subareaID, :title, :fileName, :localFileName";
             
@@ -290,7 +296,7 @@ class PaperModel {
             $sql="INSERT INTO $this->table ("
                     . "$cols  ) VALUES ("
                     . "$params )";
-            //echo("</br>$sql");
+            echo("<br>$sql");
             
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindParam(':authorID'  , $this->authorID);
