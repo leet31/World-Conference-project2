@@ -20,5 +20,10 @@
         <p><strong>To download the entire program as PDF: </strong></p>
         </div>
         
+        <div>
+              <p><i>Thursday, November 17, 2016</i></p>
+            <small><b>Conference Registration Desk will be open on Thursday, November 17, 2016 from 3:00pm to 7:00pm. Pre-registered conference participants are encouraged to pick up their registration packets during this time. Conference Registration Desk is located on the first floor, across from Ballroom 103.</b></small>
+        </div>
+        
     </body>
 </html>
