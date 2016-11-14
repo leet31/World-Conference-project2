@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <?php
+if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
+if (!(isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE)){
+    header("Location: ../login");
+    die();
+}
+
 require '../../controllers/connectDb.php';
 require '../../models/UserModel.php';
 

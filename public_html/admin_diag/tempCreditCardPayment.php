@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <!-- temp PHP for debugging html-->
 <?php
+if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
+if (!(isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE)){
+    header("Location: ../login");
+    die();
+}
+
 $firstName    =isset($_POST['firstName'])? $_POST['firstName']         :"John";
 $lastName     =isset($_POST['lastName']) ? $_POST['lastName']          :"Doe";
 $address1     =isset($_POST['address1']) ? $_POST['address1']          :"123MainSt.";
