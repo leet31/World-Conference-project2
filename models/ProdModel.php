@@ -33,6 +33,20 @@ class ProdModel {
         $products = $stmt->fetchAll();
         return $products;
     }
+    public function getListByCat($catID) {
+        $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE CATEGORY = :catID");
+        $stmt->bindParam(':catID', $catID);
+        $stmt->execute();
+        $products = $stmt->fetchAll();
+        return $products;
+    }
+    public function getProductByID($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE ID = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $product = $stmt->fetch();
+        return $product;
+    }
 
     public function delete($productID) {
         try {

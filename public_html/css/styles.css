@@ -13,7 +13,7 @@ ul {
     background-color: #171515;
    
 }
-li  {
+li{
     float: left;
     border-right:1px solid #bbb;
 }
@@ -154,4 +154,22 @@ img:hover{
     display: inline-block;
     width: 65%;
     position: relative;
+}
+.cart{
+    width: 4%;
+    display: inline-block;
+}
+.cart:hover{
+    width:4%;
+    
+}
+.category_list{
+    display: inline-block;
+    width: 10%;
+    background-color: #f9f9f9;
+}
+.product_list, .product_detail{
+    display: inline-block;
+    width: 60%;
+    background-color: #f9f9f9;
 }
