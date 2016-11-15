@@ -40,7 +40,7 @@ class PaperModel {
     /**
      * gets list of papers with author name, reviewer name, area name, and subarea name for content manager
      */
-    public function getEditPaperList($authorID = ''){
+    public function getEditPaperList($authorID = '',$reviewerID = ''){
         $sql = "
             SELECT p.ID, p.REVIEWER_ID, p.AUTHOR_ID, p.SUBAREA_ID, p.TITLE, p.FILENAME, p.LOCAL_FILENAME,
             s.NAME AS `SUBAREA_NAME`,
@@ -59,8 +59,11 @@ class PaperModel {
             LEFT JOIN `wa_users` AS rn 
                 ON p.REVIEWER_ID=rn.ID";
         
+        //add WHERE clause, if any
         if($authorID != ''){
             $sql .= " \nWHERE p.AUTHOR_ID=$authorID";
+        }else if($reviewerID != ''){
+            $sql .= " \nWHERE p.REVIEWER_ID=$reviewerID";
         }
                 
         try{
@@ -406,13 +409,20 @@ class PaperModel {
     }
 
     public function viewDoc(){
-        //echo("</br>FileName: $this->fileName");
-        //echo("</br>LocalFileName: $this->localFileName");
+//        echo("</br>FileName: $this->fileName");
+//        echo("</br>LocalFileName: $this->localFileName");
+//       
+//        error_log("FileName: ".$this->fileName."\n");
+//        error_log("LocalFileName: ".$this->localFileName."\n");
+        
         $errMsg = "";
         $source_dir = "../../documents/";
         $source_file = $source_dir.$this->localFileName;
         //echo("</br>SourceFile: $source_file");
     
+        //sanitize file name
+        //$this->fileName = str_replace("'","-",$this->fileName);
+        
         if (file_exists($source_file)) {
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
@@ -430,6 +440,29 @@ class PaperModel {
         }
         return"NONE";
 
+    }
+    
+    /**
+     * Function: sanitize
+     * Returns a sanitized string, typically for URLs.
+     *
+     * Parameters:
+     *     $string - The string to sanitize.
+     *     $force_lowercase - Force the string to lowercase?
+     *     $anal - If set to *true*, will remove all non-alphanumeric characters.
+     */
+    public function sanitize($string, $force_lowercase = true, $anal = false) {
+        $strip = array("~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "=", "+", "[", "{", "]", "&#39;",
+            "}", "\\", "|", ";", ":", "\"", "'", "&#8216;", "&#8217;", "&#8220;", "&#8221;", "&#8211;", "&#8212;",
+            "â€”", "â€“", ",", "<", ".", ">", "/", "?");
+        $clean = trim(str_replace($strip, "", strip_tags($string)));
+        $clean = preg_replace('/\s+/', "-", $clean);
+        $clean = ($anal) ? preg_replace("/[^a-zA-Z0-9]/", "", $clean) : $clean;
+        return ($force_lowercase) ?
+                (function_exists('mb_strtolower')) ?
+                        mb_strtolower($clean, 'UTF-8') :
+                        strtolower($clean) :
+                $clean;
     }
 
 }

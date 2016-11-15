@@ -1,6 +1,6 @@
 <?php
 if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
-if (!(isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE)){
+if (!isset($_SESSION['userRec'])) {
     header("Location: ../login");
     die();
 }
