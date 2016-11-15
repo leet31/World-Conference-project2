@@ -1,4 +1,5 @@
 <?php
+
 require_once '../../models/fields.php';
 require_once '../../models/validate.php';
 require '../../controllers/connectDb.php';
@@ -37,16 +38,15 @@ switch ($action) {
             include 'login.php';
         } else {
 
-            $msg = $UM->login($email, $password);
-            if ($msg == 'NONE') {
+            $errMsg = $UM->login($email, $password);
+            if ($errMsg == 'NONE') {
                 include 'login_success.php';
             } else {
                 include 'login_fail.php';
-                echo '<div>' . $msg . '</div>';
+                echo '<div>' . $errMsg . '</div>';
             }
-        }
 
-    break;
-    
+            break;
+        }
 }
 
