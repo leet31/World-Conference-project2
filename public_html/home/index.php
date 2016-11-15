@@ -13,12 +13,15 @@
         <b>November 20-28, Charlotte, NC</b></p>
        
         <?php include '../home/menu.php'?>
-       
+       <div
         <p style="font-size: x-large">&nbsp;</p>
-        <p style="font-size: xx-large; background-color:#D49318; color: cyan;"><strong>The 2016 World Congress in Computer science, Computer Engineering, & Applied Computing</strong></p>
+        <p style="font-size: xx-large; background-color:#4880D5; color: black;"><strong>The 2016 World Congress in Computer science, Computer Engineering, & Applied Computing</strong></p>
         <p style="font-size: x-large">&nbsp;</p>
-        <p><strong>  </strong></p>
-        <p>&nbsp;</p>
+         <p style="font-size: large; color: black;"><i>Welcome to the 2016 World Congress in Computer Science. This years events will be composed of research presentations, keynote lectures, tutorials, and panel discussions. Please click on menu option: <a href="../home/keynotespeakers.php">Keynote Speakers</a> to see some of the speakers that will be attending. Also, take advantage of early registeration and early bookings at the hotel where this years conference is being held. </i></p>
+       </div>   
+                   
+
+             
      
     </body>
 
