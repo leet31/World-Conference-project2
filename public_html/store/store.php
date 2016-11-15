@@ -40,7 +40,7 @@
                         }*/
             .category_list a {
                 color:black;
-                margin:10px;
+                /*margin:10px;*/
             }
             .product a{
                 color:black; 

@@ -16,6 +16,8 @@ ul {
 li{
     float: left;
     border-right:1px solid #bbb;
+    padding: 0px;
+    
 }
 
 li:last-child {
@@ -28,13 +30,14 @@ li a {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    margin: 0px;
 }
 
 li a, .dropbtn { 
     display: inline-block;
     color: white;
     text-align: center;
-    padding: 10px;
+    padding: 7px;
     text-decoration: none;
 }
 li a.active {
@@ -153,19 +156,18 @@ img.speaker_img:hover{
 }
 .profile{
     display: inline-block;
+    vertical-align: top;
     width: 15%;
 }
 .speaker{
     display: inline-block;
+    vertical-align: top;
     width: 65%;
     position: relative;
 }
-.cart{
-    width: 4%;
-    display: inline-block;
+.account{
+    background-color: #708090;
 }
-.cart:hover{
-    width:4%;
-    
+.admin_menu{
+    background-color: #2F4F4F;
 }
-

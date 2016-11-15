@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Store</title>
+        <title>Shopping Cart</title>
         <link rel="stylesheet" type="text/css" href="../css/styles.css"><style>
             fieldset{
                 text-align: right;
@@ -15,29 +15,33 @@
                 background-color: #f2f2f2;
                 text-align: center;
             }
-           
+
             input[type=number]{
                 width: 80px;
             }
-            
+
             table{
                 margin: auto;
             }
             td, th{
-                border:solid #add9c0;
+                border:solid #C0C0C0;
                 border-width:0px 1px 1px 0px;
                 padding:10px;
                 text-align: center;
             }
-            table{border:solid #add9c0;
+            table{
+                border:solid #C0C0C0;
                   border-width:1px 0px 0px 1px;
+            }
+            a{
+                color: black;
             }
         </style>
 
     </head>
 
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
-        <p style="text-align: center; font-size: 36px;">Store</p>
+        <p style="text-align: center; font-size: 36px;">Shopping Cart</p>
         <?php include '../home/menu.php'; ?>
         <div>
             <fieldset>
@@ -47,8 +51,6 @@
                     echo 'There are no items in your cart.';
                 } else {
                     ?> 
-
-
                     <table>
                         <th>Item#</th>
                         <th>Name</th>
@@ -62,19 +64,18 @@
                             echo '<form action="." method="post"><tr> ';
                             $cost = number_format($item['cost'], 2);
                             $total = number_format($item['total'], 2);
-                            echo '<td><input type ="text" readonly name="product_id" value="' . $item['id'] . '"></td><td>' . $item['name'] .
+                            echo '<td><input type ="text" readonly name="product_id" value="' . $item['id'] . '"></td>';
+                          
+                            echo '<td>' . $item['name'] .
                             '</td><td>' . $cost . '</td><td>'
                             . '<input type="number" name="qty" value="' .
                             $item['qty'] . '"  max="10" step="1"></td><td>' . $total . '</td>';
                             echo '<td><input type="submit" name="action" value="Update"></td>';
-
                             echo '</tr>';
                             echo '</form>';
                         }
                         ?>
                     </table>
-
-                    </form>
                 <?php } ?>
                 <p>Total Before Tax is: $ <?php echo $total_b_tax; ?></p> 
                 <p>Click "Update" to update each quantity.<br> 

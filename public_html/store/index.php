@@ -29,7 +29,7 @@ foreach ($products as $product) {
     $products_array[$product['ID']] = $product;
 }
 require_once('cart.php');
-
+$total_b_tax=0;
 $action = filter_input(INPUT_GET, 'action');
 if ($action == NULL) {
     $action = filter_input(INPUT_POST, 'action');
@@ -75,6 +75,7 @@ switch ($action) {
         $product = $PM->getProductByID($product_id);
 
         cart\add_item($product_id, $qty);
+        
         $total_b_tax= cart\get_subtotal();
         include('cart_view.php');
 //        echo var_dump($products_array);
