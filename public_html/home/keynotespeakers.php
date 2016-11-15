@@ -12,7 +12,7 @@
         <div class="content">
             
                 <div class = "profile">
-                    <img src="../img/antoniou.png" alt="Dr. George Antoniou">
+                    <img class='speaker_img' src="../img/antoniou.png" alt="Dr. George Antoniou">
                 </div>
                 <div class = "speaker">
                    
@@ -30,7 +30,7 @@
                 </div>
             
                 <div class = "profile">
-                    <img src="../img/coutras.png" alt="Dr. Constantine Coutras">
+                    <img class='speaker_img'src="../img/coutras.png" alt="Dr. Constantine Coutras">
                 </div>
                 <div class = "speaker">
 
@@ -45,7 +45,7 @@
 
                 </div>
                 <div class = "profile">
-                    <img src="../img/feldman.png" alt="Dr. Anna Feldman">
+                    <img  class='speaker_img' src="../img/feldman.png" alt="Dr. Anna Feldman">
                 </div>
                 <div class = "speaker">
                     <h3>Proceedings of the North American Association for Computational Linguistics</h3>
@@ -59,7 +59,7 @@
 
                 </div>
                 <div class = "profile">
-                    <img src="../img/herbert.png" alt="Dr. Katherine Herbert">
+                    <img class='speaker_img' src="../img/herbert.png" alt="Dr. Katherine Herbert">
                 </div>
                 <div class = "speaker">
 
@@ -74,7 +74,7 @@
 
                 </div>
                 <div class = "profile">
-                    <img src="../img/peng.png" alt="Dr. John Peng">
+                    <img class='speaker_img' src="../img/peng.png" alt="Dr. John Peng">
                 </div>
                 <div class = "speaker">
 

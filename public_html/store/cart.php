@@ -63,6 +63,9 @@ namespace cart {
     // Get cart subtotal
     function get_subtotal() {
         $subtotal = 0;
+        if(!isset($_SESSION['cartRec'])){
+            return 0;
+        }
         foreach ($_SESSION['cartRec'] as $item) {
             $subtotal += $item['total'];
         }

@@ -7,10 +7,7 @@
     </head>
 
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
-        <p style="text-align: center; font-size: 36px;">Log In Fail</p>
+        <p style="text-align: center; font-size: 36px;">Log In</p>
         <?php include '../home/menu.php'; ?>
-        <div>
-            <p> Login Fail!</p>
-            
-        </div>
+        
     </body>

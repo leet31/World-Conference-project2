@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>User Account Management</title>
+        <title>Account Management</title>
         <link rel="stylesheet" type="text/css" href="../css/styles.css">
         <style>
             table{
@@ -13,7 +13,7 @@
     </head>
 
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
-        <p style="text-align: center; font-size: 36px;">Online Registration</p>
+        <p style="text-align: center; font-size: 36px;">Account Management</p>
         <?php include '../home/menu.php'; ?>
         <div>
         <table border ="1">

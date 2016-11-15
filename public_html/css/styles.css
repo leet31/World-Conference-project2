@@ -122,6 +122,10 @@ input[type = email]{
     margin-bottom: 0.5em;
     width: 15em;
 }
+input[type = password]{
+    margin-bottom: 0.5em;
+    width: 15em;
+}
 input[type = submit]{
     margin: 0.5em;
     font-size: large;
@@ -141,10 +145,10 @@ input[type = radio] {
 span{
     margin: 0.25em;
 }
-img{
+img.speaker_img{
     width: 50%;
 }
-img:hover{
+img.speaker_img:hover{
     width: 80%;
 }
 .profile{
@@ -164,13 +168,4 @@ img:hover{
     width:4%;
     
 }
-.category_list{
-    display: inline-block;
-    width: 10%;
-    background-color: #f9f9f9;
-}
-.product_list, .product_detail{
-    display: inline-block;
-    width: 60%;
-    background-color: #f9f9f9;
-}
+

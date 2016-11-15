@@ -4,19 +4,52 @@
         <meta charset="utf-8">
         <title>Store</title>
         <link rel="stylesheet" type="text/css" href="../css/styles.css"><style>
-           .product_table, .product_table th, .product_table td{
-                border: 1px solid black;
+            .category_list{
+                display: inline-block;
+                width: 15%;
+                background-color: #f9f9f9;
+                margin: 5px;
+                padding:5px;
+                vertical-align: top;
+
             }
-          
-            .product_table{
-                margin: auto;
+            .product_list, .product_detail{
+                display: inline-block;
+                width: 80%;
+                padding:0px;
+                vertical-align: top;
+
             }
-            
-            .product_table th, .product_table td{
-                width: 200px;
+            .product_img{
+                display: inline-block;
+                width: 20%;
+                vertical-align: top;
+            }
+            .product_text{
+                display: inline-block;
+                width: 60%;
+                vertical-align: top;
+            }
+            .product{
+                display: inline-block;
+                width: 25%;
+                padding:0px;
+                margin-bottom: 10px;
+            }
+            img{
+                width:150px;
+            }
+            img:hover{
+                width:120%;
+            }
+            input[type=text]{
+                padding: 10px;
+                border-style: none;
+                border-width: 0px;
+                background-color: #f2f2f2;
             }
         </style>
-        
+
     </head>
 
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
@@ -27,27 +60,36 @@
                 <table>
                     <?php
                     foreach ($categories as $cat) {
-                        echo '<tr><td><a href=.?category_id='.$cat['ID'].'>'.$cat['CATEGORY_NAME'].'</a></td></tr>';
+                        echo '<tr><td><a href=.?category_id=' . $cat['ID'] . '>' . $cat['CATEGORY_NAME'] . '</a></td></tr>';
                     }
                     ?>
                 </table>
             </div>
             <div class="product_detail">
-                <form name="productDetailForm" action="." method="post">
-                <table class="product_table">
-                    
+                <div class="product_img">
                     <?php
-                    echo '<tr><th>Product ID</th><td><input type="text" name="product_id" readonly value='.$product['ID'].'></td></tr>';
-                    echo '<tr><th>Product Name</th><td>'.$product['NAME'].'</td></tr>';
-                    echo '<tr><th>Product Description</th><td>'.$product['DESCRIPTION'].'</td></tr>';
-                    echo '<tr><th>Product Price</th><td>'.number_format($product['PRICE'], 2).'</td></tr>';
+                    if ($product['IMG_NAME'] == '') {
+                        $html = '<img src="../product_images/default.png"/><br>';
+                    } else {
+                        $html = '<img src="../product_images/' . $product['IMG_NAME'] . '"/><br>';
+                    }
+                    echo $html;
                     ?>
-                     <tr><th>Quantity</th><td><select name ="qty">
-                    <option>1</option><option>2</option><option>3</option><option>4</option>'
-                    </select></td></tr>
-                    <tr><td></td><td><input type="submit" name ="action" value="Add"></td></tr>
-                </table>
+                </div>
+                <div class="product_text">
+                    <form name="productDetailForm" action="." method="post">
+
+                        <?php
+                        echo '<i><small>item #:</small></i><input type="text" name="product_id" readonly value=' . $product['ID'] . '>';
+                        echo '<h3>' . $product['NAME'] . '</h3>';
+                        echo '<p>' . $product['DESCRIPTION'] . '</p>';
+                        echo '$ <i>' . number_format($product['PRICE'], 2) . '</i><br><br>';
+                        ?>
+                        <b>Qty: </b> <input name="qty" type="number" min="0" max="10" step="1"><br><br><br>
+                        <input type="submit" name ="action" value="Add">
+
                     </form>
+                </div>   
             </div>
     </body>
 </html>

@@ -21,7 +21,7 @@ if (isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE) {
             <a href="../admin_edit/editProducts.php">Edit Product</a>
             <a href="../admin_edit/editAreas.php">Edit Content Areas</a>
             <a href="../admin_edit/editSubareas.php">Edit Content Subareas</a>
-            <a href="../admin_edit/editUsers.php">Edit Users</a>
+            <a href="../admin_edit">Edit Users</a>
             <a href="../admin_edit/editPapers.php">Edit Paper Submissions</a>
         </div>
     </li>
