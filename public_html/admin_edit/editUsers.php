@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <?php
+if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
+if (!(isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE)){
+    header("Location: ../login");
+    die();
+}
+
 require '../../controllers/connectDb.php';
 require '../../models/UserModel.php';
 
@@ -86,15 +92,14 @@ $allList = $UM->getList();
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Company</th>
-                        <th>Address</th>
-                        <th>Apt#/Suit#</th>
+                        <th>Address Line 1</th>
+                        <th>Address Line 2</th>
                         <th>City</th>
                         <th>State</th>
                         <th>Zip</th>
                         <th>Phone</th>
                         <th>Email</th>
-                        <th>Password</th>
-                        <th>Type</th>
+                        <th>Roles</th>
                     </tr>
                     <tr>
 
@@ -138,11 +143,6 @@ $allList = $UM->getList();
                                    value='<?php #echo($UM->pwHash==""?"Not Set":"Set") ?>'>
                         </td>-->
                         <td>
-                            <input type="button" name="btnPassword" id="btnPassword"
-                                   value='Set/Reset PW'
-                                   onclick="setPw();">
-                        </td>
-                        <td>
                             <input type="checkbox" name="cbAdmin"     <?php echo($UM->admin == "1" ? "checked" : "") ?> >Admin</br>
                             <input type="checkbox" name="cbAttend"    <?php echo($UM->attendee == "1" ? "checked" : "") ?> >Attendee</br>
                             <input type="checkbox" name="cbPresenter" <?php echo($UM->presenter == "1" ? "checked" : "") ?> >Presenter</br>
@@ -159,7 +159,9 @@ $allList = $UM->getList();
                             }
                             ?>
                             <input type="reset" name="btnClear" value ="Reset"></br>                            
-                            
+                            <input type="button" name="btnPassword" id="btnPassword"
+                                   value='Set/Reset PW'
+                                   onclick="setPw();">
                         </td>
                     </tr>
                 </table>
