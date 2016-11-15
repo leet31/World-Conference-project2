@@ -184,7 +184,12 @@ class PaperModel {
                 $errMsg = $this->update();
             } else
             if (filter_input(INPUT_POST, 'btnInsert')) {
-                $errMsg = $this->insert();
+                $returnArray = $this->insert();
+                if(!$returnArray[0]){
+                    $errMsg = $returnArray[1];
+                }else {
+                    $errMsg ='';
+                }
             } else
             if (filter_input(INPUT_POST, 'btnUploadPaper')) {
                 $errMsg = $this->uploadPaper();
@@ -245,6 +250,18 @@ class PaperModel {
          * include this in HTML FORM: "<input name="document" type="file" class="inputFile" />"
          * <form> must have these two attributes: "method='post' enctype='multipart/form-data' "
          */
+        //$uploadLogFile = 'C:\temp\uploads.log';
+        error_log(microtime()." Insert started\n");//,3,"$uploadLogFile");
+        
+        error_log(microtime()." authorID:      ".$this->authorID     ."\n");//,3,"$uploadLogFile");
+        error_log(microtime()." reviewerID:    ".$this->reviewerID   ."\n");//,3,"$uploadLogFile");
+        error_log(microtime()." subareaID:     ".$this->subareaID    ."\n");//,3,"$uploadLogFile");
+        error_log(microtime()." title:         ".$this->title        ."\n");//,3,"$uploadLogFile");
+        error_log(microtime()." fileName:      ".$this->fileName     ."\n");//,3,"$uploadLogFile");
+        error_log(microtime()." localFileName: ".$this->localFileName."\n");//,3,"$uploadLogFile");
+        $files_str=print_r($_FILES, true);
+        error_log(microtime()." _FILES:        ".$files_str          ."\n");//,3,"$uploadLogFile");
+        
 //        echo("</br> authorID:      ".$this->authorID);
 //        echo("</br> reviewerID:    ".$this->reviewerID);
 //        echo("</br> subareaID:     ".$this->subareaID);
@@ -257,33 +274,38 @@ class PaperModel {
 //        echo("</br>Count: ".count($_FILES));
         
         if (count($_FILES) <= 0) {
-            return "Error: no files uploaded";
+            return array(false,"Error: no files uploaded");
         }
         
         if (!is_uploaded_file($_FILES['document']['tmp_name'])) {
-            return "Error: Uploaded file not found";
+            return array(false,"Error: Uploaded file not found");
         }
         
         $target_dir = "../../documents/";
         $target_file = $target_dir . basename($_FILES["document"]['tmp_name']);
+        error_log(microtime()." Target File:    ".$target_file          ."\n");
         //echo("</br>Target File: $target_file");
         $uploadOk = 1;
         
         // Check file size
-        if ($_FILES["document"]["size"] > 10000000) {
-            return "Sorry, your file is too large ( > 10MB).";
+        if ($_FILES["document"]["size"] > 8388608) {
+            return array(false,"Sorry, your file is too large ( > 8 MB).");
         }
         
         if (move_uploaded_file($_FILES["document"]["tmp_name"], $target_file)) {
             $errMsg = "The file ". basename( $_FILES["document"]["name"]). " has been uploaded.";
         } else {
-            return "Sorry, there was an error uploading your file.";
+            return array(false,"Sorry, there was an error uploading your file.");
         }
 
         $this->fileName=$_FILES['document']['name'];
         $this->localFileName=basename($_FILES["document"]['tmp_name']);
+        error_log(microtime()." fileName:      ".$this->fileName     ."\n");//,3,"$uploadLogFile");
+        error_log(microtime()." localFileName: ".$this->localFileName."\n");//,3,"$uploadLogFile");
+        
 //        echo("<br><br> fileName:      ".$this->fileName);
 //        echo("<br> localFileName: ".$this->localFileName);
+        
        try {
             $cols =  "AUTHOR_ID, SUBAREA_ID, TITLE,  FILENAME,  LOCAL_FILENAME  ";
             $params= ":authorID, :subareaID, :title, :fileName, :localFileName";
@@ -296,7 +318,8 @@ class PaperModel {
             $sql="INSERT INTO $this->table ("
                     . "$cols  ) VALUES ("
                     . "$params )";
-            echo("<br>$sql");
+            error_log(microtime()." sql       :    ".$sql."\n");//,3,"$uploadLogFile");
+//            echo("<br>$sql");
             
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindParam(':authorID'  , $this->authorID);
@@ -311,12 +334,14 @@ class PaperModel {
             $stmt->execute();
         } catch (PDOException $e) {
             $this->fileName = '';
-            return $e->getMessage();
+            error_log(microtime()." PDO Exception: ".$e->getMessage()."\n");//,3,"$uploadLogFile");
+            return array(false,$e->getMessage());
         }
 
         $this->clear();
         unset($_POST);
-        return 'NONE';
+        error_log(microtime()." Insertion OK:      ".$this->pdo->lastInsertId()."\n");//,3,"$uploadLogFile");
+        return array(true,'Success:Document Number is '.$this->pdo->lastInsertId());
     }
 
     public function update() {
