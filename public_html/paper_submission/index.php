@@ -26,7 +26,7 @@ $validate = new Validate();
 $fields = $validate->getFields();
 
 $fields->addField('title', 'Title of paper');
-$fields->addField('fileChooser', 'Document file to upload - 100MB Max');
+$fields->addField('fileChooser', 'Document file to upload - 8 MB Max');
 $fields->addField('subarea','Select the knowlege Area | Subarea for your paper.');
 
 $action = filter_input(INPUT_POST, 'log_action');
