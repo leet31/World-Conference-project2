@@ -18,13 +18,28 @@ if (!(isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE)) {
                 border: 1px solid black;
             }
         </style>
+        <script>
+            window.onload = function () {
+                document.getElementById('paperSubmitForm').addEventListener('submit', function (evt) {
+                    var file = document.getElementById('document').files[0];
+                    
+                    if (file && file.size < 8388608) { // defualt XAMPP limit
+                        //Submit form        
+                    } else {
+                        alert("Error: File is larger than 8 MB");
+                        //Prevent default and display error
+                        evt.preventDefault();
+                    }
+                }, false);
+            }
+        </script>
     </head>
 
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png"> 
         <p style="text-align: center; font-size: large;"></p>
         <?php include '../home/menu.php' ?>
         <div>
-            <form name="paperSubmitForm" action="." method="post" enctype="multipart/form-data">
+            <form name="paperSubmitForm" id="paperSubmitForm" action="." method="post" enctype="multipart/form-data">
                 <fieldset>
                     <legend>Submit Paper for Review</legend>
                     <label>Name:</label>
@@ -53,7 +68,7 @@ if (!(isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE)) {
                     <br>
 
                     <label>File to Upload:</label>
-                    <input name="document" type="file" required style="width: 25em">
+                    <input name="document" id="document" type="file" required style="width: 25em">
                     <?php echo $fields->getField('fileChooser')->getHTML(); ?><br>
                     <br>
                     <label></label>
@@ -73,15 +88,15 @@ if (!(isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE)) {
                 <?php
                 foreach ($editPaperList as $row) {
                     echo("<tr>\n");
-                        echo("<td>\n");
-                            echo($row['TITLE']);
-                        echo("</td>\n");
-                        echo("<td>\n");
-                            echo($row['AREA_NAME'] . " | " . $row['SUBAREA_NAME']);
-                        echo("</td>\n");
-                        echo("<td>\n");
-                            echo($row['FILENAME']);
-                        echo("</td>\n");
+                    echo("<td>\n");
+                    echo($row['TITLE']);
+                    echo("</td>\n");
+                    echo("<td>\n");
+                    echo($row['AREA_NAME'] . " | " . $row['SUBAREA_NAME']);
+                    echo("</td>\n");
+                    echo("<td>\n");
+                    echo($row['FILENAME']);
+                    echo("</td>\n");
                     echo("</tr>\n");
                 }
                 ?>
