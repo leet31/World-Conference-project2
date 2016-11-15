@@ -26,7 +26,7 @@ $validate = new Validate();
 $fields = $validate->getFields();
 
 $fields->addField('title', 'Title of paper');
-$fields->addField('fileChooser', 'Document file to upload - 1GB Max');
+$fields->addField('fileChooser', 'Document file to upload - 100MB Max');
 $fields->addField('subarea','Select the knowlege Area | Subarea for your paper.');
 
 $action = filter_input(INPUT_POST, 'log_action');
@@ -60,17 +60,22 @@ switch ($action) {
         $PM->subareaID = trim(filter_input(INPUT_POST,'subareaID'));
         $PM->title = trim(filter_input(INPUT_POST,'title'));
         
-        $errMsg = $PM->insert();
+//        echo("<br>Author: $PM->authorID");
+//        echo("<br>Reviewer: $PM->reviewerID");
+//        echo("<br>Subarea: $PM->subareaID");
+//        echo("<br>title: $PM->title");
         
-        if ($errMsg != 'NONE') {
+        $ret_array = $PM->insert();
+        $msg = $ret_array[1];
+       
+        if ($ret_array[0]) {
             include 'paper_submit_success.php';
+            echo '<div>' . $msg . '</div>';
         } else {
             include 'paper_submit_fail.php';
-            echo '<div>' . $errMmsg . '</div>';
+            echo '<div>' . $msg . '</div>';
         }
-
-        //include 'papersubmission.php';
-
+        
         break;
 }
 
