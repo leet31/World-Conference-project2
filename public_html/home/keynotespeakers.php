@@ -17,7 +17,7 @@
                 <div class = "speaker">
                    
 
-                        <h3><b>Minimal Circuit and State Space Realization of 2D Al-Pole Systems with Coefficient Symmetry</b></h3>
+                    <h3><b>Minimal Circuit and State Space Realization of 2D Al-Pole Systems with Coefficient Symmetry</b></h3>
                     <p><b>Dr. George Antoniou</b></p>
                     <p><i>Professor of Montclair State University</i></p>
                     <small><b>Education:</b></small>
