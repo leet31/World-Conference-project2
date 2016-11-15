@@ -7,9 +7,9 @@
     
     
 if (isset($_SESSION['userRec'])) {
-    echo '<ul  class ="account"><li><a href="../user_account">' . $_SESSION['userRec']['FIRST_NAME'] . '</a></li><li><a href="../logout">Logout</a></li></ul>';
+    echo '<ul  class ="account"><li class="main_menu"><a href="../user_account">' . $_SESSION['userRec']['FIRST_NAME'] . '</a></li><li class="main_menu"><a href="../logout">Logout</a></li></ul>';
 } else {
-    echo '<ul class ="account"><li><a href="../login">Log In</a></li><li><a href="../register">Register</a></li></ul>';
+    echo '<ul class ="account"><li class="main_menu"><a href="../login">Log In</a></li><li class="main_menu"><a href="../register">Register</a></li></ul>';
 }
 include('menu.html');
 if (isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE) {

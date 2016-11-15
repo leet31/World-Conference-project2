@@ -30,6 +30,13 @@ class ProdCatModel {
         $cats = $stmt->fetchAll();
         return $cats;
     }
+    public function getListByID($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE ID = :id");
+         $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $cats = $stmt->fetch();
+        return $cats;
+    }
 
     public function delete($catID) {
         try {
