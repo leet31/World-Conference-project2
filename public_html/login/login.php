@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title>Log In</title>
         <link rel="stylesheet" type="text/css" href="../css/styles.css">
+       
     </head>
 
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
@@ -18,7 +19,7 @@
                     <legend>Input Your Email Address and Password</legend>
                     <label>Email:</label>
                     <input name="email" type="email" value="<?php echo htmlspecialchars($email); ?>" >
-                    <?php echo $fields->getField('email')->getHTML(); ?><br>
+                   <?php echo $fields->getField('email')->getHTML(); ?><br>
                     <br>
                     <label>Password:</label>
                     <input name="password" type="password" value="<?php echo htmlspecialchars($password); ?>">

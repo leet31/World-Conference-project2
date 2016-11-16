@@ -3,12 +3,12 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Online Registration</title>
+        <title>Registration</title>
         <link rel="stylesheet" type="text/css" href="../css/styles.css">
     </head>
 
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
-        <p style="text-align: center; font-size: 36px;">Online Registration</p>
+        <p style="text-align: center; font-size: 36px;">Registration</p>
         <?php include '../home/menu.php'; ?>
         <div>
             <form name="regForm" action="." method="post">

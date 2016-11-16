@@ -10,7 +10,7 @@
         <p style="text-align: center; font-size: 36px;">Login Successful!</p>
         <?php include '../home/menu.php'; ?>
         <div>
-            <p> Login Successful!</p>
+            <p></p>
             <p>Welcome <?php $_SESSION['userRec']['FIRST_NAME']?></p>
         </div>
     </body>

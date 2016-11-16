@@ -11,7 +11,7 @@
 //}
 
 namespace cart {
-    
+
 //    echo var_dump($products_array);
 
     if (!isset($_SESSION)) {
@@ -36,7 +36,7 @@ namespace cart {
         $cost = $products_array[$key]['PRICE'];
         $total = $cost * $quantity;
         $item = array(
-            'id' =>$key,
+            'id' => $key,
             'name' => $products_array[$key]['NAME'],
             'cost' => $cost,
             'qty' => $quantity,
@@ -63,6 +63,9 @@ namespace cart {
     // Get cart subtotal
     function get_subtotal() {
         $subtotal = 0;
+        if (!isset($_SESSION['cartRec'])) {
+            return 0;
+        }
         foreach ($_SESSION['cartRec'] as $item) {
             $subtotal += $item['total'];
         }
@@ -83,10 +86,16 @@ namespace cart {
         };
     }
 
-    // Sort the cart on the specified key
-    function sort($sort_key) {
-        $compare_function = compare_factory($sort_key);
-        usort($_SESSION['cartRec'], $compare_function);
+    function getTotalQty() {
+        if (!isset($_SESSION['cartRec'])) {
+            return 0;
+        } else {
+            $qty = 0;
+            foreach ($_SESSION['cartRec'] as $line) {
+                $qty += $line['qty'];
+            }
+            return $qty;
+        }
     }
 
 }

@@ -5,61 +5,97 @@
         <meta charset="utf-8">
         <title>Store</title>
         <link rel="stylesheet" type="text/css" href="../css/styles.css"><style>
-            .product_table, .product_table th, .product_table td{
-                border: 1px solid black;
+
+            .category_list{
+                display: inline-block;
+                width: 15%;
+                background-color: #f9f9f9;
+                margin: 5px;
+                padding:5px;
+                vertical-align: top;
+
             }
-          
-            .product_table{
-                margin: auto;
+            .product_list, .product_detail{
+                display: inline-block;
+                width: 80%;
+                padding:0px;
+
             }
+            .product_img{
+                display: inline-block;
+                width: 20%
+            }
+
+            .product{
+                display: inline-block;
+                width: 25%;
+                padding:0px;
+                margin-bottom: 10px;
+            }
+            img{
+                width:150px;
+            }
+            /*            img:hover{
+                            width:100%;
+                        }*/
+            .category_list a {
+                color:black;
+                /*margin:10px;*/
+            }
+            .product a{
+                color:black; 
+            }
+
         </style>
-        
+
     </head>
 
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
         <p style="text-align: center; font-size: 36px;">Store</p>
         <?php include '../home/menu.php'; ?>
-        <div>
+        <div class='body'>
             <div class="category_list">
-                <table>
-                    <?php
-                    foreach ($categories as $cat) {
-                        echo '<tr><td><a href=.?category_id='.$cat['ID'].'>'.$cat['CATEGORY_NAME'].'</a></td></tr>';
-                    }
-                    ?>
-                </table>
+
+                <?php
+                foreach ($categories as $cat) {
+                    echo '<a href=.?category_id=' . $cat['ID'] . '>' . $cat['CATEGORY_NAME'] . '</a><br>';
+                }
+                ?>
+
+
             </div>
-            
+
             <div class="product_list">
-                <h1><?php echo $category_one['CATEGORY_NAME']?></h1>
+                <h1><?php echo $category_one['CATEGORY_NAME'] ?></h1>
+
                 <!--<a href="../cart">Go to Shopping Cart to Check out!</a>-->
-                 <br>
-                 <br>
-                 
-              
-                 <table class='product_table'>
-                     <th>Product ID</th>
-                     <th>Product Name</th>
-                     <th>Product Description</th>
-                     <th>Product Price</th>
-                     <!--<th>Quantity</th>-->
-                     <!--<th></th>-->
-                    <?php
-                    foreach ($product_list as $product) {
-                        echo '<tr>';
-                        echo '<td><a href=?action=product_detail&amp;product_id='.$product['ID'].'><p name="product_id">'.$product['ID'].'</p></td>';
-                        echo '<td>'.$product['NAME'].'</td>';
-                        echo '<td>'.$product['DESCRIPTION'].'</td>';
-                        echo '<td>'.number_format($product['PRICE'], 2).'</td>';
-                        
-//                        echo '<td><input type="submit" name="store_action" value="Add"></td>';
-                        
-                        echo '</tr>';
+                <br>
+                <br>
+
+
+
+                <?php
+                if (count($product_list) < 1) {
+                    echo '<h2>No Product in this category!</h2>';
+                }
+                foreach ($product_list as $product) {
+
+                    echo '<div class="product">';
+                    $html = '<a href=?action=product_detail&amp;product_id=' . $product['ID'] . '>';
+                    if ($product['IMG_NAME'] == '') {
+                        $html .= '<img src="../product_images/default.png"/><br>';
+                    } else {
+                        $html .= '<img src="../product_images/' . $product['IMG_NAME'] . '"/><br>';
                     }
-                    ?>
-                </table>
-                
-                </div>
+                    $html .= $product['NAME'];
+                    $html .= '$ <i>' . number_format($product['PRICE'], 2) . '</i>';
+                    $html .= '</a>';
+                    echo $html;
+                    echo '</div>';
+                }
+                ?>
+
+            </div>
         </div>
 
 

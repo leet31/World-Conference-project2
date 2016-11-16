@@ -40,10 +40,11 @@ switch ($action) {
 
             $errMsg = $UM->login($email, $password);
             if ($errMsg == 'NONE') {
-                include 'login_success.php';
+                include 'result.php';
+                echo '<div> Log In Successful!</div>';
             } else {
-                include 'login_fail.php';
-                echo '<div>' . $errMsg . '</div>';
+                include 'Result.php';
+                echo '<div> Log In Failed: ' . $errMsg . '</div>';
             }
 
             break;

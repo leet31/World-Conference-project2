@@ -13,18 +13,19 @@ class ProdModel {
         }
     }
 
-    public function insert($catID, $name, $description, $price) {
+    public function insert($catID, $name, $description, $price, $img_name) {
         try {
-            $stmt = $this->pdo->prepare("INSERT INTO $this->table (CATEGORY, NAME, DESCRIPTION, PRICE) VALUES (:catID, :name, :description, :price)");
+            $stmt = $this->pdo->prepare("INSERT INTO $this->table (CATEGORY, NAME, DESCRIPTION, PRICE, IMG_NAME) VALUES (:catID, :name, :description, :price, :img)");
             $stmt->bindParam(':catID', $catID);
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':description', $description);
             $stmt->bindParam(':price', $price);
+            $stmt->bindParam(':img', $img_name);
             $stmt->execute();
         } catch (PDOException $e) {
             return $e->getMessage();
         }
-        return 'NONE';
+        return 'Add Successfully! ';
     }
 
     public function getList() {
@@ -33,6 +34,7 @@ class ProdModel {
         $products = $stmt->fetchAll();
         return $products;
     }
+
     public function getListByCat($catID) {
         $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE CATEGORY = :catID");
         $stmt->bindParam(':catID', $catID);
@@ -40,6 +42,7 @@ class ProdModel {
         $products = $stmt->fetchAll();
         return $products;
     }
+
     public function getProductByID($id) {
         $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE ID = :id");
         $stmt->bindParam(':id', $id);
@@ -56,37 +59,87 @@ class ProdModel {
         } catch (PDOException $e) {
             return $e->getMessage();
         }
-        return 'NONE';
+        return 'Delete Successfully! ';
     }
 
-    public function update($productID, $catID, $name, $description, $price) {
+    public function update($productID, $catID, $name, $description, $price, $img) {
+       
         try {
-            $stmt = $this->pdo->prepare("UPDATE $this->table set CATEGORY = :catID, NAME = :name, DESCRIPTION =:description, PRICE=:price WHERE ID = :productID");
+            $stmt = $this->pdo->prepare("UPDATE $this->table set CATEGORY = :catID, NAME = :name, DESCRIPTION =:description, PRICE=:price, IMG_NAME=:img WHERE ID = :productID");
             $stmt->bindParam(':productID', $productID);
             $stmt->bindParam(':catID', $catID);
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':description', $description);
             $stmt->bindParam(':price', $price);
+            $stmt->bindParam(':img', $img);
             $stmt->execute();
         } catch (PDOException $e) {
             return $e->getMessage();
         }
-        return 'NONE';
+        return 'Update Successfully! ';
     }
 
     public function doAction() {
         $errMsg = '';
-
         if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
             if (filter_input(INPUT_POST, 'btnDelete')) {
                 $errMsg = $this->delete(filter_input(INPUT_POST, 'productID'));
             } else
             if (filter_input(INPUT_POST, 'btnUpdate')) {
-                $errMsg = $this->update(filter_input(INPUT_POST, 'productID'), filter_input(INPUT_POST, 'catID'), filter_input(INPUT_POST, 'name'), 
-                        filter_input(INPUT_POST, 'description'), filter_input(INPUT_POST, 'price'));
-            } else
-            if (filter_input(INPUT_POST, 'btnInsert')) {
-                $errMsg = $this->insert(filter_input(INPUT_POST, 'catID'), filter_input(INPUT_POST, 'name'), filter_input(INPUT_POST, 'description'), filter_input(INPUT_POST, 'price'));
+                $errMsg = '';
+                $name = $_FILES['newfile']['name'];
+                $tmp_name = $_FILES['newfile']['tmp_name'];
+                $type = $_FILES['newfile']['type'];
+                $size = $_FILES['newfile']['size'];
+                $extension = strtolower(substr($name, strpos($name, '.') + 1));
+                $new_name = time() . '.' . $extension;
+                if (isset($name)) {
+                    if (!empty($name)) {
+                        if (($extension == 'png' AND $type = 'image/png') || ($extension == 'jpeg' AND $type = 'image/jpeg') || ($extension == 'gif' AND $type = 'image/gif') || ($extension == 'jpeg' AND $type = 'image/pjpeg')) {
+                            $location = '../product_images/';
+                            if (move_uploaded_file($tmp_name, $location . $new_name)) {
+                                //updated
+                                $errMsg .= $this->update(filter_input(INPUT_POST, 'productID'), filter_input(INPUT_POST, 'catID'), filter_input(INPUT_POST, 'name'), filter_input(INPUT_POST, 'description'), filter_input(INPUT_POST, 'price'), $new_name);
+                            } else {
+                                $errMsg .= "There were an error with the image uploading. ";
+                            }
+                        } else {
+                            $errMsg .= "The file must be with png, jpeg, gif extension. ";
+                        }
+                    } else {
+                        //no image is changed.
+                        $productID = filter_input(INPUT_POST, 'productID');
+                        $product = $this->getProductByID($productID);
+                        $img = $product["IMG_NAME"];
+                        $errMsg .= $this->update($productID, filter_input(INPUT_POST, 'catID'), filter_input(INPUT_POST, 'name'), filter_input(INPUT_POST, 'description'), filter_input(INPUT_POST, 'price'), $img);
+                    }
+                }
+            } else if (filter_input(INPUT_POST, 'btnInsert')) {//add new
+                $errMsg = '';
+                $name = $_FILES['file']['name'];
+                $tmp_name = $_FILES['file']['tmp_name'];
+                $type = $_FILES['file']['type'];
+                $size = $_FILES['file']['size'];
+                $extension = strtolower(substr($name, strpos($name, '.') + 1));
+                $new_name = time() . '.' . $extension;
+                if (isset($name)) {
+                    if (!empty($name)) {
+                        if (($extension == 'png' AND $type = 'image/png') || ($extension == 'jpeg' AND $type = 'image/jpeg') || ($extension == 'gif' AND $type = 'image/gif') || ($extension == 'jpeg' AND $type = 'image/pjpeg')) {
+                            $location = '../product_images/';
+                            if (move_uploaded_file($tmp_name, $location . $new_name)) {
+                                //updated
+                                $errMsg .= $this->insert(filter_input(INPUT_POST, 'catID'), filter_input(INPUT_POST, 'name'), filter_input(INPUT_POST, 'description'), filter_input(INPUT_POST, 'price'), $new_name);
+                            } else {
+                                $errMsg .= "There were an error with the image uploading. ";
+                            }
+                        } else {
+                            $errMsg .= "The file must be with png, jpeg, gif extension. ";
+                        }
+                    } else {
+                        //no image is changed.
+                        $errMsg .= $this->insert(filter_input(INPUT_POST, 'catID'), filter_input(INPUT_POST, 'name'), filter_input(INPUT_POST, 'description'), filter_input(INPUT_POST, 'price'), 'default.png');
+                    }
+                }
             }
         }
 
