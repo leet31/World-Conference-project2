@@ -83,37 +83,28 @@ switch ($action) {
         break;
 
     case 'submit':
-        if (empty($_SESSION['cartRec'])) {
-            $_SESSION['cartRec'] = array(); //initial shopping cart
-        }
-        if (isset($_SESSION['cartRec'])) {
-            $product_id = $discountFeeInfo['ID'];
-            $qty = 1;
-        }
+        $msg = checkStudentStatusChanged();
+        if ($msg == '') {
+            if (empty($_SESSION['cartRec'])) {
+                $_SESSION['cartRec'] = array(); //initial shopping cart
+            }
+            if (isset($_SESSION['cartRec'])) {
+                $product_id = $discountFeeInfo['ID'];
+                $qty = 1;
+            }
 
-        cart\add_item($product_id, $qty);
+            cart\add_item($product_id, $qty);
 
-        $_SESSION['IS_REGISTERING'] = true;
-        header("Location: ../store/?action=cart");
+            $_SESSION['IS_REGISTERING'] = true;
+            header("Location: ../store/?action=cart");
+        } else {
+            include 'conferenceregister.php';
+            echo("<p>$msg</p>");
+        }
         break;
 
     case 'update':
-        $isStudentChecked = filter_input(INPUT_POST, 'cbStudent') != NULL;
-        $msg = '';
-
-        //if student checkbox changed, update User table
-        if (($_SESSION['userRec']['STUDENT']) != $isStudentChecked) {
-            $userID = $_SESSION['userRec']['ID'];
-            $fieldName = 'STUDENT';
-            $fieldValue = $isStudentChecked;
-            $msg = $UM->updateSingleField($userID, $fieldName, $fieldValue);
-            //if no error, update UserRec to match table
-            if ($msg == '') {
-                $_SESSION['userRec']['STUDENT'] = $isStudentChecked ? 1 : 0;
-                getDiscountFeeInfo();
-            }
-        }
-
+        $msg = checkStudentStatusChanged();
         include 'conferenceregister.php';
         echo("<p>$msg</p>");
 
@@ -151,6 +142,30 @@ function getDiscountFeeInfo() {
         if (is_string($discountFeeInfo)) {
             $errMsg .= "\n" . $discountFeeInfo;
             $discountFeeInfo = array('PRICE' => 'Err');
+        }
+    }
+}
+
+/**
+ * Check if user changed Student role and update wa_users record and 
+ * $_SESSION(['userRec'] if so.
+ * Return '' on success or errormessage
+ */
+function checkStudentStatusChanged() {
+    global $UM;
+    $isStudentChecked = filter_input(INPUT_POST, 'cbStudent') != NULL;
+    $msg = '';
+
+    //if student checkbox changed, update User table
+    if (($_SESSION['userRec']['STUDENT']) != $isStudentChecked) {
+        $userID = $_SESSION['userRec']['ID'];
+        $fieldName = 'STUDENT';
+        $fieldValue = $isStudentChecked;
+        $msg = $UM->updateSingleField($userID, $fieldName, $fieldValue);
+        //if no error, update UserRec to match table
+        if ($msg == '') {
+            $_SESSION['userRec']['STUDENT'] = $isStudentChecked ? 1 : 0;
+            getDiscountFeeInfo();
         }
     }
 }

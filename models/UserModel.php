@@ -477,6 +477,8 @@ class UserModel {
      * @return string
      */
     public function updateSingleField($userID, $fieldName, $fieldValue){
+//        echo("<br>Updating USER...<br>");
+        
         $sql = "UPDATE `$this->table` SET `$fieldName` = :fieldValue WHERE `ID` = :userID";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':fieldValue', $fieldValue);
@@ -485,13 +487,16 @@ class UserModel {
         try{
             $res = $stmt->execute();
         }catch (PDOException $e) {
+//            echo("<br>Updating USER EXCEPTION...<br>");
             return $e->getMessage();
         }
         
         if(!$res){
+//            echo("<br>Updating USER Failed...<br>");
             return "Update failed";
         }
         
+//        echo("<br>Updating USER OK...<br>");
         return '';
     }
 }
