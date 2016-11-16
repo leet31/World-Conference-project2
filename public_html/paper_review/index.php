@@ -1,6 +1,9 @@
 <?php
+/**
+ * PAPER REVIEW
+ */
 if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
-if (!(isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE)){
+if (!isset($_SESSION['userRec'])){
     header("Location: ../login");
     die();
 }
@@ -26,15 +29,13 @@ $validate = new Validate();
 $fields = $validate->getFields();
 
 $action = filter_input(INPUT_POST, 'log_action');
-if(isset($_SESSION['username'])) {
-    include '../login';
+
+if ($action === NULL) {
+    $action = 'reset';
 } else {
-    if($action === NULL){
-        $action = 'reset';
-    }else {
     $action = strtolower($action);
-    }
 }
+
 
 //error_log("Action: ".$action."\n");
     

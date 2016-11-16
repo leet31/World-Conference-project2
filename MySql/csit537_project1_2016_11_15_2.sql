@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `csit537_project1`
 --
+CREATE DATABASE IF NOT EXISTS `csit537_project1-cc-2` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `csit537_project1-cc-2`;
 
 -- --------------------------------------------------------
 

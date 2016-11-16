@@ -464,5 +464,21 @@ class PaperModel {
                         strtolower($clean) :
                 $clean;
     }
+    
+    public function getPaperCountByAuthorId($authorId){
+        $sql = "select COUNT(ID) as `P_COUNT` from $this->table WHERE AUTHOR_ID = :authorId";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':authorId', $authorId);
+        try{
+            $res = $stmt->execute();
+        }catch (PDOException $e) {
+            //see php log for details
+            //return $e->getMessage();
+            return -1;
+        }
+        
+        $row=$stmt->fetch();
+        return $row['P_COUNT'];
+    }
 
 }

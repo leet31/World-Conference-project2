@@ -11,7 +11,7 @@ if (!isset($_SESSION['userRec'])) {
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Page Submission</title>
+        <title>Page Review</title>
         <link rel="stylesheet" type="text/css" href="../css/styles.css">
         <style>
             table, th, td{
