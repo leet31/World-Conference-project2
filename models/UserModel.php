@@ -255,16 +255,14 @@ class UserModel {
 
     //load user record into $this
     public function getUser($userID) {
-        try {
+        
             $stmt = $this->pdo->prepare("SELECT * FROM  $this->table "
                     . "WHERE ID =  :userID");
 
             $stmt->bindParam(':userID', $userID);
             $stmt->execute();
             $user = $stmt->fetch();
-        } catch (PDOException $e) {
-            return $e->getMessage();
-        }
+       
 
         $this->userID = $user['ID'];
         $this->pwHash = $user['PW_HASH'];
@@ -284,7 +282,7 @@ class UserModel {
         $this->student = $user['STUDENT'];
         $this->reviewer = $user['REVIEWER'];
 
-        return "";
+        return $user;
     }
 
     public function submitLogin() {
