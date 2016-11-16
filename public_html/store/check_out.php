@@ -80,14 +80,15 @@
                     <input name="card_type" id="rbAtDiscover" type="radio" value = "d"><img src="../../public_html/images/discover.jpg" width="114" height="80" alt=""/> 
                     <input name="card_type" id="rbAtVisa" type="radio" value="v"><img src="../../public_html/images/visa.png" width="127" height="81" alt=""/> 
                     <input name="card_type" id="rbAtMastercard" type="radio" value="m"><img src="../../public_html/images/mastercard.gif" width="128" height="78" alt=""/><br>
+                    <?php echo $fields->getField('card_type')->getHTML();?>
                     <table>
                         <tr><td>*Card Number:</td>
                             <td> <input name="card_number" type="text" value="<?php echo htmlspecialchars($cardNumber) ?>"></td>
-                            <td><?php echo $fields->getField('card_number')->getHTML(); ?></td></tr>
+                            <td style="text-align: left;"><?php echo $fields->getField('card_number')->getHTML(); ?></td></tr>
 
                         <tr><td>*Expiration Date:</td>
                             <td> <input name="exp_date" type="text" value="<?php echo htmlspecialchars($expDate) ?>"></td>
-                            <td><?php echo $fields->getField('exp_date')->getHTML(); ?></td></tr>
+                            <td style="text-align: left"><?php echo $fields->getField('exp_date')->getHTML(); ?></td></tr>
                         
                     </table>
                     <input type="submit" name="action" value="Pay">
