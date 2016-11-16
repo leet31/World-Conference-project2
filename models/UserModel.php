@@ -464,7 +464,8 @@ class UserModel {
                     . "PW_HASH,   FIRST_NAME, LAST_NAME,  COMPANY,  ADDRESS_1,  ADDRESS_2,  CITY,  STATE,  ZIP_CODE,  PHONE_NUMBER,  EMAIL,  ADMIN,  ATTENDEE,  PRESENTER,  STUDENT,  REVIEWER) VALUES ("
                     . ":pw_hash, :first_name, :last_name, :company, :address_1, :address_2, :city, :state, :zip_code, :phone_number, :email, :admin, :attendee, :presenter, :student, :reviewer)");
 
-            $stmt->bindParam(':pw_hash', sha1($pwd));
+            $hash = sha1($pwd);
+            $stmt->bindParam(':pw_hash', $hash);
             $stmt->bindParam(':first_name', $firstName);
             $stmt->bindParam(':last_name', $lastName);
             $stmt->bindParam(':company', $company);
