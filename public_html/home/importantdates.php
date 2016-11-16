@@ -18,9 +18,9 @@
         <p>&nbsp;</p>
         <p>February 25th, 2017: Submission of camera-ready or final versions of the accepted papers</p>
         <p>&nbsp;</p>
-        <p>July 6th, 2017: Conference Starts</p>
+        <p>March 6th, 2017: Conference Starts</p>
         <p>&nbsp;</p>
-        <p>July 11th, 2017: Conference Ends</p>
+        <p>March 11th, 2017: Conference Ends</p>
         <p style="color: #F7F3F3">&nbsp;</p>
         </div>
     </body>
