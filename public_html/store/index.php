@@ -125,7 +125,7 @@ switch ($action) {
             echo '<div>Error: Shopping cart is empty! Please add item first!</div>';
         } else {
             if (!isset($_SESSION['userRec'])) {
-                include '../login';
+                header ('location:../login');//from one index to another index
                 echo '<div>Please log in first to check out!</div>';
             } else {
                 $user_id = $_SESSION['userRec']['ID'];
