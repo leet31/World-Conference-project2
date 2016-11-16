@@ -1,6 +1,8 @@
 
 <?php
-
+/**
+ * STORE
+ */
 require '../../controllers/connectDb.php';
 require '../../models/ProdModel.php';
 require '../../models/ProdCatModel.php';

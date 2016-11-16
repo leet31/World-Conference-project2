@@ -33,40 +33,6 @@ class UserModel {
         } else {
             die("Object Type Error");
         }
-
-//        if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') !== 'POST') {
-//            unset($_SESSION['userVars']);
-//        }
-
-//        if (isset($_SESSION['userVars'])) {
-//            $userVars = $_SESSION['userVars'];
-//
-////            echo("<p>Constructor -UserVars: ");
-////            print_r($userVars);
-////            echo("</p>");
-//
-//            if ($userVars) {
-//                $this->userID = $userVars['userID'];
-//                $this->firstName = $userVars['firstName'];
-//                $this->lastName = $userVars['lastName'];
-//                $this->compOrg = $userVars['compOrg'];
-//                $this->address1 = $userVars['address1'];
-//                $this->address2 = $userVars['address2'];
-//                $this->city = $userVars['city'];
-//                $this->state = $userVars['state'];
-//                $this->zipCode = $userVars['zipCode'];
-//                $this->phone = $userVars['phone'];
-//                $this->email = $userVars['email'];
-//                $this->admin = $userVars['admin'];
-//                $this->attendee = $userVars['attendee'];
-//                $this->presenter = $userVars['presenter'];
-//                $this->student = $userVars['student'];
-//                $this->reviewer = $userVars['reviewer'];
-//                $this->password1 = $userVars['password1'];
-//                $this->password2 = $userVars['password2'];
-//                $this->attendeeType = $userVars['attendeeType'];
-//            }
-//        }
     }
 
     public function getList() {
@@ -500,6 +466,33 @@ class UserModel {
         $stmt->execute();
         $fullNameList = $stmt->fetchAll();
         return $fullNameList;
+    }
+    
+    /**
+     * Updates a single field on a single record. Returns "" on success, or 
+     * error message on failure.
+     * @param type $userID  user id of record to update
+     * @param type $fieldName   name of field to updat
+     * @param type $fieldValue new value for $fieldName
+     * @return string
+     */
+    public function updateSingleField($userID, $fieldName, $fieldValue){
+        $sql = "UPDATE `$this->table` SET `$fieldName` = :fieldValue WHERE `ID` = :userID";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':fieldValue', $fieldValue);
+        $stmt->bindParam(':userID', $userID);
+        
+        try{
+            $res = $stmt->execute();
+        }catch (PDOException $e) {
+            return $e->getMessage();
+        }
+        
+        if(!$res){
+            return "Update failed";
+        }
+        
+        return '';
     }
 }
 ?>
