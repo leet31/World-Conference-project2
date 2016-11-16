@@ -207,7 +207,7 @@ class Validate {
             }
         }
  if ( ! $validPrefix ) {
-            $field->setErrorMessage('Invalid card number prefix.');
+            $field->setErrorMsg('Invalid card number prefix.');
             return;
         }
         //validate checksum

@@ -16,7 +16,7 @@
         <div>
             <form name="logForm" action="." method="post">
                 <fieldset>
-                    <legend>Input Your Email Address and Password</legend>
+                    <legend>Website Login</legend>
                     <label>Email:</label>
                     <input name="email" type="email" value="<?php echo htmlspecialchars($email); ?>" >
                    <?php echo $fields->getField('email')->getHTML(); ?><br>

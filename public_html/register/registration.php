@@ -25,12 +25,13 @@
                     <label>Company/Organization:</label>
                     <input name="company_name" type="text" value="<?php echo htmlspecialchars($company_name) ?>">
                     <?php echo $fields->getField('company_name')->getHTML(); ?><br>
-                    <label>*Attendee Type: </label>
+                    <!--<label>*Attendee Type: </label>
                     <input name="attendee_type[]" id="rbAttendee" type="checkbox" value = "attendee"> Attendee
                     <input name="attendee_type[]" id="rbAtPresenter" type="checkbox" value="presenter"> Presenter
                     <input name="attendee_type[]" id="rbAtStudent" type="checkbox" value="student"> Student
                     <input name="attendee_type[]" id="rbAtNa" type="checkbox" value="reviewer">Reviewer
-                    <?php echo $fields->getField('attendee_type')->getHTML();?><br>
+                    <?php #echo $fields->getField('attendee_type')->getHTML();?><br>-->
+                    
                 </fieldset> 
                 <fieldset>
                     <legend>Contact Information</legend>

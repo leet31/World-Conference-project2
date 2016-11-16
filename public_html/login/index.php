@@ -12,8 +12,10 @@ $fields = $validate->getFields();
 
 $fields->addField('email', 'Must be a valid email address.');
 $fields->addField('password', 'Must be at least 6 characters.');
-
-$action = filter_input(INPUT_POST, 'log_action');
+$action = filter_input(INPUT_GET, 'action');
+if ($action == NULL) {
+    $action = filter_input(INPUT_POST, 'log_action');
+}
 
 if ($action === NULL) {
     $action = 'reset';

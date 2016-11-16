@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * WEBSITE REGISTER
+ */
 require_once '../../models/fields.php';
 require_once '../../models/validate.php';
 require '../../controllers/connectDb.php';
@@ -21,7 +23,7 @@ $fields->addField('phone', 'Use 9999999999 format');
 $fields->addField('email', 'Must be a valid email address');
 $fields->addField('password', 'Must be at least 6 characters.');
 $fields->addField('verify_password', 'Must be same password.');
-$fields->addField('attendee_type', 'Must pick one.');
+#$fields->addField('attendee_type', 'Must pick one.');
 
 //credit card fields
 $fields->addField('card_type');
@@ -77,7 +79,7 @@ switch ($action) {
         $email = filter_input(INPUT_POST, 'email');
         $password = filter_input(INPUT_POST, 'password');
         $verify_password = filter_input(INPUT_POST, 'verify_password');
-        $attendee_type = (isset($_POST['attendee_type'])?$_POST['attendee_type']:null);
+        #$attendee_type = (isset($_POST['attendee_type'])?$_POST['attendee_type']:null);
 
         //below is about credit card
         $cardType = filter_input(INPUT_POST, 'card_type');
@@ -98,27 +100,27 @@ switch ($action) {
         $validate->email('email', $email);
         $validate->password('password', $password);
         $validate->verify('verify_password', $password, $verify_password);
-        $validate->attendee('attendee_type', $attendee_type);
+        #$validate->attendee('attendee_type', $attendee_type);
         $attendee = FALSE;
         $presenter = FALSE;
         $student = FALSE;
         $reviewer = FALSE;
-        if (count($attendee_type) > 0) {
-            foreach ($attendee_type as $temp) {
-                if ($temp == 'attendee') {
-                    $attendee = TRUE;
-                }
-                if ($temp == 'presenter') {
-                    $presenter = TRUE;
-                }
-                if ($temp == 'student') {
-                    $student = TRUE;
-                }
-                if ($temp == 'reviewer') {
-                    $reviewer = TRUE;
-                }
-            }
-        }
+//        if (count($attendee_type) > 0) {
+//            foreach ($attendee_type as $temp) {
+//                if ($temp == 'attendee') {
+//                    $attendee = TRUE;
+//                }
+//                if ($temp == 'presenter') {
+//                    $presenter = TRUE;
+//                }
+//                if ($temp == 'student') {
+//                    $student = TRUE;
+//                }
+//                if ($temp == 'reviewer') {
+//                    $reviewer = TRUE;
+//                }
+//            }
+//        }
 
 
 //        
@@ -146,7 +148,6 @@ switch ($action) {
         } else {
             $msg = $UM->insertNew($password, $first_name, $last_name, $company_name, $attendee, $presenter, $student, $reviewer, $address, $address2, $city, $state, $zip, $phone, $email);
             if ($msg == 'NONE') {
-//                $_SESSION['userVars']=$userVars;
                 $UM->login($email, $password); //default login after register
                 include 'register_success.php';
             } else {
