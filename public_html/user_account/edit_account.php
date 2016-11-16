@@ -5,6 +5,10 @@
         <meta charset="utf-8">
         <title>User Account Management</title>
         <link rel="stylesheet" type="text/css" href="../css/styles.css">
+        <style>
+            
+            </style>
+          
     </head>
 
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">

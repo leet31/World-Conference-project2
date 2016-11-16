@@ -80,7 +80,7 @@
                 <p>Total Before Tax is: $ <?php echo $total_b_tax; ?></p> 
                 <p>Click "Update" to update each quantity.<br> 
                     Enter a quantity of 0 to remove an item.</p>
-                <a href=".?action=store">Add Item</a>|
+                <a href=".?action=overview">Add Item</a>|
                 <a href=".?action=empty_cart">Empty Cart</a>|
                 <a href=".?action=check_out">Check Out</a>
             </fieldset>

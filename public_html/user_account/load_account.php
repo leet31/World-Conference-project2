@@ -6,9 +6,22 @@
         <title>Account Management</title>
         <link rel="stylesheet" type="text/css" href="../css/styles.css">
         <style>
+          
+
             table{
                 margin: auto;
-               
+            }
+            td, th{
+                border:solid #C0C0C0;
+                border-width:0px 1px 1px 0px;
+                padding:10px;
+                text-align: center;
+            }
+            table{
+                border:solid #C0C0C0;
+                border-width:1px 0px 0px 1px;
+            }
+          
         </style>
     </head>
 
