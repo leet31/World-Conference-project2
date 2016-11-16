@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `csit537_project1`
 --
+CREATE DATABASE IF NOT EXISTS `csit537_project1-CC` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `csit537_project1-CC`;
 
 -- --------------------------------------------------------
 
@@ -26,6 +28,7 @@ SET time_zone = "+00:00";
 -- 表的结构 `wa_areas`
 --
 
+DROP TABLE IF EXISTS `wa_areas`;
 CREATE TABLE IF NOT EXISTS `wa_areas` (
 `ID` int(11) NOT NULL,
   `NAME` varchar(20) NOT NULL,
@@ -53,6 +56,7 @@ INSERT INTO `wa_areas` (`ID`, `NAME`, `DESCRIPTION`) VALUES
 -- 表的结构 `wa_book_details`
 --
 
+DROP TABLE IF EXISTS `wa_book_details`;
 CREATE TABLE IF NOT EXISTS `wa_book_details` (
   `PRODUCT_ID` int(11) NOT NULL,
   `TITLE` varchar(256) NOT NULL,
@@ -69,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `wa_book_details` (
 -- 表的结构 `wa_orders`
 --
 
+DROP TABLE IF EXISTS `wa_orders`;
 CREATE TABLE IF NOT EXISTS `wa_orders` (
 `ID` int(11) NOT NULL,
   `CUSTOMER_ID` int(11) NOT NULL,
@@ -81,6 +86,7 @@ CREATE TABLE IF NOT EXISTS `wa_orders` (
 -- 表的结构 `wa_order_details`
 --
 
+DROP TABLE IF EXISTS `wa_order_details`;
 CREATE TABLE IF NOT EXISTS `wa_order_details` (
   `ORDER_ID` int(11) NOT NULL,
   `PRODUCT_ID` int(11) NOT NULL,
@@ -93,6 +99,7 @@ CREATE TABLE IF NOT EXISTS `wa_order_details` (
 -- 表的结构 `wa_papers`
 --
 
+DROP TABLE IF EXISTS `wa_papers`;
 CREATE TABLE IF NOT EXISTS `wa_papers` (
 `ID` int(11) NOT NULL,
   `AUTHOR_ID` int(11) NOT NULL COMMENT 'User ID of paper''s author',
@@ -127,6 +134,7 @@ INSERT INTO `wa_papers` (`ID`, `AUTHOR_ID`, `REVIEWER_ID`, `SUBAREA_ID`, `TITLE`
 -- 表的结构 `wa_products`
 --
 
+DROP TABLE IF EXISTS `wa_products`;
 CREATE TABLE IF NOT EXISTS `wa_products` (
 `ID` int(11) NOT NULL,
   `CATEGORY` int(11) NOT NULL,
@@ -163,6 +171,7 @@ INSERT INTO `wa_products` (`ID`, `CATEGORY`, `NAME`, `DESCRIPTION`, `PRICE`, `IM
 -- 表的结构 `wa_product_categories`
 --
 
+DROP TABLE IF EXISTS `wa_product_categories`;
 CREATE TABLE IF NOT EXISTS `wa_product_categories` (
 `ID` int(11) NOT NULL,
   `CATEGORY_NAME` varchar(20) NOT NULL
@@ -183,6 +192,7 @@ INSERT INTO `wa_product_categories` (`ID`, `CATEGORY_NAME`) VALUES
 --
 -- 触发器 `wa_product_categories`
 --
+DROP TRIGGER IF EXISTS `PREV_BLANK_CAT_INSERT`;
 DELIMITER //
 CREATE TRIGGER `PREV_BLANK_CAT_INSERT` BEFORE INSERT ON `wa_product_categories`
  FOR EACH ROW BEGIN
@@ -193,6 +203,7 @@ CREATE TRIGGER `PREV_BLANK_CAT_INSERT` BEFORE INSERT ON `wa_product_categories`
 END
 //
 DELIMITER ;
+DROP TRIGGER IF EXISTS`PREV_BLANK_CAT_UPDATE`;
 DELIMITER //
 CREATE TRIGGER `PREV_BLANK_CAT_UPDATE` BEFORE UPDATE ON `wa_product_categories`
  FOR EACH ROW BEGIN
@@ -210,6 +221,7 @@ DELIMITER ;
 -- 表的结构 `wa_subareas`
 --
 
+DROP TABLE IF EXISTS `wa_subareas`;
 CREATE TABLE IF NOT EXISTS `wa_subareas` (
 `ID` int(11) NOT NULL,
   `PARENT_ID` int(11) NOT NULL,
@@ -249,6 +261,7 @@ INSERT INTO `wa_subareas` (`ID`, `PARENT_ID`, `NAME`, `DESCRIPTION`) VALUES
 -- 表的结构 `wa_users`
 --
 
+DROP TABLE IF EXISTS `wa_users`;
 CREATE TABLE IF NOT EXISTS `wa_users` (
 `ID` int(11) NOT NULL COMMENT 'AI User ID',
   `PW_HASH` varchar(40) NOT NULL COMMENT 'User PW SHA1 Hash',
