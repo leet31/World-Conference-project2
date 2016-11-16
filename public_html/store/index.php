@@ -139,6 +139,10 @@ switch ($action) {
         }
         break;
     case 'pay':
+        if(!isset($_SESSION['cartRec'])){
+            //user hit reload on pay screen?
+            header("Location: ../home");
+        }
         $user_id = $_SESSION['userRec']['ID'];
         $total_b_tax = cart\get_subtotal();
         $tax = 0; //tax percentage is set to 0 for now.
@@ -179,7 +183,19 @@ switch ($action) {
                 }
                 if ($result == '') {
 
-                    $result = "Check it out successfully!";
+                    //if user is registering for conference, add user role STUDENT
+                    if(isset($_SESSION['IS_REGISTERING']) && $_SESSION['IS_REGISTERING']){
+                        $res = $UM->updateSingleField($_SESSION['userRec']['ID'], 'ATTENDEE', 1);
+                        if($res ==''){
+                            unset($_SESSION['IS_REGISTERING']);
+                            $_SESSION['userRec']['ATTENDEE'] = 1;
+                        } else{
+                            $result = "Error updating Attendee role:\n".$res."\n";
+                        }
+                    }
+                    
+                    $result .= "Check it out successfully!";
+                    
                     /* todo: charge credit card...
                      * 
                      */
