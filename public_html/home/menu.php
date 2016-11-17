@@ -7,7 +7,7 @@ if (!isset($_SESSION)) {
 $ttlQty = cart\getTotalQty();
 $cart_url = '<li><a href="../store?action=cart">Cart(' . $ttlQty . ')</a></li>';
 if (isset($_SESSION['userRec'])) {
-    echo '<ul  class ="account"><li class="main_menu"><a href="../user_account">Hello! ' . $_SESSION['userRec']['FIRST_NAME'] . '</a></li><li class="main_menu"><a href="../logout">Logout</a></li>' . $cart_url . '</ul>';
+    echo '<ul  class ="account"><li class="main_menu"><a href="../user_account">Hello! <i style="text-decoration:underline;">' . $_SESSION['userRec']['FIRST_NAME'] . '</i></a></li><li class="main_menu"><a href="../logout">Logout</a></li>' . $cart_url . '</ul>';
 } else {
     echo '<ul class ="account"><li class="main_menu"><a href="../login">Log In</a></li><li class="main_menu"><a href="../register">Register</a></li>' . $cart_url . '</ul>';
 }

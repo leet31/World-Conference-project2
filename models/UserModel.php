@@ -230,7 +230,7 @@ class UserModel {
                     . "    STATE        = :state    ,"
                     . "    ZIP_CODE     = :zipCode  ,"
                     . "    PHONE_NUMBER = :phone    ,"
-                    . "    EMAIL        = :email    ,"
+                    . "    EMAIL        = :email    "
                     . "WHERE ID = :userID ");
 
             $stmt->bindParam(':userID', $id);
