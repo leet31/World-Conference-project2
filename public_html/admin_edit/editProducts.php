@@ -46,7 +46,6 @@ $errMsg_product = $PM->doAction();
 
 
     </head>
-    <body>
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
         <p style="text-align: center; font-size: 36px;">Edit Product</p>
         <?php include('../home/menu.php') ?>
@@ -154,7 +153,8 @@ $errMsg_product = $PM->doAction();
                     </tr>
                     <tr>
                         <th>Price</th>
-                        <td><input type="number" name="price" min="0" pattern="\d+(\.\d{2})?"></td>
+                        <!--<td><input type="number" name="price" min="0" pattern="\d+(\.\d{2})?"></td>-->
+                        <td><input type="number" name="price" min="0" step="any"></td>
                     </tr>
                     <tr>
                         <th>Image</th>
