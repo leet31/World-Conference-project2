@@ -24,12 +24,24 @@ class ProdCatModel {
         return '';
     }
 
-    public function getList() {
-        $stmt = $this->pdo->prepare("SELECT * FROM $this->table");
+    public function getList($notCategory = '') {
+        if ($notCategory != '') {
+            $notCategory .= '%';
+            $sql = "SELECT * FROM $this->table WHERE CATEGORY_NAME NOT LIKE :notCategory";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':notCategory', $notCategory);
+        } else {
+            $sql = "SELECT * FROM $this->table";
+            $stmt = $this->pdo->prepare($sql);
+        }
+        echo("<br>cat not: $notCategory<br>");
+        echo("<br>SQL: $sql<br>");
+        
         $stmt->execute();
         $cats = $stmt->fetchAll();
         return $cats;
     }
+
     public function getListByID($id) {
         $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE ID = :id");
          $stmt->bindParam(':id', $id);

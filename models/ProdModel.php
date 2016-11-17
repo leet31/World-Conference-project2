@@ -28,8 +28,24 @@ class ProdModel {
         return 'Add Successfully! ';
     }
 
-    public function getList() {
-        $stmt = $this->pdo->prepare("SELECT * FROM $this->table");
+    public function getList($notCategory = ''){
+        if ($notCategory != ''){
+            $notCategory .= '%';
+            $sql = "SELECT p.*
+                    FROM `wa_products`as p 
+                    INNER JOIN `wa_product_categories` AS pc 
+                            WHERE (pc.ID = p.CATEGORY) 
+                                    AND (pc.CATEGORY_NAME NOT LIKE :categoryName)";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':categoryName', $notCategory);
+        }else{
+            $sql = "SELECT * FROM $this->table";
+            $stmt = $this->pdo->prepare($sql);
+        }
+        
+        echo("<br>prod not: $notCategory<br>");
+        echo("<br>SQL: $sql<br>");
+        
         $stmt->execute();
         $products = $stmt->fetchAll();
         return $products;
