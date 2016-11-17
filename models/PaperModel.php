@@ -61,13 +61,21 @@ class PaperModel {
         
         //add WHERE clause, if any
         if($authorID != ''){
-            $sql .= " \nWHERE p.AUTHOR_ID=$authorID";
+            $sql .= " \nWHERE p.AUTHOR_ID = :authorID";
         }else if($reviewerID != ''){
-            $sql .= " \nWHERE p.REVIEWER_ID=$reviewerID";
+            $sql .= " \nWHERE p.REVIEWER_ID = :reviewerID";
         }
                 
         try{
             $stmt = $this->pdo->prepare($sql);
+
+            //bind parameters, if needed
+            if($authorID != ''){
+                 $stmt->bindValue(':authorID', $authorID);
+             } else if($reviewerID != ''){
+                 $stmt->bindValue(':reviewerID', $reviewerID);
+             }
+             
             $res = $stmt->execute();
         } catch (PDOException $e) {
             return $e->getMessage();
