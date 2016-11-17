@@ -39,7 +39,8 @@
             <tr><th>City</th><td><?php echo htmlspecialchars($city) ?></td></tr>
             <tr><th>State</th><td><?php echo htmlspecialchars($state) ?></td></tr>
             <tr><th>Zip Code</th><td><?php echo htmlspecialchars($zip) ?></td></tr>
-            <tr><th>Phone</th><td><?php echo htmlspecialchars($email) ?></td></tr>
+            <tr><th>Phone</th><td><?php echo htmlspecialchars($phone) ?></td></tr>
+            <tr><th>Email</th><td><?php echo htmlspecialchars($email) ?></td></tr>
             <tr><th>Type</th><td><?php echo htmlspecialchars($typeString) ?></td></tr>
             <tr><td></td><td> <form action="." method="post">
                 <input type ="submit" name="account_action" value="Edit"></td>

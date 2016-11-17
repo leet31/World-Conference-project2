@@ -22,10 +22,6 @@ $fields->addField('password', 'Leave it blank if no change.');
 $fields->addField('verify_password', 'Leave it blank if no change.');
 $fields->addField('attendee_type', 'Must pick one.');
 
-//credit card fields
-$fields->addField('card_type');
-$fields->addField('card_number');
-$fields->addField('exp_date');
 
   $UM->getUser($_SESSION['userRec']['ID']);
         $userID=$UM->userID;

@@ -216,7 +216,7 @@ class UserModel {
             return"Error: Update Failed";
         }
     }
-   public function updateNew($id, $firstName, $lastName, $compOrg, $address1, $address2, $city, $sate, $zipCode, $phone, $email) {
+   public function updateNew($id, $firstName, $lastName, $compOrg, $address1, $address2, $city, $state, $zipCode, $phone, $email) {
 
         try {
             $stmt = $this->pdo->prepare("UPDATE $this->table "
