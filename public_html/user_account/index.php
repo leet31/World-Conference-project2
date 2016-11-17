@@ -22,10 +22,6 @@ $fields->addField('password', 'Leave it blank if no change.');
 $fields->addField('verify_password', 'Leave it blank if no change.');
 $fields->addField('attendee_type', 'Must pick one.');
 
-//credit card fields
-$fields->addField('card_type');
-$fields->addField('card_number');
-$fields->addField('exp_date');
 
   $UM->getUser($_SESSION['userRec']['ID']);
         $userID=$UM->userID;
@@ -115,7 +111,7 @@ switch ($action) {
         include 'edit_account.php';
         break;
     case 'update':
-
+        $userID = $_SESSION['userRec']['ID'];
         $first_name = trim(filter_input(INPUT_POST, 'first_name'));
         $last_name = trim(filter_input(INPUT_POST, 'last_name'));
         $company_name = trim(filter_input(INPUT_POST, 'company_name'));
@@ -126,15 +122,9 @@ switch ($action) {
         $zip = filter_input(INPUT_POST, 'zip');
         $phone = filter_input(INPUT_POST, 'phone');
         $email = filter_input(INPUT_POST, 'email');
-        $password = filter_input(INPUT_POST, 'password');
-        $verify_password = filter_input(INPUT_POST, 'verify_password');
-        $attendee_type = (isset($_POST['attendee_type'])?$_POST['attendee_type']:null);
-
-        //below is about credit card
-        $cardType = filter_input(INPUT_POST, 'card_type');
-        $cardNumber = filter_input(INPUT_POST, 'card_number');
-        $cardDigits = preg_replace('/[^[:digit:]]/', '', $cardNumber); //delete the characters not number characters
-        $expDate = filter_input(INPUT_POST, 'exp_date');
+//        $password = filter_input(INPUT_POST, 'password');
+//        $verify_password = filter_input(INPUT_POST, 'verify_password');
+//        $attendee_type = (isset($_POST['attendee_type'])?$_POST['attendee_type']:null);
 
         //validate form data
         $validate->text('first_name', $first_name);
@@ -149,48 +139,32 @@ switch ($action) {
         $validate->email('email', $email);
 //        $validate->password('password', $password, false);
 //        $validate->verify('verify_password', $password, $verify_password, false);
-        $validate->attendee('attendee_type', $attendee_type);
-        $attendee = FALSE;
-        $presenter = FALSE;
-        $student = FALSE;
-        $reviewer = FALSE;
-        if (count($attendee_type) > 0) {
-            foreach ($attendee_type as $temp) {
-                if ($temp == 'attendee') {
-                    $attendee = TRUE;
-                }
-                if ($temp == 'presenter') {
-                    $presenter = TRUE;
-                }
-                if ($temp == 'student') {
-                    $student = TRUE;
-                }
-                if ($temp == 'reviewer') {
-                    $reviewer = TRUE;
-                }
-            }
-        }
+//        $validate->attendee('attendee_type', $attendee_type);
+//        $attendee = FALSE;
+//        $presenter = FALSE;
+//        $student = FALSE;
+//        $reviewer = FALSE;
+//        if (count($attendee_type) > 0) {
+//            foreach ($attendee_type as $temp) {
+//                if ($temp == 'attendee') {
+//                    $attendee = TRUE;
+//                }
+//                if ($temp == 'presenter') {
+//                    $presenter = TRUE;
+//                }
+//                if ($temp == 'student') {
+//                    $student = TRUE;
+//                }
+//                if ($temp == 'reviewer') {
+//                    $reviewer = TRUE;
+//                }
+//            }
+//        }
 
         if ($fields->hasErrors()) {
             include 'edit_account.php';
-        } else {
-            $UM->firstName=$first_name;
-            $UM->lastName=$last_name;
-            $UM->compOrg=$company_name;
-            $UM->address1=$address;
-            $UM->address2=$address2;
-            $UM->city=$city;
-            $UM->state=$state;
-            $UM->zipCode=$zip;
-            $UM->phone=$phone;
-            $UM->email=$email;
-            $UM->attendee=$attendee;
-            $UM->student=$student;
-            $UM->reviewer=$reviewer;
-            $UM->presenter=$presenter;
-            $UM->admin=$admin;
-            
-            $msg = $UM->update();
+        } else {     
+            $msg = $UM->updateNew($userID, $first_name, $last_name, $company_name, $address, $address2, $city, $state, $zip, $phone, $email);
             include 'result.php';
            
                 echo '<div>' . $msg . '</div>';

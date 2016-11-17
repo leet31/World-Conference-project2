@@ -18,6 +18,7 @@
             <form name="regForm" action="." method="post">
                 <fieldset>
                     <legend>Personal Information</legend>
+                    
                     <label>*First Name:</label>
                     <input name="first_name" type="text" value="<?php echo htmlspecialchars($first_name) ?>">
                     <?php echo $fields->getField('first_name')->getHTML(); ?><br>
@@ -29,12 +30,12 @@
                     <label>Company/Organization:</label>
                     <input name="company_name" type="text" value="<?php echo htmlspecialchars($company_name) ?>">
                     <?php echo $fields->getField('company_name')->getHTML(); ?><br>
-                    <label>*Attendee Type: </label>
+<!--                    <label>*Attendee Type: </label>
                     <input name="attendee_type[]" id="rbAttendee" type="checkbox" value = "attendee" <?php if($attendee) echo "checked"?>> Attendee
                     <input name="attendee_type[]" id="rbAtPresenter" type="checkbox" value="presenter" <?php if($presenter) echo "checked"?>> Presenter
                     <input name="attendee_type[]" id="rbAtStudent" type="checkbox" value="student" <?php if($student) echo "checked"?>> Student
                     <input name="attendee_type[]" id="rbAtNa" type="checkbox" value="reviewer" <?php if($reviewer) echo "checked"?>>Reviewer
-                    <?php echo $fields->getField('attendee_type')->getHTML();?><br>
+                    <?php echo $fields->getField('attendee_type')->getHTML();?><br>-->
                 </fieldset> 
                 <fieldset>
                     <legend>Contact Information</legend>
@@ -72,29 +73,11 @@
                     <input name="verify_password" type="password" value="">
                     <?php echo $fields->getField('verify_password')->getHTML(); ?><br>-->
 
-                 
-
-                    
+                                     
                 </fieldset> 
 
-<!--                <fieldset>
-                    <legend>Credit Card Information</legend>
-                    <label>*Payment Method:</label>
-                    <input name="card_type" id="rbAtAmericanExpress" type="radio" value = "a"><img src="../../public_html/images/american express.png" width="99" height="81" alt=""/>
-                    <input name="card_type" id="rbAtDiscover" type="radio" value = "d"><img src="../../public_html/images/discover.jpg" width="114" height="80" alt=""/> 
-                    <input name="card_type" id="rbAtVisa" type="radio" value="v"><img src="../../public_html/images/visa.png" width="127" height="81" alt=""/> 
-                    <input name="card_type" id="rbAtMastercard" type="radio" value="m"><img src="../../public_html/images/mastercard.gif" width="128" height="78" alt=""/><br>
-
-                    <label>*Card Number:</label>
-                    <input name="card_number" type="text" value="<?php echo htmlspecialchars($cardNumber) ?>">
-                    <?php echo $fields->getField('card_number')->getHTML(); ?><br>
-
-                    <label>*Expiration Date:</label>
-                    <input name="exp_date" type="text" value="<?php echo htmlspecialchars($expDate) ?>">
-                    <?php echo $fields->getField('exp_date')->getHTML(); ?><br>
-                </fieldset>-->
                 <fieldset>
-                    <legend>Submit Registration</legend>
+                    <legend>Operation</legend>
 
                     <label>&nbsp;</label>
                     <input type ="submit" name="account_action" value="Update">

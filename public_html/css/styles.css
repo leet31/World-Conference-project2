@@ -12,13 +12,14 @@ ul {
     padding: 0;
     overflow: hidden;
     background-color: #171515; 
+
 }
 li{
     float: left;
     border-right:1px solid #bbb;
     padding: 0px;
-    
 }
+
 
 li:last-child {
     border-right: none;
@@ -92,17 +93,17 @@ li.dropdown {
 
 .account{
     padding: 0px;
-    
+
 }
 .admin_menu{
     padding: 0px;
 }
 
 fieldset{
-   padding-top: 2em;
-   margin-bottom: 2em;
-   margin-left: 10em;
-   margin-right: 10em;
+    padding-top: 2em;
+    margin-bottom: 2em;
+    margin-left: 10em;
+    margin-right: 10em;
 }
 legend{
     text-align: center;
@@ -132,7 +133,7 @@ input[type = password]{
 input[type = submit]{
     margin: 0.5em;
     font-size: large;
-    
+
     /*margin-right: 5em;*/
 }
 input[type = radio] {

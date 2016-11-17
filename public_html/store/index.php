@@ -36,8 +36,9 @@ $UM = new UserModel($pdo);
 //perform requested action, if any
 //$errMsg_product = $PM->doAction();
 //get product categories list as an array
-$categories = $CM->getList();
-$products = $PM->getList();
+//exclude conference fees in store
+$categories = $CM->getList('Conference Fees');
+$products = $PM->getList('Conference Fees');
 $products_array = array();
 if (isset($_SESSION['userRec'])) {
     $user = $UM->getUser($_SESSION['userRec']['ID']);
@@ -70,7 +71,7 @@ switch ($action) {
     case 'overview':
         $category_id = filter_input(INPUT_GET, 'category_id', FILTER_VALIDATE_INT);
         if ($category_id == NULL || $category_id == FALSE) {
-            $category_id = 1;
+            $category_id = $categories[0]['ID'];
         }
         $category_one = $CM->getListByID($category_id);
         $product_list = $PM->getListByCat($category_id);

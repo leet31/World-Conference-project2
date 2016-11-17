@@ -52,10 +52,12 @@ class UserModel {
 //        echo("<p>_SESSION: ");
 //        print_r($_SESSION);
 //        echo("</p>");
+        
         //save form values in user object
         if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
             //save posted vars
             $this->userID = filter_input(INPUT_POST, "userID");
+            $this->pwHash = filter_input(INPUT_POST, "pwHash");
             $this->firstName = filter_input(INPUT_POST, "firstName");
             $this->lastName = filter_input(INPUT_POST, "lastName");
             $this->compOrg = filter_input(INPUT_POST, "compOrg");
@@ -75,38 +77,16 @@ class UserModel {
             $this->password2 = filter_input(INPUT_POST, "password2");
             $this->attendeeType = filter_input(INPUT_POST, "attendeeType");
 
-//            //save posted form values to array for session vars
-//            $userVars = array(
-//                "userID" => $this->userID,
-//                "firstName" => $this->firstName,
-//                "lastName" => $this->lastName,
-//                "compOrg" => $this->compOrg,
-//                "address1" => $this->address1,
-//                "address2" => $this->address2,
-//                "city" => $this->city,
-//                "state" => $this->state,
-//                "zipCode" => $this->zipCode,
-//                "phone" => $this->phone,
-//                "email" => $this->email,
-//                "attendee" => $this->attendee,
-//                "admin" => $this->attendee,
-//                "presenter" => $this->presenter,
-//                "student" => $this->student,
-//                "reviewer" => $this->reviewer,
-//                "password1" => $this->password1,
-//                "password2" => $this->password2,
-//                "attendeeType" => $this->attendeeType
-//            );
-
-//            //save posted vars in session to reload on error
-//            $_SESSION['userVars'] = $userVars;
-
             //determine which action was selected
             if (filter_input(INPUT_POST, 'btnEdit')) {
-                $errMsg = $this->getUser($this->userID);
+                //return error message instead of array
+                $errMsg = $this->getUser($this->userID, false);
             } else
             if (filter_input(INPUT_POST, 'btnDelete')) {
                 $errMsg = $this->delete();
+            } else
+            if (filter_input(INPUT_POST, 'btnReset')) {
+                $this->clear();
             } else
             if (filter_input(INPUT_POST, 'btnUpdate')) {
                 $errMsg = $this->update();
@@ -171,9 +151,20 @@ class UserModel {
     }
 
     public function update() {
+
+        //check if password is being changed
+        $pw = filter_input(INPUT_POST, "hiddenPw");
+        if ($pw != '') {
+            $this->pwHash = sha1($pw);
+        }
+        if (strlen($this->pwHash) != 40) {
+            return "Password not set or not valid";
+        }
+
         try {
             $stmt = $this->pdo->prepare("UPDATE $this->table "
                     . "SET "
+                    . "    PW_HASH      = :pwHash   ,"
                     . "    FIRST_NAME   = :firstName,"
                     . "    LAST_NAME    = :lastName ,"
                     . "    COMPANY      = :compOrg  ,"
@@ -192,6 +183,7 @@ class UserModel {
                     . "WHERE ID = :userID ");
 
             $stmt->bindParam(':userID', $this->userID);
+            $stmt->bindParam(':pwHash', $this->pwHash);
             $stmt->bindParam(':firstName', $this->firstName);
             $stmt->bindParam(':lastName', $this->lastName);
             $stmt->bindParam(':compOrg', $this->compOrg);
@@ -212,23 +204,85 @@ class UserModel {
         } catch (PDOException $e) {
             return $e->getMessage();
         }
+
+        $rowCount = $stmt->rowCount();
         if ($res) {
-            return "Success: " . $stmt->rowCount() . " rows updated";
+            if ($rowCount == 1) {
+                return "Success: " . $rowCount . " rows updated";
+            } else {
+                return "Error: " . $rowCount . " rows updated";
+            }
         } else {
             return"Error: Update Failed";
         }
     }
+   public function updateNew($id, $firstName, $lastName, $compOrg, $address1, $address2, $city, $state, $zipCode, $phone, $email) {
 
-    //load user record into $this
-    public function getUser($userID) {
-        
-            $stmt = $this->pdo->prepare("SELECT * FROM  $this->table "
-                    . "WHERE ID =  :userID");
+        try {
+            $stmt = $this->pdo->prepare("UPDATE $this->table "
+                    . "SET "
+                    . "    FIRST_NAME   = :firstName,"
+                    . "    LAST_NAME    = :lastName ,"
+                    . "    COMPANY      = :compOrg  ,"
+                    . "    ADDRESS_1    = :address1 ,"
+                    . "    ADDRESS_2    = :address2 ,"
+                    . "    CITY         = :city     ,"
+                    . "    STATE        = :state    ,"
+                    . "    ZIP_CODE     = :zipCode  ,"
+                    . "    PHONE_NUMBER = :phone    ,"
+                    . "    EMAIL        = :email    "
+                    . "WHERE ID = :userID ");
 
+            $stmt->bindParam(':userID', $id);
+           
+            $stmt->bindParam(':firstName', $firstName);
+            $stmt->bindParam(':lastName', $lastName);
+            $stmt->bindParam(':compOrg', $compOrg);
+            $stmt->bindParam(':address1', $address1);
+            $stmt->bindParam(':address2', $address2);
+            $stmt->bindParam(':city', $city);
+            $stmt->bindParam(':state', $state);
+            $stmt->bindParam(':zipCode', $zipCode);
+            $stmt->bindParam(':phone', $phone);
+            $stmt->bindParam(':email', $email);
+            $res = $stmt->execute();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+
+        $rowCount = $stmt->rowCount();
+        if ($res) {
+            if ($rowCount == 1) {
+                return "Success: " . $rowCount . " rows updated";
+            } else {
+                return "Error: " . $rowCount . " rows updated";
+            }
+        } else {
+            return"Error: Update Failed";
+        }
+    }
+    
+    /**
+     * 
+     * @param type $userID user ID of user to search for
+     * @param type $returnArray if true, return user record (for store), 
+     * otherwise return error message string "NONE" for no error.
+     * @return type string or array
+     */
+    public function getUser($userID, $returnArray = true) {
+        $errMsg = 'NONE';
+
+        $stmt = $this->pdo->prepare("SELECT * FROM  $this->table "
+                . "WHERE ID =  :userID");
+
+        try {
             $stmt->bindParam(':userID', $userID);
             $stmt->execute();
-            $user = $stmt->fetch();
-       
+        } catch (PDOException $e) {
+            $errMsg = $e->getMessage();
+        }
+        
+        $user = $stmt->fetch();
 
         $this->userID = $user['ID'];
         $this->pwHash = $user['PW_HASH'];
@@ -248,7 +302,11 @@ class UserModel {
         $this->student = $user['STUDENT'];
         $this->reviewer = $user['REVIEWER'];
 
-        return $user;
+        if($returnArray){
+            return $user;
+        }
+        
+        return $errMsg;
     }
 
     public function submitLogin() {

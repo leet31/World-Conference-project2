@@ -41,19 +41,18 @@ $errMsg_product = $PM->doAction();
                 height:150px;
                 pointer-events:none;
             }
-           
+
         </style>
 
 
     </head>
-    <body>
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
         <p style="text-align: center; font-size: 36px;">Edit Product</p>
         <?php include('../home/menu.php') ?>
 
 
         <!--display error message, if any-->
-        //<?php
+        <?php
 //        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //            $name = $_FILES['file']['name'];
 //
@@ -85,8 +84,6 @@ $errMsg_product = $PM->doAction();
 //            }
 //        }
 //
-
-
 //            if ($name == NULL) {
 //                $errMsg_product = $PM->doAction('default.png');
 //            } else {
@@ -111,14 +108,14 @@ $errMsg_product = $PM->doAction();
 //                }
 //                $errMsg_product = $PM->doAction($img_new_name);
 ////        }
-//        ?>
+        ?>
 
 
 
         <?php
         if (isset($errMsg_product)) {
-            if ($errMsg_product !='') {
-                echo '<div><h3>'.$errMsg_product.'</h3></div>';
+            if ($errMsg_product != '') {
+                echo '<div><h3>' . $errMsg_product . '</h3></div>';
             }
         }
         $cat_list = $CM->getList();
@@ -154,7 +151,8 @@ $errMsg_product = $PM->doAction();
                     </tr>
                     <tr>
                         <th>Price</th>
-                        <td><input type="number" name="price" min="0" pattern="\d+(\.\d{2})?"></td>
+                        <!--<td><input type="number" name="price" min="0" pattern="\d+(\.\d{2})?"></td>-->
+                        <td><input type="number" name="price" min="0" step="any"></td>
                     </tr>
                     <tr>
                         <th>Image</th>
@@ -193,12 +191,12 @@ $errMsg_product = $PM->doAction();
                     echo('<td>' . $row['ID'] . '</td>');
                     echo '<form action = "' . $_SERVER['REQUEST_URI'] . '" method= "post" enctype="multipart/form-data">' .
                     '<td><input type="hidden" name="productID" value=" ' . $row['ID'] . '"></td>' .
-                    '<td><input type="submit" name="btnDelete" value="Delete"></td>' ;
-                    if($row['IMG_NAME'] == '') {
-                        echo  '<td><img src="../product_images/default.png"></td>';
+                    '<td><input type="submit" name="btnDelete" value="Delete"></td>';
+                    if ($row['IMG_NAME'] == '') {
+                        echo '<td><img src="../product_images/default.png"></td>';
                     } else {
-                        echo '<td><img src="../product_images/'.$row['IMG_NAME'].'"></td>';
-                    } 
+                        echo '<td><img src="../product_images/' . $row['IMG_NAME'] . '"></td>';
+                    }
                     echo '<td><select name="catID" value=" ' . $row['CATEGORY'] . '">';
                     foreach ($cat_list as $cat) {
                         if ($cat['ID'] == $row['CATEGORY']) {
@@ -213,7 +211,7 @@ $errMsg_product = $PM->doAction();
                     echo '</td>';
                     echo
                     '<td><input type="text" name= "name" value="' . $row['NAME'] . '"></td>' .
-                    '<td><input type="text" name= "description" value="' . $row['DESCRIPTION'] . '"></td>' .
+                    '<td><textarea cols="30" rows="10" name= "description">'.$row['DESCRIPTION'].'</textarea></td>' .
                     '<td><input type="text" name= "price" value="' . number_format($row['PRICE'], 2) . '"></td>' .
                     '<td><input type="file" name="newfile"><input type="submit" name="btnUpdate" value="Update"></td>' .
                     '</form>';

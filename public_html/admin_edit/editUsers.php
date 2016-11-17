@@ -158,7 +158,7 @@ $allList = $UM->getList();
                                 echo('<input type="submit" name="btnDelete" value ="Delete"></br>');
                             }
                             ?>
-                            <input type="reset" name="btnClear" value ="Reset"></br>                            
+                            <input type="submit" name="btnReset" value ="Reset"></br>                            
                             <input type="button" name="btnPassword" id="btnPassword"
                                    value='Set/Reset PW'
                                    onclick="setPw();">
@@ -180,22 +180,18 @@ $allList = $UM->getList();
                 foreach ($allList as $row) {
                     echo('<tr>');
                     echo('<td>' . $row['ID'] . '</td>');
-                    echo('<td>' . "\n" .
-                    "<form action = " . $_SERVER['REQUEST_URI'] . " method='post'>" . "\n" .
-                    "<input type='hidden' name='userID' value=" . $row['ID'] . ">" . "\n" .
-                    "</form>" . "\n" .
-                    "<form action = " . $_SERVER['REQUEST_URI'] . " method='post'>" . "\n" .
-                    "<input type='hidden' name='userID' value=" . $row['ID'] . ">" . "\n" .
-                    "<input type='text' name= 'firstName' value='" . $row['FIRST_NAME'] . "'></td>" . "\n" .
-                    "<td><input type='text' name= 'lastName' value='" . $row['LAST_NAME'] . "'></td>" . "\n" .
-                    "<td><input type='text' name= 'email' value='" . $row['EMAIL'] . "'></td>" . "\n" .
-                    "<td><input type='submit' name='btnEdit' value='Edit'>" . "\n" .
-                    "</form>" . "\n" .
+                    echo("<form action = " . $_SERVER['REQUEST_URI'] . " method='post'>" . "\n");
+                    echo("<td style='display: none'><input type='text' name='userID' value='" . $row['ID'] ."'><\td>" . "\n");
+                    echo('<td>'. $row["FIRST_NAME"] .'</td>' . "\n");
+                    echo('<td>'. $row["LAST_NAME"]  .'</td>' . "\n");
+                    echo('<td>'. $row["EMAIL"]      .'</td>' . "\n");
+                    echo("<td><input type='submit' name='btnEdit' value='Edit'>" . "\n");
+                    echo("</form>" . "\n" .
                     '</td>' . "\n");
                     echo('</tr>');
                 }
                 ?>
-
+                
             </table>
         </div>
     </body>
