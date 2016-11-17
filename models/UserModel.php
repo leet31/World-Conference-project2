@@ -46,17 +46,18 @@ class UserModel {
     public function doAction() {
         $errMsg = '';
 
-        echo("<p>_POST: ");
-        print_r($_POST);
-        echo("</p>");
-        echo("<p>_SESSION: ");
-        print_r($_SESSION);
-        echo("</p>");
+//        echo("<p>_POST: ");
+//        print_r($_POST);
+//        echo("</p>");
+//        echo("<p>_SESSION: ");
+//        print_r($_SESSION);
+//        echo("</p>");
         
         //save form values in user object
         if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
             //save posted vars
             $this->userID = filter_input(INPUT_POST, "userID");
+            $this->pwHash = filter_input(INPUT_POST, "pwHash");
             $this->firstName = filter_input(INPUT_POST, "firstName");
             $this->lastName = filter_input(INPUT_POST, "lastName");
             $this->compOrg = filter_input(INPUT_POST, "compOrg");
@@ -83,6 +84,9 @@ class UserModel {
             } else
             if (filter_input(INPUT_POST, 'btnDelete')) {
                 $errMsg = $this->delete();
+            } else
+            if (filter_input(INPUT_POST, 'btnReset')) {
+                $this->clear();
             } else
             if (filter_input(INPUT_POST, 'btnUpdate')) {
                 $errMsg = $this->update();
@@ -147,9 +151,20 @@ class UserModel {
     }
 
     public function update() {
+
+        //check if password is being changed
+        $pw = filter_input(INPUT_POST, "hiddenPw");
+        if ($pw != '') {
+            $this->pwHash = sha1($pw);
+        }
+        if (strlen($this->pwHash) != 40) {
+            return "Password not set or not valid";
+        }
+
         try {
             $stmt = $this->pdo->prepare("UPDATE $this->table "
                     . "SET "
+                    . "    PW_HASH      = :pwHash   ,"
                     . "    FIRST_NAME   = :firstName,"
                     . "    LAST_NAME    = :lastName ,"
                     . "    COMPANY      = :compOrg  ,"
@@ -168,6 +183,7 @@ class UserModel {
                     . "WHERE ID = :userID ");
 
             $stmt->bindParam(':userID', $this->userID);
+            $stmt->bindParam(':pwHash', $this->pwHash);
             $stmt->bindParam(':firstName', $this->firstName);
             $stmt->bindParam(':lastName', $this->lastName);
             $stmt->bindParam(':compOrg', $this->compOrg);
@@ -188,8 +204,14 @@ class UserModel {
         } catch (PDOException $e) {
             return $e->getMessage();
         }
+
+        $rowCount = $stmt->rowCount();
         if ($res) {
-            return "Success: " . $stmt->rowCount() . " rows updated";
+            if ($rowCount == 1) {
+                return "Success: " . $rowCount . " rows updated";
+            } else {
+                return "Error: " . $rowCount . " rows updated";
+            }
         } else {
             return"Error: Update Failed";
         }
