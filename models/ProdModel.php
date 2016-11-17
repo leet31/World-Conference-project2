@@ -59,7 +59,7 @@ class ProdModel {
         } catch (PDOException $e) {
             return $e->getMessage();
         }
-        return 'Delete Successfully! ';
+        return 'Deleted Successfully! ';
     }
 
     public function update($productID, $catID, $name, $description, $price, $img) {
@@ -76,7 +76,7 @@ class ProdModel {
         } catch (PDOException $e) {
             return $e->getMessage();
         }
-        return 'Update Successfully! ';
+        return 'Updated Successfully! ';
     }
 
     public function doAction() {
@@ -144,6 +144,46 @@ class ProdModel {
         }
 
         return $errMsg;
+    }
+    
+    /**
+     * 
+     * @param type $categoryName must be EXACT MATCH for wa_product_categories.CATEGORY_NAME
+     * @param type $productName must contain enough of the first part of wa_products.NAME to match exactly one record
+     */
+    public function getProductInfoByName($categoryName, $productName){
+        $productName .='%';
+        
+        $sql = "SELECT p.*
+                FROM `wa_products`as p 
+                INNER JOIN `wa_product_categories` AS pc 
+                        WHERE (pc.ID = p.CATEGORY) 
+                                AND (pc.CATEGORY_NAME = :categoryName)
+                                AND (p.NAME LIKE :productName)";
+//        echo("<br>sql: $sql<br>");
+//        echo("<br>cat: $categoryName<br>");
+//        echo("<br>prod: $productName<br>");
+        
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(':categoryName', $categoryName);
+            $stmt->bindValue(':productName', $productName, PDO::PARAM_STR);
+            $res = $stmt->execute();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+        
+        if (!$res) {
+            return 'getProductInfoByName Failed';
+        }
+
+        $count = $stmt->rowCount();
+        if ($count != 1) {
+            return "Error: Wrong number of rows returned: $count";
+        }
+        
+        $row = $stmt->fetch();
+        return $row;
     }
 
 }
