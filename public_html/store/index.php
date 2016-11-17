@@ -194,7 +194,7 @@ switch ($action) {
                         }
                     }
                     
-                    $result .= "Check it out successfully!";
+                    $result .= "Thank You! Check it out successfully! Your order number is ".$new_order['ID'];
                     
                     /* todo: charge credit card...
                      * 
