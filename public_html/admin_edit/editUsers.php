@@ -158,7 +158,7 @@ $allList = $UM->getList();
                                 echo('<input type="submit" name="btnDelete" value ="Delete"></br>');
                             }
                             ?>
-                            <input type="reset" name="btnClear" value ="Reset"></br>                            
+                            <input type="submit" name="btnReset" value ="Reset"></br>                            
                             <input type="button" name="btnPassword" id="btnPassword"
                                    value='Set/Reset PW'
                                    onclick="setPw();">
