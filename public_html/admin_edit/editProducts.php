@@ -41,7 +41,7 @@ $errMsg_product = $PM->doAction();
                 height:150px;
                 pointer-events:none;
             }
-           
+
         </style>
 
 
@@ -52,7 +52,7 @@ $errMsg_product = $PM->doAction();
 
 
         <!--display error message, if any-->
-        //<?php
+        <?php
 //        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //            $name = $_FILES['file']['name'];
 //
@@ -84,8 +84,6 @@ $errMsg_product = $PM->doAction();
 //            }
 //        }
 //
-
-
 //            if ($name == NULL) {
 //                $errMsg_product = $PM->doAction('default.png');
 //            } else {
@@ -110,14 +108,14 @@ $errMsg_product = $PM->doAction();
 //                }
 //                $errMsg_product = $PM->doAction($img_new_name);
 ////        }
-//        ?>
+        ?>
 
 
 
         <?php
         if (isset($errMsg_product)) {
-            if ($errMsg_product !='') {
-                echo '<div><h3>'.$errMsg_product.'</h3></div>';
+            if ($errMsg_product != '') {
+                echo '<div><h3>' . $errMsg_product . '</h3></div>';
             }
         }
         $cat_list = $CM->getList();
@@ -193,12 +191,12 @@ $errMsg_product = $PM->doAction();
                     echo('<td>' . $row['ID'] . '</td>');
                     echo '<form action = "' . $_SERVER['REQUEST_URI'] . '" method= "post" enctype="multipart/form-data">' .
                     '<td><input type="hidden" name="productID" value=" ' . $row['ID'] . '"></td>' .
-                    '<td><input type="submit" name="btnDelete" value="Delete"></td>' ;
-                    if($row['IMG_NAME'] == '') {
-                        echo  '<td><img src="../product_images/default.png"></td>';
+                    '<td><input type="submit" name="btnDelete" value="Delete"></td>';
+                    if ($row['IMG_NAME'] == '') {
+                        echo '<td><img src="../product_images/default.png"></td>';
                     } else {
-                        echo '<td><img src="../product_images/'.$row['IMG_NAME'].'"></td>';
-                    } 
+                        echo '<td><img src="../product_images/' . $row['IMG_NAME'] . '"></td>';
+                    }
                     echo '<td><select name="catID" value=" ' . $row['CATEGORY'] . '">';
                     foreach ($cat_list as $cat) {
                         if ($cat['ID'] == $row['CATEGORY']) {
