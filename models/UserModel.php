@@ -216,7 +216,52 @@ class UserModel {
             return"Error: Update Failed";
         }
     }
+   public function updateNew($id, $firstName, $lastName, $compOrg, $address1, $address2, $city, $sate, $zipCode, $phone, $email) {
 
+        try {
+            $stmt = $this->pdo->prepare("UPDATE $this->table "
+                    . "SET "
+                    . "    FIRST_NAME   = :firstName,"
+                    . "    LAST_NAME    = :lastName ,"
+                    . "    COMPANY      = :compOrg  ,"
+                    . "    ADDRESS_1    = :address1 ,"
+                    . "    ADDRESS_2    = :address2 ,"
+                    . "    CITY         = :city     ,"
+                    . "    STATE        = :state    ,"
+                    . "    ZIP_CODE     = :zipCode  ,"
+                    . "    PHONE_NUMBER = :phone    ,"
+                    . "    EMAIL        = :email    ,"
+                    . "WHERE ID = :userID ");
+
+            $stmt->bindParam(':userID', $id);
+           
+            $stmt->bindParam(':firstName', $firstName);
+            $stmt->bindParam(':lastName', $lastName);
+            $stmt->bindParam(':compOrg', $compOrg);
+            $stmt->bindParam(':address1', $address1);
+            $stmt->bindParam(':address2', $address2);
+            $stmt->bindParam(':city', $city);
+            $stmt->bindParam(':state', $state);
+            $stmt->bindParam(':zipCode', $zipCode);
+            $stmt->bindParam(':phone', $phone);
+            $stmt->bindParam(':email', $email);
+            $res = $stmt->execute();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+
+        $rowCount = $stmt->rowCount();
+        if ($res) {
+            if ($rowCount == 1) {
+                return "Success: " . $rowCount . " rows updated";
+            } else {
+                return "Error: " . $rowCount . " rows updated";
+            }
+        } else {
+            return"Error: Update Failed";
+        }
+    }
+    
     /**
      * 
      * @param type $userID user ID of user to search for

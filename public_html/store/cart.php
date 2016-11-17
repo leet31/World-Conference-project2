@@ -73,18 +73,7 @@ namespace cart {
         return $subtotal_f;
     }
 
-    // Get a function for sorting the cart on the specified key
-    function compare_factory($sort_key) {
-        return function($left, $right) use ($sort_key) {
-            if ($left[$sort_key] == $right[$sort_key]) {
-                return 0;
-            } else if ($left[$sort_key] < $right[$sort_key]) {
-                return -1;
-            } else {
-                return 1;
-            }
-        };
-    }
+   
 
     function getTotalQty() {
         if (!isset($_SESSION['cartRec'])) {

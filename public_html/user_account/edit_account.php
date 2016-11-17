@@ -18,6 +18,7 @@
             <form name="regForm" action="." method="post">
                 <fieldset>
                     <legend>Personal Information</legend>
+                    
                     <label>*First Name:</label>
                     <input name="first_name" type="text" value="<?php echo htmlspecialchars($first_name) ?>">
                     <?php echo $fields->getField('first_name')->getHTML(); ?><br>
@@ -29,12 +30,12 @@
                     <label>Company/Organization:</label>
                     <input name="company_name" type="text" value="<?php echo htmlspecialchars($company_name) ?>">
                     <?php echo $fields->getField('company_name')->getHTML(); ?><br>
-                    <label>*Attendee Type: </label>
+<!--                    <label>*Attendee Type: </label>
                     <input name="attendee_type[]" id="rbAttendee" type="checkbox" value = "attendee" <?php if($attendee) echo "checked"?>> Attendee
                     <input name="attendee_type[]" id="rbAtPresenter" type="checkbox" value="presenter" <?php if($presenter) echo "checked"?>> Presenter
                     <input name="attendee_type[]" id="rbAtStudent" type="checkbox" value="student" <?php if($student) echo "checked"?>> Student
                     <input name="attendee_type[]" id="rbAtNa" type="checkbox" value="reviewer" <?php if($reviewer) echo "checked"?>>Reviewer
-                    <?php echo $fields->getField('attendee_type')->getHTML();?><br>
+                    <?php echo $fields->getField('attendee_type')->getHTML();?><br>-->
                 </fieldset> 
                 <fieldset>
                     <legend>Contact Information</legend>
