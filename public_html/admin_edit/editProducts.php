@@ -211,7 +211,7 @@ $errMsg_product = $PM->doAction();
                     echo '</td>';
                     echo
                     '<td><input type="text" name= "name" value="' . $row['NAME'] . '"></td>' .
-                    '<td><input type="text" name= "description" value="' . $row['DESCRIPTION'] . '"></td>' .
+                    '<td><textarea cols="30" rows="10" name= "description">'.$row['DESCRIPTION'].'</textarea></td>' .
                     '<td><input type="text" name= "price" value="' . number_format($row['PRICE'], 2) . '"></td>' .
                     '<td><input type="file" name="newfile"><input type="submit" name="btnUpdate" value="Update"></td>' .
                     '</form>';
