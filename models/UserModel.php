@@ -46,12 +46,13 @@ class UserModel {
     public function doAction() {
         $errMsg = '';
 
-//        echo("<p>_POST: ");
-//        print_r($_POST);
-//        echo("</p>");
-//        echo("<p>_SESSION: ");
-//        print_r($_SESSION);
-//        echo("</p>");
+        echo("<p>_POST: ");
+        print_r($_POST);
+        echo("</p>");
+        echo("<p>_SESSION: ");
+        print_r($_SESSION);
+        echo("</p>");
+        
         //save form values in user object
         if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
             //save posted vars
@@ -75,35 +76,10 @@ class UserModel {
             $this->password2 = filter_input(INPUT_POST, "password2");
             $this->attendeeType = filter_input(INPUT_POST, "attendeeType");
 
-//            //save posted form values to array for session vars
-//            $userVars = array(
-//                "userID" => $this->userID,
-//                "firstName" => $this->firstName,
-//                "lastName" => $this->lastName,
-//                "compOrg" => $this->compOrg,
-//                "address1" => $this->address1,
-//                "address2" => $this->address2,
-//                "city" => $this->city,
-//                "state" => $this->state,
-//                "zipCode" => $this->zipCode,
-//                "phone" => $this->phone,
-//                "email" => $this->email,
-//                "attendee" => $this->attendee,
-//                "admin" => $this->attendee,
-//                "presenter" => $this->presenter,
-//                "student" => $this->student,
-//                "reviewer" => $this->reviewer,
-//                "password1" => $this->password1,
-//                "password2" => $this->password2,
-//                "attendeeType" => $this->attendeeType
-//            );
-
-//            //save posted vars in session to reload on error
-//            $_SESSION['userVars'] = $userVars;
-
             //determine which action was selected
             if (filter_input(INPUT_POST, 'btnEdit')) {
-                $errMsg = $this->getUser($this->userID);
+                //return error message instead of array
+                $errMsg = $this->getUser($this->userID, false);
             } else
             if (filter_input(INPUT_POST, 'btnDelete')) {
                 $errMsg = $this->delete();
@@ -219,16 +195,27 @@ class UserModel {
         }
     }
 
-    //load user record into $this
-    public function getUser($userID) {
-        
-            $stmt = $this->pdo->prepare("SELECT * FROM  $this->table "
-                    . "WHERE ID =  :userID");
+    /**
+     * 
+     * @param type $userID user ID of user to search for
+     * @param type $returnArray if true, return user record (for store), 
+     * otherwise return error message string "NONE" for no error.
+     * @return type string or array
+     */
+    public function getUser($userID, $returnArray = true) {
+        $errMsg = 'NONE';
 
+        $stmt = $this->pdo->prepare("SELECT * FROM  $this->table "
+                . "WHERE ID =  :userID");
+
+        try {
             $stmt->bindParam(':userID', $userID);
             $stmt->execute();
-            $user = $stmt->fetch();
-       
+        } catch (PDOException $e) {
+            $errMsg = $e->getMessage();
+        }
+        
+        $user = $stmt->fetch();
 
         $this->userID = $user['ID'];
         $this->pwHash = $user['PW_HASH'];
@@ -248,7 +235,11 @@ class UserModel {
         $this->student = $user['STUDENT'];
         $this->reviewer = $user['REVIEWER'];
 
-        return $user;
+        if($returnArray){
+            return $user;
+        }
+        
+        return $errMsg;
     }
 
     public function submitLogin() {
