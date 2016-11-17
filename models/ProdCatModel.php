@@ -34,8 +34,6 @@ class ProdCatModel {
             $sql = "SELECT * FROM $this->table";
             $stmt = $this->pdo->prepare($sql);
         }
-        echo("<br>cat not: $notCategory<br>");
-        echo("<br>SQL: $sql<br>");
         
         $stmt->execute();
         $cats = $stmt->fetchAll();

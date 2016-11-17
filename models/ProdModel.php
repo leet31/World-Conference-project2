@@ -43,9 +43,6 @@ class ProdModel {
             $stmt = $this->pdo->prepare($sql);
         }
         
-        echo("<br>prod not: $notCategory<br>");
-        echo("<br>SQL: $sql<br>");
-        
         $stmt->execute();
         $products = $stmt->fetchAll();
         return $products;
