@@ -9,7 +9,7 @@
 
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
         
-        <p style="text-align: center; font-size: 36px;">Hotel Information</p>
+        <p style="text-align: center; font-size: 36px;">Guidelines</p>
         <?php include '../home/menu.php'; ?>
          <div>
         <h2>Guidelines for Authors</h2>
