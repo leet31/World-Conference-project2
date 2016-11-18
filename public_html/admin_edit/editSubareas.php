@@ -44,7 +44,7 @@ $parentList = $SAM->getParentList();
     </head>
     <body>
           <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
-        <p style="text-align: center; font-size: 36px;">Edit Content Subareas<</p>
+        <p style="text-align: center; font-size: 36px;">Edit Content Subareas</p>
          <?php include('../home/menu.php') ?>
         <!--display error message, if any-->
         <?php if (isset($errMsg) && $errMsg != '') echo "<div><h3>Error: $errMsg</h3><div>" ?>
