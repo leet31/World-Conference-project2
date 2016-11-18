@@ -42,8 +42,7 @@ $parentList = $SAM->getParentList();
         </style>
 
     </head>
-    <body>
-          <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
+    <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
         <p style="text-align: center; font-size: 36px;">Edit Content Subareas</p>
          <?php include('../home/menu.php') ?>
         <!--display error message, if any-->

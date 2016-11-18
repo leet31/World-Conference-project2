@@ -70,17 +70,14 @@ $editPaperList = $PM->getEditPaperList();
         </script>
     </head>
     <body>
-        <?php include('../home/menu.php') ?>
-        <?php //  foreach($areaSubareaList as $row){
-            //echo("</br>ID: ".$row['ID']);
-            //echo("<br>Name: ".$row['NAME']);
-        //}
-        ?>
-        <div><h2>Edit Papers</h2></div>
+         <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
+        <p style="text-align: center; font-size: 36px;">Edit Content Subareas</p>
+         <?php include('../home/menu.php') ?>
+       
         <!--display error message, if any-->
-        <div id="errMsg">
+        
             <?php if (isset($errMsg) && $errMsg != '' && strtoupper($errMsg) != 'NONE') echo "<div><h3>$errMsg</h3><div>" ?>
-        </div>
+    
         <div>
             <form action = "<?php filter_input(INPUT_SERVER, 'REQUEST_URI') ?>" method='post' enctype="multipart/form-data" name="editForm" id="editForm">
                 <table>
