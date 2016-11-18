@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Shopping Cart</title>
+        <title>Check Out</title>
         <link rel="stylesheet" type="text/css" href="../css/styles.css"><style>
             fieldset{
                 text-align: Center;
@@ -34,7 +34,7 @@
     </head>
 
     <body background="../images/2015_AIGA-Design-Month_Website-Footer.png">
-        <p style="text-align: center; font-size: 36px;">Shopping Cart</p>
+        <p style="text-align: center; font-size: 36px;">Check Out</p>
         <?php include '../home/menu.php'; ?>
         <div>
             <fieldset>
