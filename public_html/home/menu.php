@@ -24,16 +24,16 @@ if (isset($_SESSION['userRec']) && $_SESSION['userRec']['ADMIN'] == TRUE) {
             <a href="../admin_edit/editUsers.php">Edit Users</a>
             <a href="../admin_edit/editPapers.php">Edit Paper Submissions</a>
         </div>
-    </li>
-    <li class ="dropdown">
-        <a href ="#" class ="dropbtn">Diagnostics Menu</a>
-        <div class="dropdown-content">
-            <a href="../admin_diag/tempRegPage.php">Temporary Registration Page</a>
-            <a href="../admin_diag/tempLoginPage.php">Temporary Login Page</a>
-             <a href="../admin_diag/tempCreditCardPayment.php">Temporary CreditCardPayment</a>
-        </div>
-    </li>'
-    . '</ul>';
+    </li></ul>';
+//    <li class ="dropdown">
+//        <a href ="#" class ="dropbtn">Diagnostics Menu</a>
+//        <div class="dropdown-content">
+//            <a href="../admin_diag/tempRegPage.php">Temporary Registration Page</a>
+//            <a href="../admin_diag/tempLoginPage.php">Temporary Login Page</a>
+//             <a href="../admin_diag/tempCreditCardPayment.php">Temporary CreditCardPayment</a>
+//        </div>
+//    </li>'
+    
 }
 ?>
     
